@@ -1,0 +1,35 @@
+{% extends "admin/base_admin.html" %}
+{% load static %}
+
+
+
+
+{% block contenido_dinamico %}
+<link rel="stylesheet" href="{% static 'css/admin/inicio.css' %}">
+
+  
+
+
+
+<div class="titulo">
+    <h2>Bienvenido, {{ request.user.first_name }} {{ request.user.last_name }}</h2>
+</div>
+
+
+<div class="tarjetas">
+    {% for institucion in instituciones %}
+        <div class="tarjeta">
+            <h2>{{ institucion.nombre }}</h2>
+            <h4>{{ institucion.ciudad }}</h5>
+            <p>Progreso de Mantenciones Anual</p>
+            
+            <div class="grafico">
+                
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock contenido_dinamico %}

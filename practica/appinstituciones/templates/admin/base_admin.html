@@ -1,0 +1,112 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospitales</title>
+  <link rel="stylesheet" href="{% static 'css/admin/base.css' %}">
+
+</head>
+
+<body>
+
+  <header>
+
+    <nav>
+      <div>
+        <img src="{% static 'img/usuario.png' %}" alt="">
+        <span>{{ request.user.username }}</span>
+      </div>
+      <div>
+        <img src="{% static 'img/admin.png' %}" alt="">
+        <span>{{ request.user.cargo }}</span>
+      </div>
+
+      <div>
+        <a href="{% url 'cerrar_sesion' %}">
+          <img src="{% static 'img/logout.png' %}" alt="">
+          <span>cerrar sesión</span>
+        </a>
+      </div>
+    </nav>
+
+
+  </header>
+
+
+
+  <main>
+    <aside>
+      <div class="logo">
+        <div class="azul"></div>
+        <div class="rojo"></div>
+      </div>
+
+      <div class="titulo">
+        <div>
+          <h3>Servicio de Salud Arauco</h3>
+          <span>Region del BioBio</span>
+        </div>
+        <span>Ministerio de Salud</span>
+      </div>
+
+      <div class="separador">
+        <hr class="custom-width">
+      </div>
+
+      <div class="opciones">
+        <div>
+          <a href="#">
+            <img src="{% static 'img/inicio.png' %}" alt="">
+            Inicio
+          </a>
+        </div>
+
+        <div class="contenedor-instituciones">
+          <details>
+            <summary>Instituciones</summary>
+            <a href="#">Lebu</a>
+            <a href="#">Arauco</a>
+            <a href="#">Curanilahue</a>
+            <a href="#">Cañete</a>
+            <a href="#">Contulmo</a>
+          </details>
+        </div>
+
+        <div>
+          <a href="#">
+            <img src="{% static 'img/crear.png' %}" alt="">
+            Crear usuario
+          </a>
+        </div>
+
+      </div>
+    </aside>
+
+
+    <section>
+
+
+      {% block contenido_dinamico %}
+        
+      {% endblock contenido_dinamico %}
+
+
+    </section>
+
+    
+  </main>
+
+
+
+
+
+
+
+
+</body>
+
+</html>
