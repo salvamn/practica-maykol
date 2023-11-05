@@ -49,3 +49,36 @@ main section .tarjetas .tarjeta p{
     margin-bottom: 10px;
     color: #646464;
 }
+
+main section .tarjetas .tarjeta #grafico-lebu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+    margin-top: 10px;
+}
+
+main section .tarjetas .tarjeta #grafico-lebu div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+
+main section .tarjetas .tarjeta #contenedor-multiples-graficos{
+    width: 100%;
+    height: 40%;
+    margin-top: 20px;
+}
+
+main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico1,
+main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico2,
+main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 33%;
+}

@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hospitales</title>
+  <title>Admin - {% block titulo_pestania %}{% endblock titulo_pestania %}</title>
   <link rel="stylesheet" href="{% static 'css/admin/base.css' %}">
 
 </head>
@@ -59,7 +59,7 @@
 
       <div class="opciones">
         <div>
-          <a href="#">
+          <a href="{% url 'inicio_admin' %}">
             <img src="{% static 'img/inicio.png' %}" alt="">
             Inicio
           </a>
@@ -77,7 +77,7 @@
         </div>
 
         <div>
-          <a href="#">
+          <a href="{% url 'lista_usuarios' %}">
             <img src="{% static 'img/crear.png' %}" alt="">
             Crear usuario
           </a>

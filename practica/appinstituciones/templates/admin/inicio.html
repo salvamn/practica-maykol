@@ -23,13 +23,51 @@
             <h4>{{ institucion.ciudad }}</h5>
             <p>Progreso de Mantenciones Anual</p>
             
-            <div class="grafico">
-                
+            <div id="grafico-lebu">
+            </div>
+
+            <div id="contenedor-multiples-graficos">
+                <div id="grafico1"></div>
+                <div id="grafico2"></div>
+                <div id="grafico3"></div>
             </div>
         </div>
     {% endfor %}
+    <div class="tarjeta">
+        <h2>{{ institucion.nombre }}</h2>
+        <h4>{{ institucion.ciudad }}</h5>
+        <p>Progreso de Mantenciones Anual</p>
+        
+        <div id="grafico-lebu">
+            <h1 style="color:  gray;">SIN INFORMACIÓN</h1>
+        </div>
+
+        <div id="contenedor-multiples-graficos">
+            <div id="grafico1"></div>
+            <div id="grafico2"></div>
+            <div id="grafico3"></div>
+        </div>
+    </div>
+    <div class="tarjeta">
+        <h2>{{ institucion.nombre }}</h2>
+        <h4>{{ institucion.ciudad }}</h5>
+        <p>Progreso de Mantenciones Anual</p>
+        
+        <div id="grafico-lebu">
+            <h1 style="color:  gray;">SIN INFORMACIÓN</h1>
+        </div>
+
+        <div id="contenedor-multiples-graficos">
+            <div id="grafico1"></div>
+            <div id="grafico2"></div>
+            <div id="grafico3"></div>
+        </div>
+    </div>
 </div>
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
 
 {% endblock contenido_dinamico %}

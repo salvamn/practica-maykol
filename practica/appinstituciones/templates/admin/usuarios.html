@@ -1,0 +1,148 @@
+{% extends "admin/base_admin.html" %}
+{% load static %}
+
+{% block titulo_pestania %}Lista de usuarios{% endblock titulo_pestania %}
+
+
+{% block contenido_dinamico %}
+
+
+
+<link rel="stylesheet" href="{% static 'css/admin/usuarios.css' %}">
+
+
+
+<div class="titulo">
+    <h2>Lista de Usuarios</h2>
+    <button id="btn-crear-usuario">crear usuario</button>
+</div>
+
+<div class="contenedor-tabla-usuarios">
+
+
+    <div class="tabla">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre de usuario</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Rut</th>
+                    <th>Correo</th>
+                    <th>Cargo</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.id }}</td>
+                    <td>{{ usuario.username }}</td>
+                    <td>{{ usuario.first_name }}</td>
+                    <td>{{ usuario.last_name }}</td>
+                    <td>{{ usuario.rut }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.cargo }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+
+
+        </table>
+
+    </div>
+
+
+    <div class="paginacion">
+        <span>
+            {% if usuarios.has_previous %}
+                <a href="?page=1">&laquo; Primero</a>
+                <a href="?page={{ usuarios.previous_page_number }}">Anterior</a>
+            {% endif %}
+
+            <span>
+                Página {{ usuarios.number }} de {{ usuarios.paginator.num_pages }}
+            </span>
+
+
+            {% if usuarios.has_next %}
+                <a href="?page={{ usuarios.next_page_number }}">Siguiente</a>
+                <a href="?page={{ usuarios.paginator.num_pages }}">Último &raquo;</a>
+            {% endif %}
+
+        </span>
+    </div>
+</div>
+
+
+
+
+
+<dialog id="modal-crear-usuario">
+    <button id="btn-cerrar-dialogo">cerrar</button>
+
+    <div class="titulo-modal">
+        <h2>Crear Usuario</h2>
+    </div>
+
+    <div class="contenedor-formulario">
+        <form action="" method="POST">
+            <div>
+                <label for="">Nombre de usuario</label>
+                <input type="text">
+            </div>
+            <div>
+                <label for="nombre">Nombre</label>
+                <input type="text">
+            </div>
+            <div>
+                <label for="apellido">Apellido</label>
+                <input type="text">
+            </div>
+            <div>
+                <label for="rut">Rut</label>
+                <input type="text">
+            </div>
+            <div>
+                <label for="correo">Correo</label>
+                <input type="email" name="" id="">
+            </div>
+            <div>
+                <label for="contrasenia">Contraseña</label>
+                <input type="password" name="" id="">
+            </div>
+            <div>
+                <input type="submit" value="crear usuario">
+            </div>
+        </form>
+    </div>
+
+</dialog>
+
+
+
+<script>
+
+    const btnAbrirDialogo = document.getElementById('btn-crear-usuario')
+    const dialogo = document.getElementById('modal-crear-usuario')
+    const btnCerrarDialogo = document.getElementById('btn-cerrar-dialogo')
+
+    btnAbrirDialogo.addEventListener('click', () => {
+        dialogo.show()
+    })
+
+    btnCerrarDialogo.addEventListener('click', () => {
+        dialogo.close()
+    })
+
+    
+
+
+
+
+</script>
+
+{% endblock contenido_dinamico %}
