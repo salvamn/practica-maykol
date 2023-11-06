@@ -11,6 +11,9 @@ import sys
 # Create your views here.
 
 def iniciar_sesion(request):
+    if request.user.is_authenticated:
+        return redirect('inicio_admin')
+    
     if request.method == 'POST':
         rut = request.POST['rut']
         password = request.POST['password']
