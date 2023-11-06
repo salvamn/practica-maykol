@@ -10,6 +10,7 @@ from appcatastro.models import CatastroEquipoIndustriales
 from appcatastro.models import CatastroEquiposMedicos
 from appcatastro.models import CatastroAmbulancias
 from appautenticacion.models import CustomUser
+from appinstituciones.models import Institucion
 
 # Create your views here.
 
@@ -29,8 +30,9 @@ def inicio_admin(request):
 def lista_usuarios(request):
     # lista_usuarios = CustomUser.objects.filter(cargo='usuario').all()
     lista_usuarios = CustomUser.objects.all()
+    lista_instituciones = Institucion.objects.all()
     
-    paginator = Paginator(lista_usuarios, 20)
+    paginator = Paginator(lista_usuarios, 12)
     page = request.GET.get('page')
     
     try:
@@ -39,7 +41,7 @@ def lista_usuarios(request):
         usuarios = paginator.page(1)
         
         
-    return render(request, 'admin/usuarios.html', {'usuarios': usuarios})
+    return render(request, 'admin/usuarios.html', {'usuarios': usuarios, 'instituciones': lista_instituciones})
 
 
 
@@ -118,7 +120,6 @@ def obtener_data_ambulancias_lebu(requets):
     }
 
     for e in data_ambulancias:
-        print(e)
         if e['estado'] == 'BUENO':
             data['bueno'] += 1 
         elif e['estado'] == 'REGULAR':

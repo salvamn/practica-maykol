@@ -9,7 +9,11 @@
 
 
 <link rel="stylesheet" href="{% static 'css/admin/usuarios.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/toastr.css' %}">
+<script src="{% static 'js/toastr.js' %}"></script> -->
 
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 
 <div class="titulo">
@@ -25,26 +29,28 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <!-- <th>ID</th> -->
                     <th>Nombre de usuario</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Rut</th>
                     <th>Correo</th>
                     <th>Cargo</th>
+                    <th>Opciones</th>
                 </tr>
             </thead>
 
             <tbody>
                 {% for usuario in usuarios %}
                 <tr>
-                    <td>{{ usuario.id }}</td>
+                    <!-- <td>{{ usuario.id }}</td> -->
                     <td>{{ usuario.username }}</td>
                     <td>{{ usuario.first_name }}</td>
                     <td>{{ usuario.last_name }}</td>
                     <td>{{ usuario.rut }}</td>
                     <td>{{ usuario.email }}</td>
                     <td>{{ usuario.cargo }}</td>
+                    <td><button id="{{ usuario.id }}">editar</button>|<button id="{{ usuario.id }}">eliminar</button></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -82,37 +88,55 @@
 
 
 <dialog id="modal-crear-usuario">
-    <button id="btn-cerrar-dialogo">cerrar</button>
+    <div class="contenedor-btn-cerrar">
+        <button id="btn-cerrar-dialogo">cerrar</button>
+    </div>
 
     <div class="titulo-modal">
         <h2>Crear Usuario</h2>
     </div>
 
     <div class="contenedor-formulario">
-        <form action="" method="POST">
+        <form action="{% url 'crear_usuario' %}" method="POST">
+            {% csrf_token %}
             <div>
                 <label for="">Nombre de usuario</label>
-                <input type="text">
+                <input type="text" name="nombre-usuario" required>
             </div>
             <div>
                 <label for="nombre">Nombre</label>
-                <input type="text">
+                <input type="text" name="nombre" required>
             </div>
             <div>
                 <label for="apellido">Apellido</label>
-                <input type="text">
+                <input type="text" name="apellido" required>
             </div>
             <div>
                 <label for="rut">Rut</label>
-                <input type="text">
+                <input type="text" name="rut" required>
             </div>
             <div>
                 <label for="correo">Correo</label>
-                <input type="email" name="" id="">
+                <input type="email" name="correo" id="correo" required>
             </div>
             <div>
                 <label for="contrasenia">Contraseña</label>
-                <input type="password" name="" id="">
+                <input type="password" name="contrasenia" id="" required>
+            </div>
+            <div>
+                <label for="">Cargo</label>
+                <select name="cargo" id="">
+                    <option value="usuario">Usuario</option>
+                    <option value="administrador">Administrador</option>
+                </select>
+            </div>
+            <div>
+                <label for="">Institución</label>
+                <select name="institucion" id="">
+                    {% for i in instituciones %}
+                      <option value="{{ i.id }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div>
                 <input type="submit" value="crear usuario">
@@ -144,5 +168,27 @@
 
 
 </script>
+
+
+
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            Toastify({
+                text: `{{ message }}`,
+                duration: 3000,
+                destination: "https://github.com/apvarun/toastify-js",
+                newWindow: true,
+                close: true,
+                gravity: "bottom", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                backgroundColor: "red", // Color de fondo para un mensaje de error
+                className: "error-toast", // Clase CSS para mensajes de error
+                onClick: function(){} // Callback after click
+              }).showToast();
+        </script>
+    {% endfor %}
+{% endif %}
 
 {% endblock contenido_dinamico %}

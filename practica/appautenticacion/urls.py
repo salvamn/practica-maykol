@@ -25,4 +25,5 @@ urlpatterns = [
     path('', views.iniciar_sesion, name='iniciar_sesion'),
     path('recuperar_contrasenia', views.recuperar_contrasenia, name='recuperar_contrasenia'),
     path('cerrar_sesion', views.cerrar_sesion, name='cerrar_sesion'),
+    path('crear_usuario', views.crear_usuario, name='crear_usuario'),
 ]
