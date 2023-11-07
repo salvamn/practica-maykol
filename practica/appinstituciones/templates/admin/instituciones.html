@@ -1,10 +1,42 @@
 {% extends "admin/base_admin.html" %}
-{{ block.super }}
+{% load static %}
 
 
-
-
+{% block titulo_pestania %}{{ institucion.nombre }}{% endblock titulo_pestania %}
 
 {% block contenido_dinamico %}
-  
+<link rel="stylesheet" href="{% static 'css/admin/instituciones.css' %}">
+
+
+
+<div class="titulo">
+    <h2>{{ institucion.nombre }}</h2>
+</div>
+
+
+
+<div class="contenedor-graficos">
+    <div class="grafico-pie">
+        <div class="titulo-grafico">
+            <h3>Equipos Medicos</h3>
+        </div>
+
+        <div class="graficos">
+            <div id="grafico-mensual">
+            </div>
+            <div id="grafico-anual">
+            </div>
+        </div>
+    </div>
+    <div class="grafico-barra"></div>
+</div>
+
+
+<div class="contenedor-tabla">
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+<script src="{% static 'js/admin/instituciones.js' %}"></script>
+
 {% endblock contenido_dinamico %}

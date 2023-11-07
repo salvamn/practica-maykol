@@ -41,7 +41,7 @@ def cerrar_sesion(request):
         return redirect('/')
 
 
-def recuperar_contrasenia(reques):
+def recuperar_contrasenia(request):
     pass
 
 

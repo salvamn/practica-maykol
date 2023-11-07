@@ -23,7 +23,7 @@ from . import views
 
 urlpatterns = [
     path('inicio', views.inicio_admin, name='inicio_admin'),
-    path('instituciones', views.instituciones_admin, name='instituciones_admin'),
+    path('instituciones/<str:institucion>/', views.instituciones_admin, name='instituciones_admin'), # https://docs.djangoproject.com/en/4.2/ref/templates/builtins/#url
     path('obtener_grafico_lebu/', views.obtener_grafico_institucion_lebu, name='obtener_grafico_lebu'),
     path('obtener_data_equipos_medicos_lebu/', views.obtener_data_equipos_medicos_lebu, name='obtener_data_equipos_medicos_lebu'),
     path('obtener_data_ambulancias_lebu/', views.obtener_data_ambulancias_lebu, name='obtener_data_ambulancias_lebu'),

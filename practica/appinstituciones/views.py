@@ -11,6 +11,7 @@ from appcatastro.models import CatastroEquiposMedicos
 from appcatastro.models import CatastroAmbulancias
 from appautenticacion.models import CustomUser
 from appinstituciones.models import Institucion
+from .models import Institucion
 
 # Create your views here.
 
@@ -46,14 +47,16 @@ def lista_usuarios(request):
 
 
 
-
-
-
-
-
 @login_required
-def instituciones_admin(request):
-    return render(request, 'admin/instituciones.html')
+def instituciones_admin(request, institucion):
+    intitucion = institucion
+    data = Institucion.objects.get(nombre=intitucion)
+    print(data)
+    
+    
+    
+    
+    return render(request, 'admin/instituciones.html', {'institucion': data})
 
 
 

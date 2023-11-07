@@ -68,12 +68,19 @@
         <div class="contenedor-instituciones">
           <details>
             <summary>Instituciones</summary>
-            <a href="#">Lebu</a>
+            <a href="{% url 'instituciones_admin' institucion='Lebu' %}">Lebu</a>
             <a href="#">Arauco</a>
             <a href="#">Curanilahue</a>
             <a href="#">Cañete</a>
             <a href="#">Contulmo</a>
           </details>
+        </div>
+
+        <div>
+          <a href="#">
+            <img src="{% static 'img/convenios.png' %}" alt="">
+            Convenios
+          </a>
         </div>
 
         <div>
