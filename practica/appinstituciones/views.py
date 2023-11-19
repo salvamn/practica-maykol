@@ -47,16 +47,101 @@ def lista_usuarios(request):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @login_required
-def instituciones_admin(request, institucion):
-    intitucion = institucion
-    data = Institucion.objects.get(nombre=intitucion)
-    print(data)
+def instituciones_admin(request, institucion, tipo_equipo=None):
+    """Esta vista renderiza una institucion, esta institucion recibe dos argumentos: el nombre y tipo de equipo a mostrar
+    
+    - El primer argumento osea el nombre de la institucion es obligatorio
+    - El segundo argumento es opcional
     
     
+    """
+    
+    global data_tipo_equipo
+    data_tipo_equipo = None
+    
+    if tipo_equipo is None and 'tipo_equipo' in request.GET:
+        
+        tipo_equipo = request.GET['tipo_equipo']
+        
+        if tipo_equipo == 'medico':
+            estados_equipos_medicos = CatastroEquipoIndustriales.objects.values('estado')
+            data_grafico = {
+                'bueno': 0,
+                'regular': 0,
+                'malo': 0,
+                'baja': 0
+            }
+            
+            for e in estados_equipos_medicos: # Bueno - Regular - Malo - Baja
+                if e['estado'] == 'BUENO':
+                    data_grafico['bueno'] += 1 
+                elif e['estado'] == 'REGULAR':
+                    data_grafico['regular'] += 1
+                elif e['estado'] == 'MALO':
+                    data_grafico['malo'] += 1
+                elif e['estado'] == 'BAJA':
+                    data_grafico['baja'] += 1
+            
+            data_tipo_equipo = data_grafico
+
+    data_institucion = Institucion.objects.get(nombre=institucion)
+    
+    # lista_instituciones = Institucion.objects.all()
+    select_tipo_equipo = ['medico', 'vehiculo', 'industrial']
+    
+    return render(request, 
+                'admin/instituciones.html', {
+                'institucion': data_institucion, 
+                'tipo_equipo': select_tipo_equipo
+                })
     
     
-    return render(request, 'admin/instituciones.html', {'institucion': data})
+def get_lebu_industrial(request):
+    datos = list(CatastroEquipoIndustriales.objects.values())
+    return JsonResponse({'datos': datos})
+
+def get_lebu_medico(request):
+    datos = list(CatastroEquiposMedicos.objects.values())
+    return JsonResponse({'datos': datos})
+
+def get_lebu_vehiculos(request):
+    datos = list(CatastroAmbulancias.objects.values())
+    return JsonResponse({'datos': datos})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -178,3 +263,20 @@ def obtener_data_total_lebu(request):
             data['baja'] += 1
             
     return JsonResponse(data)
+
+
+def obtener_criticidad_medicos_lebu(request):
+    data_criticidad = CatastroEquiposMedicos.objects.values('criticidad') # CRITICO - RELEVANTE
+    data = {
+        'critico': 0,
+        'relevante': 0
+    }
+    
+    for crt in data_criticidad:
+        if crt['criticidad'] == 'CRITICO':
+            data['critico'] += 1
+        elif crt['criticidad'] == 'RELEVANTE':
+            data['relevante'] += 1
+            
+    return JsonResponse(data)
+    
