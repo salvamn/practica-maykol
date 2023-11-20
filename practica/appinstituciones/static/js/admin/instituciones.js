@@ -269,6 +269,7 @@ createApp({
                 .then(response => {
                     data_grafico = { 'bueno': 0, 'regular': 0, 'malo': 0, 'baja': 0 }
                     data_grafico_barra = { 'critico': 0, 'relevante': 0 }
+                    vida_util_residual = 0
                     for(var elemento of response.data.datos){
                         if(elemento.estado === 'BUENO'){
                             data_grafico.bueno += 1
@@ -288,10 +289,17 @@ createApp({
                             data_grafico_barra.relevante += 1
                         }
                     }
+
+                    for(var vur of response.data.datos){
+                        if(vur.vida_util_residual <= 0){
+                            vida_util_residual += 1
+                        }
+                    }
                     this.titulo_primer_grafico = 'Vehiculos'
                     this.grafico(data_grafico.bueno, data_grafico.regular, data_grafico.malo, data_grafico.baja)
                     this.grafico_barra_1(data_grafico_barra.critico)
                     this.grafico_barra_2(data_grafico_barra.relevante)
+                    this.vida_util = vida_util_residual
                     this.data_tabla = response.data.datos
                 })
             }
@@ -299,7 +307,7 @@ createApp({
 
         data_inicial(){
             axios('http://127.0.0.1:8000/get_lebu_medico/')
-            
+
         },
 
         grafico(bueno, regular, malo, baja){
