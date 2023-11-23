@@ -182,7 +182,8 @@ main aside .titulo span{
     color: blue;
 }
 
-.opciones .contenedor-instituciones{
+.opciones .contenedor-instituciones,
+.opciones .contenedor-catastro{
     /* width: 70%; */
     display: flex;
     flex-direction: column;
@@ -191,7 +192,8 @@ main aside .titulo span{
     height: auto !important;
 }
 
-.opciones .contenedor-instituciones details{
+.opciones .contenedor-instituciones details,
+.opciones .contenedor-catastro details{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -199,7 +201,8 @@ main aside .titulo span{
     cursor: pointer;
 }
 
-.opciones .contenedor-instituciones details a{
+.opciones .contenedor-instituciones details a,
+.opciones .contenedor-catastro details a{
     height: auto;
     margin-top: 5px;
 }

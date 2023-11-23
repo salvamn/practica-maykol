@@ -39,4 +39,8 @@ urlpatterns = [
     # Vistas otras
     path('obtener_criticidad_medicos_lebu/', views.obtener_criticidad_medicos_lebu, name='obtener_criticidad_medicos_lebu'),
     
+    
+    # Vistas catastro
+    path('añadir_catastro_industrial/', views.añadir_catastro_industrial, name='añadir_catastro_industrial'),
+    
 ]

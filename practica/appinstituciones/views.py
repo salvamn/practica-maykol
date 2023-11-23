@@ -280,3 +280,34 @@ def obtener_criticidad_medicos_lebu(request):
             
     return JsonResponse(data)
     
+    
+    
+
+
+
+# Catastro
+
+
+@login_required
+def añadir_catastro_industrial(request):
+    if request.method == 'POST':
+        servicio_clinico = request.POST.get('servicio-clinico', None)
+        clase = request.POST.get('clase', None)
+        sub_clase = request.POST.get('sub-clase', None)
+        
+        nombre_equipo = request.POST.get('nombre-equipo', None)
+        marca = request.POST.get('marca', None)
+        modelo = request.POST.get('modelo', None)
+        
+        serie = request.POST.get('serie', None)
+        numero_inventario = request.POST.get('numero-inventario', None)
+        propiedad = request.POST.get('propiedad', None)
+        
+        anio_adquisicion = request.POST.get('anio-adquisicion', None)
+        vida_util = request.POST.get('vida-util', None)
+
+
+
+        
+    catastro_equipo_industrial = CatastroEquipoIndustriales.objects.values()
+    return render(request, 'admin/añadir_catastro_industrial.html', {'equipos_industriales': catastro_equipo_industrial})

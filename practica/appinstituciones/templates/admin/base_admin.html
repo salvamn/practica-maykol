@@ -76,6 +76,15 @@
           </details>
         </div>
 
+        <div class="contenedor-catastro">
+          <details>
+            <summary>Añadir Catastro</summary>
+            <a href="{% url 'añadir_catastro_industrial' %}">Equipo Industrial</a>
+            <a href="#">Equipo Medico</a>
+            <a href="#">Vehiculos</a>
+          </details>
+        </div>
+
         <div>
           <a href="#">
             <img src="{% static 'img/convenios.png' %}" alt="">
@@ -85,7 +94,7 @@
 
         <div>
           <a href="{% url 'lista_usuarios' %}">
-            <img src="{% static 'img/crear.png' %}" alt="">
+            <img src="{% static 'img/añadir_usuario.png' %}" alt="">
             Crear usuario
           </a>
         </div>
