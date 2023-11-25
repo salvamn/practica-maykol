@@ -1,55 +1,3 @@
-fetch('http://127.0.0.1:8000/obtener_data_equipos_medicos_lebu/')
-.then(response => response.json())
-.then(data => {
-    const domAnual = document.getElementById('grafico-anual')
-    var myChart = echarts.init(domAnual, null)
-    var option = {
-        tooltip: {
-            trigger: 'item'
-        },
-        legend: {
-            bottom: '2%',
-            left: 'center'
-        },
-        series: [
-            {
-                name: 'Estado General Total',
-                type: 'pie',
-                radius: ['20%', '70%'],
-                avoidLabelOverlap: false,
-                bottom: '15%',
-                label: {
-                    show: true,
-                    position: 'center'
-                },
-                emphasis: {
-                    label: {
-                        show: false,
-                        fontSize: 10,
-                        fontWeight: 'bold'
-                    }
-                },
-                labelLine: {
-                    show: false
-                },
-                data: [
-                    { value: data.bueno, name: 'Bueno' },
-                    { value: data.regular, name: 'Regular' },
-                    { value: data.malo, name: 'Malo' },
-                    { value: data.baja, name: 'Baja' }
-                ]
-            }
-        ]
-    };
-
-    myChart.setOption(option);
-
-    // Agrega la siguiente línea después de setOption para hacer que el gráfico se ajuste al contenedor
-    window.addEventListener('resize', function () {
-    myChart.resize();
-    });
-})
-
 fetch('http://127.0.0.1:8000/obtener_criticidad_medicos_lebu/')
 .then(response => response.json())
 .then(data => {
@@ -57,7 +5,7 @@ fetch('http://127.0.0.1:8000/obtener_criticidad_medicos_lebu/')
     const domContenedorRelevanteBarra = document.getElementById('grafico-barra-relevante-anual')
     var myChart = echarts.init(domContenedorMultiplesgraficos, null)
     var myChart2 = echarts.init(domContenedorRelevanteBarra, null)
-
+    // console.log((data));
     option = {
         grid: {
             left: '2%',
@@ -83,7 +31,7 @@ fetch('http://127.0.0.1:8000/obtener_criticidad_medicos_lebu/')
                 emphasis: {
                     focus: 'series'
                 },
-                data: [data.critico]
+                data: []
             },
 
         ],
@@ -133,7 +81,7 @@ fetch('http://127.0.0.1:8000/obtener_criticidad_medicos_lebu/')
                 emphasis: {
                     focus: 'series'
                 },
-                data: [data.relevante]
+                data: []
             },
 
         ],
@@ -159,13 +107,6 @@ fetch('http://127.0.0.1:8000/obtener_criticidad_medicos_lebu/')
 
 })
 
-fetch('http://127.0.0.1:8000/get_lebu_medico/')
-.then(response => response.json())
-.then(data => {
-    console.log(data);
-})
-
-
 
 const { createApp } = Vue
 createApp({
@@ -187,7 +128,7 @@ createApp({
     methods: {
         actualizarGraficoMedianteSelect(){
             if (this.opcionSelecionada === 'medico') {
-                axios.get('http://127.0.0.1:8000/get_lebu_medico/')
+                axios.get('http://127.0.0.1:8000/get_canete_medico/')
                 .then(response => {
                     data_grafico = { 'bueno': 0, 'regular': 0, 'malo': 0, 'baja': 0 }
                     data_grafico_barra = { 'critico': 0, 'relevante': 0 }
@@ -227,7 +168,7 @@ createApp({
                     // console.log(this.data_tabla[0].id);
                 })
             }else if(this.opcionSelecionada === 'industrial'){
-                axios.get('http://127.0.0.1:8000/get_lebu_industrial/')
+                axios.get('http://127.0.0.1:8000/get_canete_industrial/')
                 .then(response => {
                     data_grafico = { 'bueno': 0, 'regular': 0, 'malo': 0, 'baja': 0 }
                     data_grafico_barra = { 'critico': 0, 'relevante': 0 }
@@ -265,7 +206,7 @@ createApp({
                     this.data_tabla = response.data.datos
                 })
             }else if(this.opcionSelecionada === 'vehiculo'){
-                axios.get('http://127.0.0.1:8000/get_lebu_vehiculos/')
+                axios.get('http://127.0.0.1:8000/get_canete_vehiculos/')
                 .then(response => {
                     data_grafico = { 'bueno': 0, 'regular': 0, 'malo': 0, 'baja': 0 }
                     data_grafico_barra = { 'critico': 0, 'relevante': 0 }
@@ -306,7 +247,44 @@ createApp({
         },
 
         data_inicial(){
-            axios('http://127.0.0.1:8000/get_lebu_medico/')
+            axios('http://127.0.0.1:8000/get_canete_medico/')
+            .then(response => {
+                data_grafico = { 'bueno': 0, 'regular': 0, 'malo': 0, 'baja': 0 }
+                data_grafico_barra = { 'critico': 0, 'relevante': 0 }
+                vida_util_residual = 0
+                for(var elemento of response.data.datos){
+                    if(elemento.estado === 'BUENO'){
+                        data_grafico.bueno += 1
+                    }else if(elemento.estado === 'REGULAR'){
+                        data_grafico.regular += 1
+                    }else if(elemento.estado === 'MALO'){
+                        data_grafico.malo += 1
+                    }else if(elemento.estado === 'BAJA'){
+                        data_grafico.baja += 1
+                    }
+                }
+
+                for(var crt of response.data.datos){
+                    if(crt.criticidad == 'CRITICO'){
+                        data_grafico_barra.critico += 1
+                    }else if(crt.criticidad == 'RELEVANTE'){
+                        data_grafico_barra.relevante += 1
+                    }
+                }
+
+                for(var vu of response.data.datos){
+                    if(vu.vida_util < 0){
+                        vida_util_residual += 1
+                    }
+                }
+
+                this.titulo_primer_grafico = 'Equipos Medicos'
+                this.grafico(data_grafico.bueno, data_grafico.regular, data_grafico.malo, data_grafico.baja)
+                this.grafico_barra_1(data_grafico_barra.critico)
+                this.grafico_barra_2(data_grafico_barra.relevante)
+                this.vida_util = vida_util_residual
+                this.data_tabla = response.data.datos
+            })
 
         },
 
@@ -439,6 +417,11 @@ createApp({
 
 
 
+    },
+
+    mounted(){
+        // this.actualizarGraficoMedianteSelect()
+        this.data_inicial()
     }
 
 }).mount('#app')

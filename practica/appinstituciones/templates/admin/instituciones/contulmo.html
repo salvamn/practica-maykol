@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block titulo_pestania %}{{ institucion.nombre }}{% endblock titulo_pestania %}
+{% block titulo_pestania %}Contulmo{% endblock titulo_pestania %}
 
 {% block contenido_dinamico %}
 <link rel="stylesheet" href="{% static 'css/admin/instituciones.css' %}">
@@ -12,7 +12,7 @@
 
 <div id="app">
 	<div class="titulo">
-		<h2>{{ institucion.nombre }}</h2>
+		<h2>Contulmo</h2>
 		<div>
 			<p>Tipo de Equipo</p>
 			<select id="select-tipo-equipo" v-model="opcionSelecionada" @change="actualizarGraficoMedianteSelect">
@@ -82,7 +82,7 @@
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
-	<script src="{% static 'js/admin/instituciones.js' %}"></script>
+	<script src="{% static 'js/admin/instituciones/contulmo.js' %}"></script>
 
 </div>
 

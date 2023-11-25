@@ -65,15 +65,13 @@ def lista_usuarios(request):
 
 
 
-
+# Lebu id 1
 @login_required
 def instituciones_admin(request, institucion, tipo_equipo=None):
     """Esta vista renderiza una institucion, esta institucion recibe dos argumentos: el nombre y tipo de equipo a mostrar
     
     - El primer argumento osea el nombre de la institucion es obligatorio
     - El segundo argumento es opcional
-    
-    
     """
     
     global data_tipo_equipo
@@ -111,33 +109,75 @@ def instituciones_admin(request, institucion, tipo_equipo=None):
     select_tipo_equipo = ['medico', 'vehiculo', 'industrial']
     
     return render(request, 
-                'admin/instituciones.html', {
+                'admin/institucion_lebu.html', {
                 'institucion': data_institucion, 
                 'tipo_equipo': select_tipo_equipo
                 })
-    
-    
 def get_lebu_industrial(request):
-    datos = list(CatastroEquipoIndustriales.objects.values())
+    datos = list(CatastroEquipoIndustriales.objects.filter(id_institucion__isnull=True).values())
     return JsonResponse({'datos': datos})
-
 def get_lebu_medico(request):
-    datos = list(CatastroEquiposMedicos.objects.values())
+    datos = list(CatastroEquiposMedicos.objects.filter(id_institucion=1).values())
     return JsonResponse({'datos': datos})
-
 def get_lebu_vehiculos(request):
-    datos = list(CatastroAmbulancias.objects.values())
+    datos = list(CatastroAmbulancias.objects.filter(id_institucion=1).values())
     return JsonResponse({'datos': datos})
 
+# Arauco id 2
+@login_required
+def institucion_arauco(request):
+    return render(request, 'admin/instituciones/arauco.html')
+def get_arauco_industrial(request):
+    datos = list(CatastroEquipoIndustriales.objects.filter(id_institucion=2).values())
+    return JsonResponse({'datos': datos})
+def get_arauco_medico(request):
+    datos = list(CatastroEquiposMedicos.objects.filter(id_institucion=2).values())
+    return JsonResponse({'datos': datos})
+def get_arauco_vehiculos(request):
+    datos = list(CatastroAmbulancias.objects.filter(id_institucion=2).values())
+    return JsonResponse({'datos': datos})
 
+# Cañete id 4
+@login_required
+def institucion_canete(request):
+    return render(request, 'admin/instituciones/canete.html')
+def get_canete_industrial(request):
+    datos = list(CatastroEquipoIndustriales.objects.filter(id_institucion=4).values())
+    return JsonResponse({'datos': datos})
+def get_canete_medico(request):
+    datos = list(CatastroEquiposMedicos.objects.filter(id_institucion=4).values())
+    return JsonResponse({'datos': datos})
+def get_canete_vehiculos(request):
+    datos = list(CatastroAmbulancias.objects.filter(id_institucion=4).values())
+    return JsonResponse({'datos': datos})
 
+# Curanilahue id 3
+@login_required
+def institucion_curanilahue(request):
+    return render(request, 'admin/instituciones/curanilahue.html')
+def get_curanilahue_industrial(request):
+    datos = list(CatastroEquipoIndustriales.objects.filter(id_institucion=3).values())
+    return JsonResponse({'datos': datos})
+def get_curanilahue_medico(request):
+    datos = list(CatastroEquiposMedicos.objects.filter(id_institucion=3).values())
+    return JsonResponse({'datos': datos})
+def get_curanilahue_vehiculos(request):
+    datos = list(CatastroAmbulancias.objects.filter(id_institucion=3).values())
+    return JsonResponse({'datos': datos})
 
-
-
-
-
-
-
+# Contulmo id 5
+@login_required
+def institucion_contulmo(request):
+    return render(request, 'admin/instituciones/contulmo.html')  
+def get_contulmo_industrial(request):
+    datos = list(CatastroEquipoIndustriales.objects.filter(id_institucion=5).values())
+    return JsonResponse({'datos': datos})
+def get_contulmo_medico(request):
+    datos = list(CatastroEquiposMedicos.objects.filter(id_institucion=5).values())
+    return JsonResponse({'datos': datos})
+def get_contulmo_vehiculos(request):
+    datos = list(CatastroAmbulancias.objects.filter(id_institucion=5).values())
+    return JsonResponse({'datos': datos})    
 
 
 
