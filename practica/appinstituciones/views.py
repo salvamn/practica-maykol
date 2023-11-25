@@ -3,7 +3,8 @@ from .models import Institucion
 from django.contrib.auth.decorators import login_required
 from django.http.response import JsonResponse
 from django.core.paginator import Paginator
-
+from django.contrib import messages
+from django.shortcuts import redirect
 # from django.conf import settings
 
 from appcatastro.models import CatastroEquipoIndustriales
@@ -291,6 +292,8 @@ def obtener_criticidad_medicos_lebu(request):
 @login_required
 def añadir_catastro_industrial(request):
     if request.method == 'POST':
+        print(request.POST)
+        print('Hola')
         servicio_clinico = request.POST.get('servicio-clinico', None)
         clase = request.POST.get('clase', None)
         sub_clase = request.POST.get('sub-clase', None)
@@ -306,8 +309,28 @@ def añadir_catastro_industrial(request):
         anio_adquisicion = request.POST.get('anio-adquisicion', None)
         vida_util = request.POST.get('vida-util', None)
 
-
+        nuevo_equipo = CatastroEquipoIndustriales(
+            servicio_clinico=servicio_clinico,
+            recinto='',
+            clase=clase,
+            subclase=sub_clase,
+            nombre_equipo=nombre_equipo,
+            marca=marca,
+            modelo=modelo,
+            serie=serie,
+            numero_inventario=numero_inventario,
+            propio=propiedad,
+            anio_adquisicion=anio_adquisicion,
+            vida_util=vida_util
+        )
+        nuevo_equipo.save()
+        messages.success(request, 'Equipo agregado con exito')
+        return redirect('añadir_catastro_industrial')
+        
 
         
     catastro_equipo_industrial = CatastroEquipoIndustriales.objects.values()
     return render(request, 'admin/añadir_catastro_industrial.html', {'equipos_industriales': catastro_equipo_industrial})
+
+
+# def get_

@@ -16,36 +16,43 @@
 			<h2>Ingresar Equipo Industrial</h2>
 		</div>
 
-		<form action="" method="post">
+		<form action="" method="POST">
 			{% csrf_token %}
 			<div>
-				<input type="text" placeholder="Servicio Clínico" name="servicio-clinico">
-				<input type="text" placeholder="Clase" name="clase">
-				<input type="text" placeholder="SubClase" name="sub-clase">
+				<input type="text" required placeholder="Servicio Clínico" name="servicio-clinico">
+				<input type="text" required placeholder="Clase" name="clase">
+				<input type="text" required placeholder="SubClase" name="sub-clase">
 			</div>
 
 			<div>
-				<input type="text" placeholder="Nombre de equipo" name="nombre-equipo">
-				<input type="text" placeholder="Marca" name="marca">
-				<input type="text" placeholder="Modelo" name="modelo">
+				<input type="text" required placeholder="Nombre de equipo" name="nombre-equipo">
+				<input type="text" required placeholder="Marca" name="marca">
+				<input type="text" required placeholder="Modelo" name="modelo">
 			</div>
 
 			<div>
-				<input type="text" placeholder="Serie" name="serie">
-				<input type="text" placeholder="N° de inventario" name="numero-inventario">
+				<input type="text" required placeholder="Serie" name="serie">
+				<input type="text" required placeholder="N° de inventario" name="numero-inventario">
 				<!-- <input type="text" placeholder="Valor del Equipo" name="valor-equipo"> -->
-				<input type="text" placeholder="Propiedad" name="propiedad">
+				<input type="text" required placeholder="Propiedad" name="propiedad">
 			</div>
 
 			<div>
-				<input type="text" placeholder="Año de adquisición, ej: 2023" name="anio-adquisicion">
-				<input type="text" placeholder="Vida útil" name="vida-util">
+				<input type="text" required placeholder="Año de adquisición, ej: 2023" name="anio-adquisicion">
+				<input type="text" required placeholder="Vida útil" name="vida-util">
 				<!-- <input type="text" placeholder="Estado" name="estado"> -->
 				<!-- <input type="text" placeholder="Criticidad" name="criticidad"> -->
 			</div>
 
 			<div>
 				<input type="submit" value="Agregar">
+				{% if messages %}
+				<ul class="messages">
+					{% for message in messages %}
+					<li style="color: green;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
 			</div>
 
 
@@ -89,7 +96,7 @@
 						<!-- <td>${ data.propio }</td> -->
 						<td>${ data.vida_util }</td>
 						<!-- <td>${ data.anio_adquisicion }</td> -->
-						<td><button v-bind:id="data.id" @click="">Mas</button></td>
+						<td><button v-bind:id="data.id" @click="mostrarModal">Mas</button></td>
 					</tr>
 				</tbody>
 			</table>
