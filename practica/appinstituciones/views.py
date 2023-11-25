@@ -84,7 +84,8 @@ def instituciones_admin(request, institucion, tipo_equipo=None):
         tipo_equipo = request.GET['tipo_equipo']
         
         if tipo_equipo == 'medico':
-            estados_equipos_medicos = CatastroEquipoIndustriales.objects.values('estado')
+            # estados_equipos_medicos = CatastroEquipoIndustriales.objects.values('estado')
+            estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion=1).values('estado')
             data_grafico = {
                 'bueno': 0,
                 'regular': 0,
@@ -154,8 +155,10 @@ def get_lebu_vehiculos(request):
 # graficos libreria: https://echarts.apache.org/examples/en/index.html#chart-type-bar
 # Docs graficos: https://echarts.apache.org/en/option.html#grid.width
 
+# Lebu
 def obtener_grafico_institucion_lebu(request):
-    estados_equipos_medicos = CatastroEquipoIndustriales.objects.values('estado')
+    # estados_equipos_medicos = CatastroEquipoIndustriales.objects.values('estado')
+    estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion__isnull=True).values('estado')
     data_grafico = {
         'bueno': 0,
         'regular': 0,
@@ -176,9 +179,8 @@ def obtener_grafico_institucion_lebu(request):
     
     
     return JsonResponse(data_grafico)
-
 def obtener_data_equipos_medicos_lebu(request):
-    data_estado_equipos_medicos = CatastroEquiposMedicos.objects.values('estado')
+    data_estado_equipos_medicos = CatastroEquiposMedicos.objects.filter(id_institucion=1).values('estado')
     data = {
         'bueno': 0,
         'regular': 0,
@@ -197,10 +199,9 @@ def obtener_data_equipos_medicos_lebu(request):
             data['baja'] += 1
 
     return JsonResponse(data)
-
-
 def obtener_data_ambulancias_lebu(requets):
-    data_ambulancias = CatastroAmbulancias.objects.values('estado')
+    # data_ambulancias = CatastroAmbulancias.objects.values('estado')
+    data_ambulancias = CatastroAmbulancias.objects.filter(id_institucion=1).values('estado')
     data = {
         'bueno': 0,
         'regular': 0,
@@ -219,12 +220,10 @@ def obtener_data_ambulancias_lebu(requets):
             data['baja'] += 1
 
     return JsonResponse(data)
-
-
 def obtener_data_total_lebu(request):
-    data_ambulancias = CatastroAmbulancias.objects.values('estado')
-    data_estado_equipos_medicos = CatastroEquiposMedicos.objects.values('estado')
-    estados_equipos_medicos = CatastroEquipoIndustriales.objects.values('estado')
+    data_ambulancias = CatastroAmbulancias.objects.filter(id_institucion=1).values('estado')
+    data_estado_equipos_medicos = CatastroEquiposMedicos.objects.filter(id_institucion=1).values('estado')
+    estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion__isnull=True).values('estado')
 
     data = {
         'bueno': 0,
@@ -264,8 +263,6 @@ def obtener_data_total_lebu(request):
             data['baja'] += 1
             
     return JsonResponse(data)
-
-
 def obtener_criticidad_medicos_lebu(request):
     data_criticidad = CatastroEquiposMedicos.objects.values('criticidad') # CRITICO - RELEVANTE
     data = {
@@ -282,7 +279,224 @@ def obtener_criticidad_medicos_lebu(request):
     return JsonResponse(data)
     
     
+#  Arauco
+def obtener_data_total_institucion_arauco(requets):
+    data_ambulancias = CatastroAmbulancias.objects.filter(id_institucion=2).values('estado')
+    data_estado_equipos_medicos = CatastroEquiposMedicos.objects.filter(id_institucion=2).values('estado')
+    estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion=2).values('estado')
+
+    data = {
+        'bueno': 0,
+        'regular': 0,
+        'malo': 0,
+        'baja': 0
+    }
     
+    for e in data_ambulancias:
+        if e['estado'] == 'BUENO':
+            data['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data['baja'] += 1
+    
+    for e in data_estado_equipos_medicos:
+        if e['estado'] == 'BUENO':
+            data['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data['baja'] += 1
+            
+    for e in estados_equipos_medicos: # Bueno - Regular - Malo - Baja
+        if e['estado'] == 'BUENO':
+            data['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data['baja'] += 1
+            
+    return JsonResponse(data)
+def obtener_data_equipos_medicos_arauco(request):
+    data_estado_equipos_medicos = CatastroEquiposMedicos.objects.filter(id_institucion=2).values('estado')
+    data = {
+        'bueno': 0,
+        'regular': 0,
+        'malo': 0,
+        'baja': 0
+    }
+
+    for e in data_estado_equipos_medicos:
+        if e['estado'] == 'BUENO':
+            data['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data['baja'] += 1
+
+    return JsonResponse(data)
+def obtener_data_equipos_industriales_arauco(request):
+    estados_equipos_industriales = CatastroEquipoIndustriales.objects.filter(id_institucion=2).values('estado')
+    data_grafico = {
+        'bueno': 0,
+        'regular': 0,
+        'malo': 0,
+        'baja': 0
+    }
+    
+    for e in estados_equipos_industriales: # Bueno - Regular - Malo - Baja
+        if e['estado'] == 'BUENO':
+            data_grafico['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data_grafico['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data_grafico['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data_grafico['baja'] += 1
+
+    return JsonResponse(data_grafico)
+def obtener_data_vehiculos_arauco(request):
+    data_ambulancias = CatastroAmbulancias.objects.filter(id_institucion=2).values('estado')
+    data = {
+        'bueno': 0,
+        'regular': 0,
+        'malo': 0,
+        'baja': 0
+    }
+
+    for e in data_ambulancias:
+        if e['estado'] == 'BUENO':
+            data['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data['baja'] += 1
+
+    return JsonResponse(data)
+
+
+# Cañete
+def obtener_data_total_institucion_canete(request):
+    data_ambulancias = CatastroAmbulancias.objects.filter(id_institucion=4).values('estado')
+    data_estado_equipos_medicos = CatastroEquiposMedicos.objects.filter(id_institucion=4).values('estado')
+    estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion=4).values('estado')
+
+    data = {
+        'bueno': 0,
+        'regular': 0,
+        'malo': 0,
+        'baja': 0
+    }
+    
+    for e in data_ambulancias:
+        if e['estado'] == 'BUENO':
+            data['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data['baja'] += 1
+    
+    for e in data_estado_equipos_medicos:
+        if e['estado'] == 'BUENO':
+            data['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data['baja'] += 1
+            
+    for e in estados_equipos_medicos: # Bueno - Regular - Malo - Baja
+        if e['estado'] == 'BUENO':
+            data['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data['baja'] += 1
+            
+    return JsonResponse(data)    
+def obtener_data_equipos_medicos_canete(request):
+    data_estado_equipos_medicos = CatastroEquiposMedicos.objects.filter(id_institucion=4).values('estado')
+    data = {
+        'bueno': 0,
+        'regular': 0,
+        'malo': 0,
+        'baja': 0
+    }
+
+    for e in data_estado_equipos_medicos:
+        if e['estado'] == 'BUENO':
+            data['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data['baja'] += 1
+
+    return JsonResponse(data)
+def obtener_data_equipos_industriales(request):
+    estados_equipos_industriales = CatastroEquipoIndustriales.objects.filter(id_institucion=4).values('estado')
+    data_grafico = {
+        'bueno': 0,
+        'regular': 0,
+        'malo': 0,
+        'baja': 0
+    }
+    
+    for e in estados_equipos_industriales: # Bueno - Regular - Malo - Baja
+        if e['estado'] == 'BUENO':
+            data_grafico['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data_grafico['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data_grafico['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data_grafico['baja'] += 1
+
+    return JsonResponse(data_grafico)
+def obtener_data_vehiculos_canete(request):
+    data_ambulancias = CatastroAmbulancias.objects.filter(id_institucion=4).values('estado')
+    data = {
+        'bueno': 0,
+        'regular': 0,
+        'malo': 0,
+        'baja': 0
+    }
+
+    for e in data_ambulancias:
+        if e['estado'] == 'BUENO':
+            data['bueno'] += 1 
+        elif e['estado'] == 'REGULAR':
+            data['regular'] += 1
+        elif e['estado'] == 'MALO':
+            data['malo'] += 1
+        elif e['estado'] == 'BAJA':
+            data['baja'] += 1
+
+    return JsonResponse(data)    
+
+
+
+
+
+
+
+
 
 
 
@@ -292,8 +506,7 @@ def obtener_criticidad_medicos_lebu(request):
 @login_required
 def añadir_catastro_industrial(request):
     if request.method == 'POST':
-        print(request.POST)
-        print('Hola')
+        # print(request.POST)
         servicio_clinico = request.POST.get('servicio-clinico', None)
         clase = request.POST.get('clase', None)
         sub_clase = request.POST.get('sub-clase', None)
@@ -311,7 +524,6 @@ def añadir_catastro_industrial(request):
 
         nuevo_equipo = CatastroEquipoIndustriales(
             servicio_clinico=servicio_clinico,
-            recinto='',
             clase=clase,
             subclase=sub_clase,
             nombre_equipo=nombre_equipo,
@@ -321,7 +533,15 @@ def añadir_catastro_industrial(request):
             numero_inventario=numero_inventario,
             propio=propiedad,
             anio_adquisicion=anio_adquisicion,
-            vida_util=vida_util
+            vida_util=vida_util,
+            
+            # campos no utiles de momento
+            vida_util_residual=0,
+            recinto='',
+            estado='',
+            garantia='',
+            anio_vencimiento_garantia=0,
+            bajo_plan_mantenimiento=''
         )
         nuevo_equipo.save()
         messages.success(request, 'Equipo agregado con exito')
@@ -333,4 +553,10 @@ def añadir_catastro_industrial(request):
     return render(request, 'admin/añadir_catastro_industrial.html', {'equipos_industriales': catastro_equipo_industrial})
 
 
-# def get_
+@login_required
+def anadir_catastro_vehiculos(request):
+
+
+
+
+    return render(request, 'admin/añadir_catastro_vehiculos.html')

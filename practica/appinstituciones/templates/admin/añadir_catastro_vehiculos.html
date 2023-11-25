@@ -1,0 +1,122 @@
+{% extends "admin/base_admin.html" %}
+{% load static %}
+
+
+{% block titulo_pestania %}Añadir Catastro Vehiculos{% endblock titulo_pestania %}
+
+{% block contenido_dinamico %}
+<link rel="stylesheet" href="{% static 'css/admin/catastro_industrial.css' %}">
+<link rel="stylesheet" href="{% static 'css/ventanaModal.css' %}">
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<div id="app">
+
+	<div id="contenedor-formulario">
+		<div class="titulo-">
+			<h2>Ingresar Vehiculo</h2>
+		</div>
+
+		<form action="" method="POST">
+			{% csrf_token %}
+			<div>
+				<input type="text" required placeholder="Servicio Clínico" name="servicio-clinico">
+				<input type="text" required placeholder="Clase" name="clase">
+				<input type="text" required placeholder="SubClase" name="sub-clase">
+			</div>
+
+			<div>
+				<input type="text" required placeholder="Nombre de equipo" name="nombre-equipo">
+				<input type="text" required placeholder="Marca" name="marca">
+				<input type="text" required placeholder="Modelo" name="modelo">
+			</div>
+
+			<div>
+				<input type="text" required placeholder="Serie" name="serie">
+				<input type="text" required placeholder="N° de inventario" name="numero-inventario">
+				<!-- <input type="text" placeholder="Valor del Equipo" name="valor-equipo"> -->
+				<input type="text" required placeholder="Propiedad" name="propiedad">
+			</div>
+
+			<div>
+				<input type="text" required placeholder="Año de adquisición, ej: 2023" name="anio-adquisicion">
+				<input type="text" required placeholder="Vida útil" name="vida-util">
+				<!-- <input type="text" placeholder="Estado" name="estado"> -->
+				<!-- <input type="text" placeholder="Criticidad" name="criticidad"> -->
+			</div>
+
+			<div>
+				<input type="submit" value="Agregar">
+				{% if messages %}
+				<ul class="messages">
+					{% for message in messages %}
+					<li style="color: green;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+
+
+
+
+
+		</form>
+	</div>
+
+	<div id="contenedor-tabla">
+		<div class="tabla">
+			<table id="tabla">
+				<thead>
+					<tr>
+						<!-- <th>ID</th> -->
+						<!-- <th>Servicio Clinico</th> -->
+						<th>Clase</th>
+						<!-- <th>SubClase</th> -->
+						<!-- <th>Marca</th> -->
+						<th>Modelo</th>
+						<!-- <th>Serie</th> -->
+						<th>Nombre Equipo</th>
+						<th>N° Inventario</th>
+						<!-- <th>Propiedad</th> -->
+						<th>Vida Útil</th>
+						<!-- <th>Año Adquisición</th> -->
+						<th>Información</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="data in data_tabla" :key="data.id">
+						<!-- <td>${ data.id }</td> -->
+						<!-- <td>${ data.servicio_clinico }</td> -->
+						<td>${ data.clase }</td>
+						<!-- <td>${ data.subclase }</td> -->
+						<!-- <td>${ data.marca }</td> -->
+						<td>${ data.modelo }</td>
+						<!-- <td>${ data.serie }</td> -->
+						<td>${ data.nombre_equipo }</td>
+						<td>${ data.numero_inventario }</td>
+						<!-- <td>${ data.propio }</td> -->
+						<td>${ data.vida_util }</td>
+						<!-- <td>${ data.anio_adquisicion }</td> -->
+						<td><button v-bind:id="data.id" @click="mostrarModal">Mas</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+
+
+</div>
+
+<!-- <script src="{% static 'js/admin/catastro_industrial.js' %}"></script> -->
+
+
+
+
+
+
+
+
+
+{% endblock contenido_dinamico %}

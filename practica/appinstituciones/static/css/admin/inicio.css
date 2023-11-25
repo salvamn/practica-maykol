@@ -50,7 +50,9 @@ main section .tarjetas .tarjeta p{
     color: #646464;
 }
 
-main section .tarjetas .tarjeta #grafico-lebu{
+main section .tarjetas .tarjeta #grafico-lebu,
+main section .tarjetas .tarjeta #grafico-arauco,
+main section .tarjetas .tarjeta #grafico-canete{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,7 +77,13 @@ main section .tarjetas .tarjeta #contenedor-multiples-graficos{
 
 main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico1,
 main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico2,
-main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico3{
+main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico3,
+main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico1-arauco,
+main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico2-arauco,
+main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico3-arauco,
+main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico1-canete,
+main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico2-canete,
+main section .tarjetas .tarjeta #contenedor-multiples-graficos #grafico3-canete{
     display: flex;
     justify-content: center;
     align-items: center;
