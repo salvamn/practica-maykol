@@ -86,4 +86,5 @@ urlpatterns = [
     
     # Usuarios
     path('obtener_usuario/<int:usuario_id>/', views.obtener_usuario, name='obtener_usuario'),
+    path('eliminar_usuario/<int:usuario_id>/', views.eliminar_usuario, name='eliminar_usuario'),
 ]

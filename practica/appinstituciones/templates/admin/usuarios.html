@@ -20,11 +20,13 @@
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
   crossorigin="anonymous">
 </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/js/iziModal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/css/iziModal.min.css">
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 
 
 <div id="app">
@@ -62,7 +64,14 @@
                         <td>{{ usuario.rut }}</td>
                         <td>{{ usuario.email }}</td>
                         <td>{{ usuario.cargo }}</td>
-                        <td><button @click="abrirModalInformacionUsuario" id="{{ usuario.id }}" class="trigger">Mas</button></td>
+                        <td>
+                            <button @click="abrirModalInformacionUsuario" id="{{ usuario.id }}" class="trigger">Mas</button>
+                            {% if request.user.rut == usuario.rut %}
+                            
+                            {% else %}
+                            <button id="{{ usuario.id }}" class="eliminar-usuario" @click="btnEliminarUsuario">Eliminar</button>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -200,7 +209,7 @@
         <hr>
         
         <div class="contenedor-form-editar-informacion-usuario">
-            <form action="" method="post">
+            <form>
                 {% csrf_token %}
                 <div>
                     <h3>Editar Información</h3>
@@ -231,7 +240,6 @@
 
                 <div>
                     <button class="editar-usuario">Editar</button>
-                    <button class="eliminar-usuario">Eliminar</button>
                 </div>
             </form>
         </div>

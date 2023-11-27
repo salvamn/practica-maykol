@@ -31,6 +31,8 @@ def inicio_admin(request):
 @login_required
 def lista_usuarios(request):
     # lista_usuarios = CustomUser.objects.filter(cargo='usuario').all()
+    # usuario_actual = request.user
+    # lista_usuarios = CustomUser.objects.exclude(id=usuario_actual.id)
     lista_usuarios = CustomUser.objects.all()
     lista_instituciones = Institucion.objects.all()
     
@@ -538,10 +540,12 @@ def obtener_data_vehiculos_canete(request):
 # Usuarios
 def obtener_usuario(request, usuario_id):
     usuario = CustomUser.objects.filter(id=usuario_id).values(
+        'id',
         'first_name', 'last_name', 'username',
         'email', 'rut', 'cargo', 'institucion_id'   
     )
     usuario_serializado = {
+        'id': usuario[0]['id'],
         'first_name': usuario[0]['first_name'],
         'last_name': usuario[0]['last_name'], 
         'username': usuario[0]['username'],
@@ -551,6 +555,15 @@ def obtener_usuario(request, usuario_id):
         'institucion_id': usuario[0]['institucion_id'] 
     }    
     return JsonResponse(usuario_serializado)
+
+def eliminar_usuario(request, usuario_id):
+    try:
+        usuario_a_eliminar = CustomUser.objects.get(id=usuario_id)
+        usuario_a_eliminar.delete()
+
+        return JsonResponse({'data': usuario_a_eliminar})
+    except CustomUser.DoesNotExist:
+        return JsonResponse({'message': 'Usuario no encontrado'}, status=404)
     
     
 
