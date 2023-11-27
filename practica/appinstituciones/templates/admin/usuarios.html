@@ -13,13 +13,16 @@
 <script src="{% static 'js/toastr.js' %}"></script> -->
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <!-- https://cdnjs.com/libraries/izimodal -->
-<script
+<!-- <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
   crossorigin="anonymous">
-</script>
+</script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/js/iziModal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/css/iziModal.min.css">
@@ -56,7 +59,7 @@
     
                 <tbody>
                     {% for usuario in usuarios %}
-                    <tr>
+                    <tr id="fila-{{ usuario.id }}">
                         <!-- <td>{{ usuario.id }}</td> -->
                         <td>{{ usuario.username }}</td>
                         <td>{{ usuario.first_name }}</td>
@@ -246,6 +249,17 @@
     </div>
     
     
+
+
+    <!-- Dialogo Jquery -->
+    <div id="dialog-confirm" title="Empty the recycle bin?">
+        <p id="texto-dialogo-js-ui" style="display: none;">
+            <span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
+            Deseas eliminar al usuario, despues no podras revertirlo?
+        </p>
+    </div>
+    <!-- Dialogo Jquery -->
+
     
     
 </div>
@@ -284,8 +298,8 @@
                 gravity: "bottom", // `top` or `bottom`
                 position: "right", // `left`, `center` or `right`
                 stopOnFocus: true, // Prevents dismissing of toast on hover
-                backgroundColor: "red", // Color de fondo para un mensaje de error
-                className: "error-toast", // Clase CSS para mensajes de error
+                backgroundColor: "#327859", // Color de fondo para un mensaje de error
+                className: "success", // Clase CSS para mensajes de error
                 onClick: function(){} // Callback after click
               }).showToast();
         </script>

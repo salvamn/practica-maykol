@@ -561,7 +561,7 @@ def eliminar_usuario(request, usuario_id):
         usuario_a_eliminar = CustomUser.objects.get(id=usuario_id)
         usuario_a_eliminar.delete()
 
-        return JsonResponse({'data': usuario_a_eliminar})
+        return JsonResponse({'data': 'usuario eliminado'})
     except CustomUser.DoesNotExist:
         return JsonResponse({'message': 'Usuario no encontrado'}, status=404)
     

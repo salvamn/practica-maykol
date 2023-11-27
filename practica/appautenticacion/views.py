@@ -47,6 +47,7 @@ def recuperar_contrasenia(request):
 
 
 def crear_usuario(request):
+    # Generador de rut: https://jqueryrut.sourceforge.net/generador-de-ruts-chilenos-validos.html
     if request.method == 'POST':
         print(request.POST)
         nombre_usuario = request.POST['nombre-usuario']
