@@ -535,7 +535,24 @@ def obtener_data_vehiculos_canete(request):
 
 
 
-
+# Usuarios
+def obtener_usuario(request, usuario_id):
+    usuario = CustomUser.objects.filter(id=usuario_id).values(
+        'first_name', 'last_name', 'username',
+        'email', 'rut', 'cargo', 'institucion_id'   
+    )
+    usuario_serializado = {
+        'first_name': usuario[0]['first_name'],
+        'last_name': usuario[0]['last_name'], 
+        'username': usuario[0]['username'],
+        'email': usuario[0]['email'], 
+        'rut': usuario[0]['rut'], 
+        'cargo': usuario[0]['cargo'], 
+        'institucion_id': usuario[0]['institucion_id'] 
+    }    
+    return JsonResponse(usuario_serializado)
+    
+    
 
 
 

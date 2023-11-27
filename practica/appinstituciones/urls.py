@@ -82,4 +82,8 @@ urlpatterns = [
     # Vistas catastro
     path('añadir_catastro_industrial/', views.añadir_catastro_industrial, name='añadir_catastro_industrial'),
     path('anadir_catastro_vehiculos/', views.anadir_catastro_vehiculos, name='anadir_catastro_vehiculos'),
+    
+    
+    # Usuarios
+    path('obtener_usuario/<int:usuario_id>/', views.obtener_usuario, name='obtener_usuario'),
 ]
