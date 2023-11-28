@@ -56,6 +56,7 @@ createApp({
 
 					$('#modal-opciones-usuario').iziModal()
 					$('#modal-opciones-usuario').iziModal('open');
+					$('#modal-opciones-usuario .id-usuario').val(this.usuario.id);
 					$('#modal-opciones-usuario .contenedor-informacion-usuario .spanEnModalNombre').text(this.usuario.nombre);
 					$('#modal-opciones-usuario .contenedor-informacion-usuario .spanEnModalApellido').text(this.usuario.apellido);
 					$('#modal-opciones-usuario .contenedor-informacion-usuario .spanEnModalCorreo').text(this.usuario.correo);
@@ -111,6 +112,13 @@ createApp({
 			});
 		},
 
+		EditarUsuario(id){
+
+		},
+
+
+
+		//  Modal
 		abrirModalInformacionUsuario(event) {
 			const idUsuario = event.target.id
 			this.obtenerUsuario(idUsuario)

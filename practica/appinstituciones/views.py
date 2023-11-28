@@ -565,6 +565,38 @@ def eliminar_usuario(request, usuario_id):
     except CustomUser.DoesNotExist:
         return JsonResponse({'message': 'Usuario no encontrado'}, status=404)
     
+def editar_usuario(request):
+    if request.method == 'POST':
+        id_usuario = request.POST.get('id-usuario')
+        usuario = CustomUser.objects.get(id=id_usuario)
+        
+        nuevo_nombre = request.POST.get('nuevo-nombre', None)
+        nuevo_apellido = request.POST.get('nuevo-apellido', None)
+        nuevo_nombre_usuario = request.POST.get('nuevo-nombre-usuario', None)
+        nuevo_correo = request.POST.get('nuevo-correo', None)
+        nuevo_rut = request.POST.get('nuevo-rut', None)
+        nueva_institucion = request.POST.get('institucion', None)
+        nuevo_cargo = request.POST.get('cargo', None)
+        
+        if nuevo_nombre is not None and nuevo_nombre != '':
+            usuario.first_name = nuevo_nombre
+        if nuevo_apellido is not None and nuevo_apellido != '':
+            usuario.last_name = nuevo_apellido
+        if nuevo_nombre_usuario is not None and nuevo_nombre_usuario != '':
+            usuario.username = nuevo_nombre_usuario
+        if nuevo_correo is not None and nuevo_correo != '':
+            usuario.email = nuevo_correo
+        if nuevo_rut is not None and nuevo_rut != '':
+            usuario.rut = nuevo_rut
+        if nueva_institucion is not None and nueva_institucion != '':
+            usuario.institucion_id = nueva_institucion
+        if nuevo_cargo is not None and nuevo_cargo != '':
+            usuario.cargo = nuevo_cargo
+
+        usuario.save()
+
+        return redirect('lista_usuarios')
+    
     
 
 
