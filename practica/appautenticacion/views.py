@@ -59,6 +59,12 @@ def crear_usuario(request):
         cargo = request.POST['cargo']
         institucion_id = request.POST['institucion']
         
+        personas_con_rut = CustomUser.objects.filter(rut=rut)
+
+        if personas_con_rut.exists():
+            messages.error(request, 'El rut ya existe en nuestra base de datos')
+            return redirect('lista_usuarios')
+        
         validar_rut = verificar_rut(rut)
         if validar_rut == False:
             messages.error(request, 'El rut ingresado es invalido.')

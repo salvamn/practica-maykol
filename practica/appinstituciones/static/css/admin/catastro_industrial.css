@@ -71,7 +71,8 @@ main section .titulo h2{
     margin-bottom: 10px;
 }
 
-#contenedor-formulario form div input{
+#contenedor-formulario form div input,
+#contenedor-formulario form div select{
     width: 30%;
     padding: 7px;
     margin-bottom: 7px;
