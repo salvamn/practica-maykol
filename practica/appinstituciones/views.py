@@ -36,7 +36,7 @@ def lista_usuarios(request):
     lista_usuarios = CustomUser.objects.all()
     lista_instituciones = Institucion.objects.all()
     
-    paginator = Paginator(lista_usuarios, 12)
+    paginator = Paginator(lista_usuarios, 8)
     page = request.GET.get('page')
     
     try:
@@ -623,6 +623,8 @@ def añadir_catastro_industrial(request):
         
         anio_adquisicion = request.POST.get('anio-adquisicion', None)
         vida_util = request.POST.get('vida-util', None)
+        
+        institucion = request.POST.get('institucion', None)
 
         nuevo_equipo = CatastroEquipoIndustriales(
             servicio_clinico=servicio_clinico,
@@ -636,6 +638,7 @@ def añadir_catastro_industrial(request):
             propio=propiedad,
             anio_adquisicion=anio_adquisicion,
             vida_util=vida_util,
+            id_institucion=int(institucion),
             
             # campos no utiles de momento
             vida_util_residual=0,
