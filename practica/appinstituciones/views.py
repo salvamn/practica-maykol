@@ -266,6 +266,7 @@ def obtener_data_total_lebu(request):
     data_ambulancias = CatastroAmbulancias.objects.filter(id_institucion=1).values('estado')
     data_estado_equipos_medicos = CatastroEquiposMedicos.objects.filter(id_institucion=1).values('estado')
     estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion__isnull=True).values('estado')
+    # estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion=1).values('estado')
 
     data = {
         'bueno': 0,
@@ -510,7 +511,7 @@ def obtener_data_equipos_industriales(request):
         elif e['estado'] == 'BAJA':
             data_grafico['baja'] += 1
 
-    return JsonResponse(data_grafico)
+    return JsonResponse(dict(data_grafico))
 def obtener_data_vehiculos_canete(request):
     data_ambulancias = CatastroAmbulancias.objects.filter(id_institucion=4).values('estado')
     data = {
@@ -532,7 +533,10 @@ def obtener_data_vehiculos_canete(request):
 
     return JsonResponse(data)    
 
-
+# Get data catastro ganeral
+def obtener_data_catastro_vehiculos_general(request):
+    data = CatastroAmbulancias.objects.values()
+    return JsonResponse(list(data), safe=False)
 
 
 
@@ -577,6 +581,9 @@ def editar_usuario(request):
         nuevo_rut = request.POST.get('nuevo-rut', None)
         nueva_institucion = request.POST.get('institucion', None)
         nuevo_cargo = request.POST.get('cargo', None)
+        
+        #TODO Verficiar que el rut ingresado no exista y no sea de otro usuario.
+        #TODO Verificar que el correo electronico no exista o no corresponda a otro usuario
         
         if nuevo_nombre is not None and nuevo_nombre != '':
             usuario.first_name = nuevo_nombre
@@ -660,8 +667,59 @@ def añadir_catastro_industrial(request):
 
 @login_required
 def anadir_catastro_vehiculos(request):
+    if request.method == 'POST':
+        carroceria = request.POST.get('carroceria', None)
+        clase = request.POST.get('clase', None)
+        samu = request.POST.get('samu', None)
+        funcion = request.POST.get('funcion', None)
+        marca = request.POST.get('marca', None)
+        modelo = request.POST.get('modelo', None)
+        kilometraje = request.POST.get('kilometraje', None)
+        criticidad = request.POST.get('criticidad', None)
+        propiedad = request.POST.get('propiedad', None)
+        patente = request.POST.get('patente', None)
+        numero_motor = request.POST.get('numero-motor', None)
+        id_institucion = request.POST.get('institucion', None)        
+        estado = request.POST.get('estado', None)
+        
+        print(request.POST)
+        
+        nuevo_vehiculo = CatastroAmbulancias(
+            carroceria=carroceria,
+            clase=clase,
+            samu=samu,
+            funcion=funcion,
+            marca=marca,
+            modelo=modelo,
+            kilometraje=kilometraje,
+            criticidad=criticidad,
+            propietario=propiedad,
+            patente=patente,
+            numero_motor=numero_motor,
+            estado=estado,
+            id_institucion=id_institucion,
+            
+            # Datos no importantes de momento
+            ubicacion='',
+            sub_ubicacion='',
+            anio=2023,
+            vida_util=0,
+            vencimiento_garantia='',
+            plan_mantencion=0,
+            tipo_equipo='',
+            id_convenio=0,
+            eliminado=0,
+            garantia=0
+        )
+        nuevo_vehiculo.save()
+        messages.success(request, 'Vehiculo agregado con exito')
+        return redirect('anadir_catastro_vehiculos')
 
 
+    catastro_equipo_vehiculos = CatastroAmbulancias.objects.values()
+    return render(request, 'admin/añadir_catastro_vehiculos.html', {'data': catastro_equipo_vehiculos})
 
-
-    return render(request, 'admin/añadir_catastro_vehiculos.html')
+def anadir_catastro_medicos(request):
+    
+    catastro_equipo_medico = CatastroEquiposMedicos.objects.values()
+    return render(request, 'admin/añadir_catastro_medicos.html', {'data': catastro_equipo_medico})
