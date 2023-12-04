@@ -113,6 +113,10 @@ createApp({
 		},
 
 		EditarUsuario(id){
+		},
+		crearUsuario(){
+			
+
 
 		},
 

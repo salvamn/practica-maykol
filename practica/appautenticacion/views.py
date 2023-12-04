@@ -60,6 +60,11 @@ def crear_usuario(request):
         institucion_id = request.POST['institucion']
         
         personas_con_rut = CustomUser.objects.filter(rut=rut)
+        
+         # Verificar si ya existe un usuario con el mismo nombre de usuario
+        if CustomUser.objects.filter(username=nombre_usuario).exists():
+            messages.error(request, 'El nombre de usuario ya existe')
+            return redirect('lista_usuarios')
 
         if personas_con_rut.exists():
             messages.error(request, 'El rut ya existe en nuestra base de datos')
@@ -72,7 +77,8 @@ def crear_usuario(request):
         
 
         
-        usuario = CustomUser.objects.create(
+        try:
+            usuario = CustomUser.objects.create(
             username=nombre_usuario,
             first_name=nombre,
             last_name=apellido,
@@ -81,9 +87,11 @@ def crear_usuario(request):
             cargo=cargo,
             password=contrasenia,
             institucion_id=institucion_id
-        )
-        usuario.set_password(contrasenia)
-        usuario.save()
+            )
+            usuario.set_password(contrasenia)
+            usuario.save()
+        except Exception as e:
+            print(e)
         
         
         

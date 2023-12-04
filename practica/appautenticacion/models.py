@@ -5,7 +5,7 @@ from appinstituciones.models import Institucion
 
 class CustomUser(AbstractUser):
     # Agregar campos personalizados
-    rut = models.CharField(max_length=13, blank=True)
+    rut = models.CharField(max_length=12, blank=True)
     cargo = models.CharField(max_length=100, blank=True)
     
     institucion = models.ForeignKey(Institucion, on_delete=models.CASCADE, default=1)
