@@ -169,3 +169,18 @@ main section .titulo h2{
 #contenedor-tabla .tabla table tbody tr td button:active{
     transform: scale(0.95);
 }
+
+
+
+
+
+
+
+/* Clases */
+#contenedor-formulario.usuario {
+    display: none;
+}
+
+#contenedor-tabla.usuario {
+    height: 90%;
+}

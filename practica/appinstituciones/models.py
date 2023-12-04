@@ -17,7 +17,7 @@ class Convenios(models.Model):
     orden_compra = models.CharField(max_length=150, default='')
     fecha_resolucion = models.CharField(max_length=100, blank=True)
     fecha_expiracion = models.CharField(max_length=100, blank=True)
-    monto_anual = models.IntegerField()
+    monto_anual = models.BigIntegerField()
     subsignacion_sigfe = models.CharField(max_length=200, blank=True)
     tipo = models.CharField(max_length=100, blank=True) # Medico, Industrial, Vehiculo
     id_institucion = models.IntegerField(default=0)

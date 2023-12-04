@@ -615,7 +615,7 @@ def editar_usuario(request):
 
 
 @login_required
-def añadir_catastro_industrial(request):
+def anadir_catastro_industrial(request):
     if request.method == 'POST':
         # print(request.POST)
         servicio_clinico = request.POST.get('servicio-clinico', None)
@@ -720,7 +720,7 @@ def anadir_catastro_vehiculos(request):
 
     catastro_equipo_vehiculos = CatastroAmbulancias.objects.values()
     return render(request, 'admin/añadir_catastro_vehiculos.html', {'data': catastro_equipo_vehiculos})
-
+@login_required
 def anadir_catastro_medicos(request):
     
     catastro_equipo_medico = CatastroEquiposMedicos.objects.values()
@@ -730,7 +730,7 @@ def anadir_catastro_medicos(request):
 
 
 # Convenios
-
+@login_required
 def convenios(request):
     if request.method == 'POST':
         servicio_salud = request.POST.get('servicio-salud', None)

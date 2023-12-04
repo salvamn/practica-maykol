@@ -6,32 +6,19 @@ createApp({
             data_tabla: null
         }
     },
-
-
-
-
     methods: {
         obtenerDataCatastroIndustrial(){
-            axios.get('http://127.0.0.1:8000/get_lebu_industrial/')
+            axios.get("http://127.0.0.1:8000/get_lebu_industrial/")
             .then(response => {
                 this.data_tabla = response.data.datos
                 // console.log(response.data);
             })
         },
-
         mostrarModal(event){
-            var idBtn = event.target.id
-            
+            var idBtn = event.target.id   
         }
-
-
-
     },
-
-
     mounted() {
         this.obtenerDataCatastroIndustrial()
     }
-
-
-}).mount('#app')
+}).mount("#app")

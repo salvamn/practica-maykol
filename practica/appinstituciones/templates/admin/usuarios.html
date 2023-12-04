@@ -35,7 +35,9 @@
 <div id="app">
     <div class="titulo">
         <h2>Lista de Usuarios</h2>
-        <button id="btn-crear-usuario">crear usuario</button>
+        {% if request.user.cargo == 'administrador' %}
+            <button id="btn-crear-usuario">crear usuario</button>
+        {% endif %}
     </div>
     
     <div class="contenedor-tabla-usuarios">
@@ -68,11 +70,13 @@
                         <td>{{ usuario.email }}</td>
                         <td>{{ usuario.cargo }}</td>
                         <td>
-                            <button @click="abrirModalInformacionUsuario" id="{{ usuario.id }}" class="trigger">Mas</button>
-                            {% if request.user.rut == usuario.rut %}
-                            
-                            {% else %}
-                            <button id="{{ usuario.id }}" class="eliminar-usuario" @click="btnEliminarUsuario">Eliminar</button>
+                            {% if request.user.cargo == 'administrador' %}
+                                <button @click="abrirModalInformacionUsuario" id="{{ usuario.id }}" class="trigger">Mas</button>
+                                {% if request.user.rut == usuario.rut %}
+                                
+                                {% else %}
+                                <button id="{{ usuario.id }}" class="eliminar-usuario" @click="btnEliminarUsuario">Eliminar</button>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>

@@ -80,7 +80,7 @@ urlpatterns = [
     
     
     # Vistas catastro
-    path('añadir_catastro_industrial/', views.añadir_catastro_industrial, name='añadir_catastro_industrial'),
+    path('anadir_catastro_industrial/', views.anadir_catastro_industrial, name='anadir_catastro_industrial'),
     path('anadir_catastro_vehiculos/', views.anadir_catastro_vehiculos, name='anadir_catastro_vehiculos'),
     path('anadir_catastro_medicos/', views.anadir_catastro_medicos, name='anadir_catastro_medicos'),
     path('obtener_data_catastro_vehiculos_general/', views.obtener_data_catastro_vehiculos_general, name='obtener_data_catastro_vehiculos_general'),

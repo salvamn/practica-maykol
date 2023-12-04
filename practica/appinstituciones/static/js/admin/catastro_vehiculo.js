@@ -12,7 +12,7 @@ createApp({
 
     methods: {
         obtenerDataCatastroIndustrial(){
-            axios.get('http://127.0.0.1:8000/obtener_data_catastro_vehiculos_general/')
+            axios.get("http://127.0.0.1:8000/obtener_data_catastro_vehiculos_general/")
             .then(response => {
                 this.data_tabla = response.data
                 console.log(response.data)
@@ -34,4 +34,4 @@ createApp({
     }
 
 
-}).mount('#app')
+}).mount("#app")
