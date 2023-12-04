@@ -723,3 +723,11 @@ def anadir_catastro_medicos(request):
     
     catastro_equipo_medico = CatastroEquiposMedicos.objects.values()
     return render(request, 'admin/añadir_catastro_medicos.html', {'data': catastro_equipo_medico})
+
+
+
+
+# Convenios
+
+def convenios(request):
+    return render(request, 'admin/convenios.html')

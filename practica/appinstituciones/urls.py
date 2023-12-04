@@ -86,6 +86,8 @@ urlpatterns = [
     path('obtener_data_catastro_vehiculos_general/', views.obtener_data_catastro_vehiculos_general, name='obtener_data_catastro_vehiculos_general'),
     
     
+    # Convenios
+    path('convenios/', views.convenios, name='convenios'),
     
     
     # Usuarios
