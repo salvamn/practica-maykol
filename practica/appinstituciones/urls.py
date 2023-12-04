@@ -88,6 +88,8 @@ urlpatterns = [
     
     # Convenios
     path('convenios/', views.convenios, name='convenios'),
+    path('obtener_convenios_general/', views.obtener_convenios_general, name='obtener_convenios_general'),
+    
     
     
     # Usuarios

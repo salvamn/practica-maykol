@@ -5,6 +5,7 @@ from django.http.response import JsonResponse
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.core.serializers import serialize
 # from django.conf import settings
 
 from appcatastro.models import CatastroEquipoIndustriales
@@ -13,6 +14,7 @@ from appcatastro.models import CatastroAmbulancias
 from appautenticacion.models import CustomUser
 from appinstituciones.models import Institucion
 from .models import Institucion
+from .models import Convenios
 
 # Create your views here.
 
@@ -730,4 +732,38 @@ def anadir_catastro_medicos(request):
 # Convenios
 
 def convenios(request):
-    return render(request, 'admin/convenios.html')
+    if request.method == 'POST':
+        servicio_salud = request.POST.get('servicio-salud', None)
+        nombre_convenio = request.POST.get('nombre-convenio', None)
+        fecha_resolucion = request.POST.get('fecha-resolucion', None)
+        monto_anual = request.POST.get('monto-anual', None)
+        subsignacion_sigfe = request.POST.get('subsignacion-sigfe', None)
+        establecimiento = request.POST.get('establecimiento', None)
+        fecha_expiracion = request.POST.get('fecha-expiracion', None)
+        orden_compra = request.POST.get('orden-compra', None)
+        tipo = request.POST.get('tipo', None)
+        institucion_id = request.POST.get('institucion', None)
+
+        nuevo_convenio = Convenios(
+            servicio_salud=servicio_salud,
+            nombre_convenio=nombre_convenio,
+            fecha_resolucion=fecha_resolucion,
+            fecha_expiracion=fecha_expiracion,
+            monto_anual=monto_anual,
+            subsignacion_sigfe=subsignacion_sigfe,
+            establecimiento=establecimiento,
+            orden_compra=orden_compra,
+            id_institucion=institucion_id,
+            tipo=tipo
+        )
+        nuevo_convenio.save()
+        messages.success(request, 'Convenio agregado con exito.')
+        return redirect('convenios')
+        
+    lista_intituciones = Institucion.objects.all()
+    return render(request, 'admin/convenios.html', {'instituciones': lista_intituciones})
+def obtener_convenios_general(request):
+    convenios = Convenios.objects.all()
+    convenios_serializados = serialize('json', convenios)
+
+    return JsonResponse({'data': convenios_serializados}, safe=False)
