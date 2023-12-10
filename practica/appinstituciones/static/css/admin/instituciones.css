@@ -1,3 +1,8 @@
+main{
+    display: inline-flex !important;
+    flex-direction: row !important;
+}
+
 main section{
     justify-content: space-around;
 }
@@ -133,31 +138,29 @@ main section .titulo h2{
 
 .contenedor-tabla .tabla{
     width: 100%;
-    height: 95%;
+    height: 100%;
+    overflow: auto;
 }
 
 .contenedor-tabla .tabla table{
-    display: flex;
-    flex-direction: column;
-    justify-content:flex-start;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    /* overflow: auto; */
-    overflow-x: hidden;
+    /* display: flex;
+    flex-direction: column; */
+    /* justify-content:flex-start; */
+    /* align-items: center; */
+    width: 100%; 
+    height: 100% !important;
+    /* overflow: auto !important; */
+    /* overflow-x: hidden; */
 
 }
 
 .contenedor-tabla .tabla table thead{
     width: 100%;
-    /* padding: 7px; */
-    /* background-color: #787878; */
-    border: 1px solid #33333337;
     border-radius: 7px;
-    padding-top: 7px;
-    padding-bottom: 7px;
 }
 
+
+/* 
 .contenedor-tabla .tabla table thead tr,
 .contenedor-tabla .tabla table tbody tr{
     display: inline-flex;
@@ -171,18 +174,13 @@ main section .titulo h2{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* padding: 7px; */
     width: 7%;
-    /* color: white; */
 
 }
 
 .contenedor-tabla .tabla table tbody{
     width: 100%;
-    /* padding: 7px; */
-    /* background-color: #787878; */
-    /* border: 1px solid #33333337; */
-    /* border-radius: 7px; */
+
 }
 
 .contenedor-tabla .tabla table tbody tr{
@@ -193,7 +191,7 @@ main section .titulo h2{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* padding: 7px; */
+    padding: 7px;
     width: 7%;
     flex-wrap: unset;
-}
+} */

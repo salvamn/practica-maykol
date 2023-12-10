@@ -6,6 +6,7 @@
 
 {% block contenido_dinamico %}
 <link rel="stylesheet" href="{% static 'css/admin/instituciones.css' %}">
+<link rel="stylesheet" href="{% static 'Semantic-UI-master/dist/semantic.min.css' %}">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- <script src="https://cdn.tailwindcss.com"></script> -->
@@ -54,7 +55,7 @@
 
 	<div class="contenedor-tabla">
 		<div class="tabla">
-			<table id="tabla">
+			<!-- <table  class="ui celled table">
 				<thead>
 					<tr>
 						<th>ID</th>
@@ -77,7 +78,105 @@
 						<td>${ data.criticidad }</td>
 					</tr>
 				</tbody>
-			</table>
+			</table> -->
+						<!-- Tabla Semantic UI -->
+						<table class="ui celled table">
+							<thead>
+								<tr>
+									<th v-for="columna in data_columnas_tabla" :key="columna">${ columna }</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-if="opcionSelecionada === 'medico'" v-for="data in data_tabla" :key="data.id">
+									<td>${ data.id }</td>
+									<td>${ data.clase }</td>
+									<td>${ data.nombre }</td>
+									<td>${ data.marca }</td>
+									<td>${ data.modelo }</td>
+									<td>${ data.serie }</td>
+									<td>${ data.anio }</td>
+									<td>${ data.vida_util }</td>
+									<td>${ data.estado }</td>
+									<td>${ data.criticidad }</td>
+									<td>${ data.garantia }</td>
+									<td>${ data.vencimiento_garantia }</td>
+									<td>${ data.plan_mantencion }</td>
+									<td>${ data.tipo_equipo }</td>
+									<td>${ data.id_convenio }</td>
+									<td>${ data.id_institucion }</td>
+									<td>${ data.eliminado }</td>
+									<td>${ data.anio_ingreso }</td>
+									<td>${ data.costo_anual }</td>
+									<td>${ data.nombre_proveedor }</td>
+									<td>${ data.numero_inventario }</td>
+									<td>${ data.recinto }</td>
+									<td>${ data.servicio_clinico }</td>
+									<td>${ data.subclase }</td>
+									<td>${ data.tipo_mantenimiento }</td>
+									<td>${ data.vida_util_residual }</td>
+								</tr>
+								<tr v-else-if="opcionSelecionada === 'vehiculo'" v-for="data in data_tabla" :key="data.id">
+									<td>${ data.id }</td>
+									<td>${ data.samu }</td>
+									<td>${ data.funcion }</td>
+									<td>${ data.marca }</td>
+									<td>${ data.modelo }</td>
+									<td>${ data.patente }</td>
+									<td>${ data.numero_motor }</td>
+									<td>${ data.kilometraje }</td>
+									<td>${ data.estado }</td>
+									<td>${ data.anio }</td>
+									<td>${ data.vida_util }</td>
+									<td>${ data.criticidad }</td>
+									<td>${ data.garantia }</td>
+									<td>${ data.vencimiento_garantia }</td>
+									<td>${ data.plan_mantencion }</td>
+									<td>${ data.tipo_equipo }</td>
+									<td>${ data.id_institucion }</td>
+									<td>${ data.eliminado }</td>
+									<td>${ data.anio_ingreso_plan_mentenimiento }</td>
+									<td>${ data.clase_ambulancia }</td>
+									<td>${ data.costo_anual_mantenimiento }</td>
+									<td>${ data.establecimiento }</td>
+									<td>${ data.estado_situacion }</td>
+									<td>${ data.id_convenio_mantenimiento }</td>
+									<td>${ data.nombre_proveedor }</td>
+									<td>${ data.region }</td>
+									<td>${ data.tipo_ambulancia }</td>
+									<td>${ data.tipo_carroceria }</td>
+									<td>${ data.tipo_mantenimiento }</td>
+									<td>${ data.vida_util_residual }</td>
+								</tr>
+								<tr v-else-if="opcionSelecionada === 'industrial'" v-for="data in data_tabla" :key="data.id">
+									<td>${ data.id }</td>
+									<td>${ data.clase }</td>
+									<td>${ data.nombre }</td>
+									<td>${ data.marca }</td>
+									<td>${ data.modelo }</td>
+									<td>${ data.serie }</td>
+									<td>${ data.anio }</td>
+									<td>${ data.vida_util }</td>
+									<td>${ data.estado }</td>
+									<td>${ data.criticidad }</td>
+									<td>${ data.garantia }</td>
+									<td>${ data.vencimiento_garantia }</td>
+									<td>${ data.plan_mantencion }</td>
+									<td>${ data.tipo_equipo }</td>
+									<td>${ data.id_convenio }</td>
+									<td>${ data.id_institucion }</td>
+									<td>${ data.eliminado }</td>
+									<td>${ data.anio_ingreso_plan_mantenimiento }</td>
+									<td>${ data.costo_anual_mantenimiento }</td>
+									<td>${ data.nombre_proveedor }</td>
+									<td>${ data.numero_inventario }</td>
+									<td>${ data.recinto }</td>
+									<td>${ data.servicio_clinico }</td>
+									<td>${ data.subclase }</td>
+									<td>${ data.tipo_mantenimiento }</td>
+									<td>${ data.vida_util_residual }</td>
+								</tr>
+							</tbody>
+						</table>
 		</div>
 	</div>
 

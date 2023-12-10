@@ -117,6 +117,7 @@ createApp({
             vida_util: 0,
             opcionSelecionada: 'medico',
             data_tabla: null,
+            data_columnas_tabla: null,
             select_lista_instituciones: [
                 { valor: 'medico', texto: 'Medico' },
                 { valor: 'industrial', texto: 'Industrial' },
@@ -158,7 +159,12 @@ createApp({
                             vida_util_residual += 1
                         }
                     }
-
+                    this.data_columnas_tabla = [
+                        'ID', 'Clase', 'Nombre', 'Marca', 'Modelo', 'Serie', 'Anio', 'Vida Util', 'Estado', 'Criticidad', 'Garantia',
+                        'Vencimiento Garantia', 'Plan Mantención', 'Tipo Equipo', 'ID Convenio', 'ID Institución', 'Eliminado', 'Año Ingreso',
+                        'Costo Anual', 'Nombre Proveedor', 'Numero Inventario', 'Recinto', 'Servicio Clinico', 'Subclase', 'Tipo Mantenimiento',
+                        'Vida Util Residual'
+                    ]
                     this.titulo_primer_grafico = 'Equipos Medicos'
                     this.grafico(data_grafico.bueno, data_grafico.regular, data_grafico.malo, data_grafico.baja)
                     this.grafico_barra_1(data_grafico_barra.critico)
@@ -198,6 +204,12 @@ createApp({
                             vida_util_residual += 1
                         }
                     }
+                    this.data_columnas_tabla = [
+                        'ID', 'Clase', 'Nombre', 'Marca', 'Modelo', 'Serie', 'Anio', 'Vida Util', 'Estado', 'Criticidad', 'Garantia',
+                        'Vencimiento Garantia', 'Plan Mantención', 'Tipo Equipo', 'ID Convenio', 'ID Institución', 'Eliminado', 'Año Ingreso',
+                        'Costo Anual', 'Nombre Proveedor', 'Numero Inventario', 'Recinto', 'Servicio Clinico', 'Subclase', 'Tipo Mantenimiento',
+                        'Vida Util Residual'
+                    ]
                     this.titulo_primer_grafico = 'Equipos Industriales'
                     this.grafico(data_grafico.bueno, data_grafico.regular, data_grafico.malo, data_grafico.baja)
                     this.grafico_barra_1(data_grafico_barra.critico)
@@ -236,6 +248,13 @@ createApp({
                             vida_util_residual += 1
                         }
                     }
+                    this.data_columnas_tabla = [
+                        'ID', 'Samu', 'Funcion', 'Marca', 'Modelo', 'Patente', 'Numero Motor', 'Kilometraje', 'Estado', 'Año',
+                        'Vida Util', 'Criticidad', 'Garantia', 'Vencimiento Garantia', 'Plan Mantención', 'Tipo Equipo', 'ID Institución',
+                        'Eliminado', 'Año Ingreso Plan Mantenimiento', 'Clase Ambulancia', 'Costo Anual Mantenimiento', 'Establecimiento',
+                        'Estado Situacion', 'ID Convenio Mantenimiento', 'Nombre Proveedor', 'Region', 'Tipo Ambulancia', 'Tipo Carroceria',
+                        'Tipo Mantenimiento', 'Vida Util Residual'
+                    ]
                     this.titulo_primer_grafico = 'Vehiculos'
                     this.grafico(data_grafico.bueno, data_grafico.regular, data_grafico.malo, data_grafico.baja)
                     this.grafico_barra_1(data_grafico_barra.critico)
@@ -277,7 +296,12 @@ createApp({
                         vida_util_residual += 1
                     }
                 }
-
+                this.data_columnas_tabla = [
+                    'ID', 'Clase', 'Nombre', 'Marca', 'Modelo', 'Serie', 'Anio', 'Vida Util', 'Estado', 'Criticidad', 'Garantia',
+                    'Vencimiento Garantia', 'Plan Mantención', 'Tipo Equipo', 'ID Convenio', 'ID Institución', 'Eliminado', 'Año Ingreso',
+                    'Costo Anual', 'Nombre Proveedor', 'Numero Inventario', 'Recinto', 'Servicio Clinico', 'Subclase', 'Tipo Mantenimiento',
+                    'Vida Util Residual'
+                ]
                 this.titulo_primer_grafico = 'Equipos Medicos'
                 this.grafico(data_grafico.bueno, data_grafico.regular, data_grafico.malo, data_grafico.baja)
                 this.grafico_barra_1(data_grafico_barra.critico)

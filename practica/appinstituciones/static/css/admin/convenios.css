@@ -92,6 +92,7 @@ main section .titulo h2{
     border: 1px solid #33333348;
     margin-right: 7px;
     margin-left: 7px;
+    font-size: small;
 }
 
 #contenedor-formulario form div input[type=submit]{

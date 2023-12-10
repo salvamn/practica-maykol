@@ -16,6 +16,8 @@ from appinstituciones.models import Institucion
 from .models import Institucion
 from .models import Convenios
 
+# https://semantic-ui.com/collections/table.html
+
 # Create your views here.
 
 @login_required
@@ -118,7 +120,7 @@ def instituciones_admin(request, institucion, tipo_equipo=None):
                 'tipo_equipo': select_tipo_equipo
                 })
 def get_lebu_industrial(request):
-    datos = list(CatastroEquipoIndustriales.objects.filter(id_institucion__isnull=True).values())
+    datos = list(CatastroEquipoIndustriales.objects.filter(id_institucion=1).values())
     return JsonResponse({'datos': datos})
 def get_lebu_medico(request):
     datos = list(CatastroEquiposMedicos.objects.filter(id_institucion=1).values())
@@ -202,7 +204,7 @@ def get_contulmo_vehiculos(request):
 # Lebu
 def obtener_grafico_institucion_lebu(request):
     # estados_equipos_medicos = CatastroEquipoIndustriales.objects.values('estado')
-    estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion__isnull=True).values('estado')
+    estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion=1).values('estado')
     data_grafico = {
         'bueno': 0,
         'regular': 0,
@@ -267,7 +269,7 @@ def obtener_data_ambulancias_lebu(requets):
 def obtener_data_total_lebu(request):
     data_ambulancias = CatastroAmbulancias.objects.filter(id_institucion=1).values('estado')
     data_estado_equipos_medicos = CatastroEquiposMedicos.objects.filter(id_institucion=1).values('estado')
-    estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion__isnull=True).values('estado')
+    estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion=1).values('estado')
     # estados_equipos_medicos = CatastroEquipoIndustriales.objects.filter(id_institucion=1).values('estado')
 
     data = {
