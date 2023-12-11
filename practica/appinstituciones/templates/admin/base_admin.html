@@ -69,14 +69,28 @@
         <div class="contenedor-instituciones">
           <details>
             <summary>Instituciones</summary>
+            {% if request.user.cargo == 'administrador' %}
             <a href="{% url 'instituciones_admin' institucion='Lebu' tipo_equipo='medico' %}">Lebu</a>
             <a href="{% url 'institucion_arauco' %}">Arauco</a>
             <a href="{% url 'institucion_curanilahue' %}">Curanilahue</a>
             <a href="{% url 'institucion_canete' %}">Cañete</a>
             <a href="{% url 'institucion_contulmo' %}">Contulmo</a>
+            
+            {% elif request.user.cargo == 'usuario' and request.user.institucion_id == 1 %}
+            <a href="{% url 'instituciones_admin' institucion='Lebu' tipo_equipo='medico' %}">Lebu</a>
+            {% elif request.user.cargo == 'usuario' and request.user.institucion_id == 2 %}
+            <a href="{% url 'institucion_arauco' %}">Arauco</a>
+            {% elif request.user.cargo == 'usuario' and request.user.institucion_id == 3 %}
+            <a href="{% url 'institucion_curanilahue' %}">Curanilahue</a>
+            {% elif request.user.cargo == 'usuario' and request.user.institucion_id == 4 %}
+            <a href="{% url 'institucion_canete' %}">Cañete</a>
+            {% elif request.user.cargo == 'usuario' and request.user.institucion_id == 5 %}
+            <a href="{% url 'institucion_contulmo' %}">Contulmo</a>
+            {% endif %}
           </details>
         </div>
 
+        {% if request.user.cargo == 'administrador' %}
         <div class="contenedor-catastro">
           <details>
             <summary>Añadir Catastro</summary>
@@ -85,6 +99,7 @@
             <a href="{% url 'anadir_catastro_medicos' %}">Equipo Medico</a>
           </details>
         </div>
+        {% endif %}
 
         <div>
           <a href="{% url 'convenios' %}">

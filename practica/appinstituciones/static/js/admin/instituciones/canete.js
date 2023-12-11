@@ -217,6 +217,8 @@ createApp({
                     this.grafico_barra_2(data_grafico_barra.relevante)
                     this.vida_util = vida_util_residual
                     this.data_tabla = response.data.datos
+                    // console.log(response.data.datos[0].estado);
+                    console.log();
                 })
             }else if(this.opcionSelecionada === 'vehiculo'){
                 axios.get('http://127.0.0.1:8000/get_canete_vehiculos/')
@@ -237,7 +239,7 @@ createApp({
                     }
 
                     for(var crt of response.data.datos){
-                        if(crt.criticidad == 'CRITICO'){
+                        if(crt.criticidad == 'CRITICO' || crt.criticidad === 'CRÍTICO'){
                             data_grafico_barra.critico += 1
                         }else if(crt.criticidad == 'RELEVANTE'){
                             data_grafico_barra.relevante += 1
