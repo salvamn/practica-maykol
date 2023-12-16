@@ -90,7 +90,7 @@
                         <script>
                             const toast = new Toasts({
                                 offsetX: 20, // 20px
-                                offsetY: 100, // 20px
+                                offsetY: 20, // 20px
                                 gap: 20, // The gap size in pixels between toasts
                                 width: 300, // 300px
                                 timing: 'ease', // See list of available CSS transition timings
@@ -99,12 +99,11 @@
                                 position: 'top-center' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
                             });
                             toast.push({
-                                title: 'error',
+                                // title: '', 
                                 content: `{{ mensaje }}`,
-                                style: 'error'
+                                style: `{{ mensaje.level_tag }}`
                             })
                         </script>
-                    <!-- <li style="color: red;" {% if mensaje.tags %} class="{{ mensaje.tags }}"{% endif %}>{{ mensaje }}</li> -->
                     {% endfor %}
                 </ul>
                 {% endif %}

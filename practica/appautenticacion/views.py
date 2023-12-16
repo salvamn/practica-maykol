@@ -152,7 +152,7 @@ def enviar_correo(rut):
 
     # Obtenemos el template y renderizamos con el contexto
     context = {'usuario': usuario_actual, 'reset_url': reset_url}
-    template = get_template('reset_password/prueba.html')
+    template = get_template('reset_password/template_correo.html')
     content = template.render(context)
     
     correo = EmailMultiAlternatives(
@@ -186,6 +186,7 @@ def restablecer_contrasenia(request, uidb64, token):
                     user.set_password(nueva_contrasenia)   
                     user.save()
                     messages.success(request, 'Contraseña cambiada con exito')
+                    return redirect('iniciar_sesion')
                 else:
                     messages.error(request, 'Las contraseñas no coinciden')
                 

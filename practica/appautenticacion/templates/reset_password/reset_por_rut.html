@@ -2,47 +2,112 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'css/toast.css' %}">
-    <script src="{% static 'js/toast.js' %}"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="{% static 'css/toast.css' %}">
+	<script src="{% static 'js/toast.js' %}"></script>
+	<link rel="stylesheet" href="{% static 'Semantic-UI-master/dist/semantic.min.css' %}">
 
 </head>
+
 <body>
-    
-    
-    <!-- Colocar el rut y automaticamente te envio un correo -->
-    <form action="" method="post">
-        {% csrf_token %}
-        <label for="rut">Coloca tu rut</label>
-        <input type="text" name="rut" required placeholder="12.345.678-9">
-        <input type="submit" value="Enviar">
-    
-    
-        <!-- Condicional del mensaje, es decir: te enviamos un correo -->
-        {% if messages %}
-        {% for mensaje in messages %}
-        <script>
-            const toast = new Toasts({
-                offsetX: 20, // 20px
-                offsetY: 20, // 20px
-                gap: 20, // The gap size in pixels between toasts
-                width: 300, // 300px
-                timing: 'ease', // See list of available CSS transition timings
-                duration: '.5s', // Transition duration
-                dimOld: true, // Dim old notifications while the newest notification stays highlighted
-                position: 'top-right' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
-            });
-            toast.push({
-                title: 'Mensaje',
-                content: `{{ mensaje }}`,
-                style: 'success'
-            })
-        </script>
-        {% endfor %}
-        {% endif %}
-    </form>
+
+	<style>
+		body {
+			background-image: url('https://ssarauco.cl/WWW/wp-content/uploads/2022/03/cropped-BANNER-Minsal.png');
+			background-size: cover;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+
+		form{
+			display: flex;
+			flex-direction: column;
+			padding: 20px;
+			background-color: white;
+			border-radius: 7px;
+			box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+		}
+
+		form label, form input, form a{
+			margin-top: 5px;
+		}
+
+		form input{
+			padding: 7px;
+			border-radius: 7px;
+			border: 1px solid #33333337;
+			cursor: pointer;
+		}
+
+		form input[type=submit]{
+			background-color: #4285f4;
+			color: white;
+		}
+
+
+		a {
+			color: #4285f4;
+			text-decoration: none;
+			font-size: 16px;
+		}
+
+		p {
+			display: none;
+		}
+
+		span{
+			margin-top: 10px;
+			color: gray;
+		}
+	</style>
+
+
+	<!-- Colocar el rut y automaticamente te envio un correo -->
+	<form action="" method="post">
+		{% csrf_token %}
+		<label for="rut">Tu rut</label>
+		<input type="text" name="rut" required placeholder="12.345.678-9">
+		<input type="submit" value="Enviar">
+
+		<span>al presionar el boton te llegara un correo al mail asociado a dicho rut.</span>
+
+		<a href="{% url 'iniciar_sesion' %}">inciar sesión</a>
+
+
+		<!-- Condicional del mensaje, es decir: te enviamos un correo -->
+		{% if messages %}
+		{% for mensaje in messages %}
+		<script>
+			const toast = new Toasts({
+				offsetX: 20, // 20px
+				offsetY: 20, // 20px
+				gap: 20, // The gap size in pixels between toasts
+				width: 300, // 300px
+				timing: 'ease', // See list of available CSS transition timings
+				duration: '.5s', // Transition duration
+				dimOld: true, // Dim old notifications while the newest notification stays highlighted
+				position: 'top-right' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+			});
+			toast.push({
+				title: 'Mensaje',
+				content: `{{ mensaje }}`,
+				style: 'success'
+			})
+		</script>
+		{% endfor %}
+		{% endif %}
+	</form>
 </body>
+
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
+<script src="{% static 'Semantic-UI-master/dist/semantic.min.js' %}"></script>

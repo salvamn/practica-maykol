@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Restablecer Contraseña</title>
+	<link rel="stylesheet" href="{% static 'css/toast.css' %}">
+	<script src="{% static 'js/toast.js' %}"></script>
+	<link rel="stylesheet" href="{% static 'Semantic-UI-master/dist/semantic.min.css' %}">
+</head>
+
+
+<body>
+
+	<style>
+		body {
+			background-image: url('https://ssarauco.cl/WWW/wp-content/uploads/2022/03/cropped-BANNER-Minsal.png');
+			background-size: cover;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			padding: 20px;
+			background-color: white;
+			border-radius: 7px;
+			box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+		}
+
+		form label,
+		form input,
+		form a {
+			margin-top: 5px;
+		}
+
+		form input {
+			padding: 7px;
+			border-radius: 7px;
+			border: 1px solid #33333337;
+			cursor: pointer;
+		}
+
+		form input[type=submit] {
+			background-color: #4285f4;
+			color: white;
+		}
+
+
+		a {
+			color: #4285f4;
+			text-decoration: none;
+			font-size: 16px;
+		}
+
+		p {
+			display: none;
+		}
+
+		span {
+			margin-top: 10px;
+			color: gray;
+		}
+	</style>
+
+
+	<p>Hola <span style="font-weight: bold;">{{ usuario.first_name }} {{ usuario.last_name }}</span></p>
+	<p>Recibiste este correo porque solicitaste restablecer la contraseña de tu cuenta en nuestro sitio.</p>
+	<p>Por favor, haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+	<a href="{{ reset_url }}">cambiar contraseña</a>
+	<p>Si no solicitaste este restablecimiento de contraseña, ignora este correo.</p>
+	<p>Atentamente,<br>El equipo de nuestro sitio</p>
+</body>
+
+</html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
+<script src="{% static 'Semantic-UI-master/dist/semantic.min.js' %}"></script>
