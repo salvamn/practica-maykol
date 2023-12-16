@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/toast.css' %}">
+    <script src="{% static 'js/toast.js' %}"></script>
+
+</head>
+<body>
+    
+    
+    <!-- Colocar el rut y automaticamente te envio un correo -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="rut">Coloca tu rut</label>
+        <input type="text" name="rut" required placeholder="12.345.678-9">
+        <input type="submit" value="Enviar">
+    
+    
+        <!-- Condicional del mensaje, es decir: te enviamos un correo -->
+        {% if messages %}
+        {% for mensaje in messages %}
+        <script>
+            const toast = new Toasts({
+                offsetX: 20, // 20px
+                offsetY: 20, // 20px
+                gap: 20, // The gap size in pixels between toasts
+                width: 300, // 300px
+                timing: 'ease', // See list of available CSS transition timings
+                duration: '.5s', // Transition duration
+                dimOld: true, // Dim old notifications while the newest notification stays highlighted
+                position: 'top-right' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+            });
+            toast.push({
+                title: 'Mensaje',
+                content: `{{ mensaje }}`,
+                style: 'success'
+            })
+        </script>
+        {% endfor %}
+        {% endif %}
+    </form>
+</body>
+</html>

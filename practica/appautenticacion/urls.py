@@ -17,13 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-
+from django.contrib.auth import views as auth_views
 from . import views
 
 
 urlpatterns = [
     path('', views.iniciar_sesion, name='iniciar_sesion'),
-    path('recuperar_contrasenia', views.recuperar_contrasenia, name='recuperar_contrasenia'),
     path('cerrar_sesion', views.cerrar_sesion, name='cerrar_sesion'),
     path('crear_usuario', views.crear_usuario, name='crear_usuario'),
+    path('recuperar_contrasenia', views.recuperar_contrasenia, name='recuperar_contrasenia'),
+    # path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/<uidb64>/<token>/', views.restablecer_contrasenia, name='restablecer_contrasenia'),
+
 ]

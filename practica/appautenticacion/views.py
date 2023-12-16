@@ -1,10 +1,18 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.template.loader import get_template
+from django.conf import settings
+from django.urls import reverse
 
 
 from .models import CustomUser
-
+from django.shortcuts import get_object_or_404
+from django.core.mail import EmailMultiAlternatives
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
 
 from itertools import cycle
 import sys
@@ -39,11 +47,6 @@ def cerrar_sesion(request):
     if request.user != None:
         logout(request)
         return redirect('/')
-
-
-def recuperar_contrasenia(request):
-    pass
-
 
 
 def crear_usuario(request):
@@ -120,5 +123,91 @@ def verificar_rut(rut):
 		return True
 	else:
 		return False
+
+
+
+
+
+
+# Vistas para recuperar la contraseña
+def enviar_correo(rut):
+    # Obtenemos el usario por su rut
+    # https://youtu.be/WDxHPd1aIVE problemas con correo
+    # usuario_actual = get_object_or_404(CustomUser, rut=rut)
+    usuario_actual = CustomUser.objects.get(rut=rut)
+    correo_destinatario = usuario_actual.email
+    print(correo_destinatario)
+    
+    # Generar el token para restablecer la contraseña
+    token = default_token_generator.make_token(usuario_actual)
+    # Crear la URL de restablecimiento de contraseña
+    uidb64 = urlsafe_base64_encode(force_bytes(usuario_actual.pk))
+    reset_url = f"http://127.0.0.1:8000/reset/{uidb64}/{token}/"
+    # reset_url = reverse('restablecer_contrasenia', kwargs={'uidb64': uidb64, 'token': token})
+
+
+    print(reset_url)
+
+    
+
+    # Obtenemos el template y renderizamos con el contexto
+    context = {'usuario': usuario_actual, 'reset_url': reset_url}
+    template = get_template('reset_password/prueba.html')
+    content = template.render(context)
+    
+    correo = EmailMultiAlternatives(
+        'Restaurar tu contraseña - Servicio de Salud Lebu',
+        'Servicio de Salud',
+        settings.EMAIL_HOST_USER,
+        [correo_destinatario]
+        # ['salvador0796@gmail.com']
+    )
+    correo.attach_alternative(content, 'text/html')
+    correo.send()
+    
+def restablecer_contrasenia(request, uidb64, token):
+    try:
+        # Decodificar el uidb64 y obtener el usuario
+        # user_id = force_text(urlsafe_base64_decode(uidb64))
+        user_id = str(urlsafe_base64_decode(uidb64), 'utf-8')
+        user = CustomUser.objects.get(pk=user_id)
+
+        # Verificar que el token sea válido
+        if default_token_generator.check_token(user, token):
+            # Si el token es válido, permitir al usuario restablecer la contraseña
+            # Aquí puedes redirigir a un formulario de restablecimiento de contraseña personalizado
+            # o procesar el restablecimiento directamente en esta vista.
+            
+            if request.method == 'POST':
+                nueva_contrasenia = request.POST.get('nueva-contrasenia', None)
+                nueva_contrasenia_repetida = request.POST.get('nueva-contrasenia-repetida', None)
+                
+                if nueva_contrasenia == nueva_contrasenia_repetida:
+                    user.set_password(nueva_contrasenia)   
+                    user.save()
+                    messages.success(request, 'Contraseña cambiada con exito')
+                else:
+                    messages.error(request, 'Las contraseñas no coinciden')
+                
+
+            # Ejemplo: redirigir a una vista de formulario de restablecimiento de contraseña
+            return render(request, 'reset_password/nuevo_password.html', {'uidb64': uidb64, 'token': token})
+        else:
+            messages.error(request, 'El enlace de restablecimiento de contraseña es inválido.')
+            return HttpResponse('El enlace de restablecimiento de contraseña es inválido.')
+    except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+        messages.error(request, 'El enlace de restablecimiento de contraseña es inválido.')
+        return HttpResponse('El enlace de restablecimiento de contraseña es inválido.')    
+    
+
+def recuperar_contrasenia(request):
+    if request.method == 'POST':
+        rut = request.POST.get('rut', None)
+        try:
+            enviar_correo(rut)      
+        except Exception as e:
+            print(e)
+    
+    return render(request, 'reset_password/reset_por_rut.html')
 
 

@@ -59,12 +59,14 @@
       </div>
 
       <div class="opciones">
+        {% if request.user.cargo == 'administrador' %}
         <div>
           <a href="{% url 'inicio_admin' %}">
             <img src="{% static 'img/inicio.png' %}" alt="">
             Inicio
           </a>
         </div>
+        {% endif %}
 
         <div class="contenedor-instituciones">
           <details>
@@ -136,7 +138,7 @@
 
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+  <!-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
 	<script src="{% static 'Semantic-UI-master/dist/semantic.min.js' %}"></script>
 
 
