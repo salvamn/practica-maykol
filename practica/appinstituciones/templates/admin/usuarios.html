@@ -23,7 +23,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/js/iziModal.min.js"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/css/iziModal.min.css">
-	<!-- <link rel="stylesheet" href="https://unpkg.com/micromodal/dist/micromodal.min.css"> -->
+<!-- <link rel="stylesheet" href="https://unpkg.com/micromodal/dist/micromodal.min.css"> -->
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -38,7 +38,8 @@
 	<div class="titulo">
 		<h2>Lista de Usuarios</h2>
 		{% if request.user.cargo == 'administrador' %}
-		<button id="btn-crear-usuario">crear usuario</button>
+		<!-- <button id="btn-crear-usuario">crear usuario</button> -->
+		<button  @click="crearUsuario">crear usuario</button>
 		{% endif %}
 	</div>
 
@@ -118,7 +119,7 @@
 
 
 
-	<dialog id="modal-crear-usuario">
+	<!-- <dialog id="modal-crear-usuario">
 		<div class="contenedor-btn-cerrar">
 			<button id="btn-cerrar-dialogo">cerrar</button>
 		</div>
@@ -176,7 +177,60 @@
 			</form>
 		</div>
 
-	</dialog>
+	</dialog> -->
+<!-- UI Modal para Crear Usuario -->
+<div id="modalCrearUsuario" class="ui modal">
+	<i class="close icon"></i>
+	<div class="header">Crear Usuario</div>
+	<div class="content">
+		<form class="ui form" action="{% url 'crear_usuario' %}" method="POST">
+			{% csrf_token %}
+			<div class="field">
+				<label for="nombreUsuario">Nombre de usuario</label>
+				<input type="text" name="nombre-usuario" id="nombreUsuario" required>
+			</div>
+			<div class="field">
+				<label for="nombre">Nombre</label>
+				<input type="text" name="nombre" id="nombre" required>
+			</div>
+			<div class="field">
+				<label for="apellido">Apellido</label>
+				<input type="text" name="apellido" id="apellido" required>
+			</div>
+			<div class="field">
+				<label for="rut">Rut</label>
+				<input type="number" placeholder="Rut sin punto ni guion: 123456789" name="rut" id="input-rut" required>
+			</div>
+			<div class="field">
+				<label for="correo">Correo</label>
+				<input type="email" name="correo" id="correo" required>
+			</div>
+			<div class="field">
+				<label for="contrasenia">Contraseña</label>
+				<input type="password" name="contrasenia" id="contrasenia" required>
+			</div>
+			<div class="field">
+				<label for="cargo">Cargo</label>
+				<select name="cargo" id="cargo">
+					<option value="usuario">Usuario</option>
+					<option value="administrador">Administrador</option>
+				</select>
+			</div>
+			<div class="field">
+				<label for="institucion">Institución</label>
+				<select name="institucion" id="institucion">
+					{% for i in instituciones %}
+					<option value="{{ i.id }}">{{ i }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="field">
+				<input type="submit" value="Crear Usuario" class="ui button">
+			</div>
+		</form>
+	</div>
+</div>
+<!-- Fin del UI Modal para Crear Usuario -->
 
 
 
@@ -263,38 +317,25 @@
 
 
 
-
-	<!-- Dialogo Jquery -->
-	<div id="dialog-confirm" title="Empty the recycle bin?">
-		<p id="texto-dialogo-js-ui" style="display: none;">
-			<span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
-			Deseas eliminar al usuario, despues no podras revertirlo?
-		</p>
+	<!-- UI Mini Modal -->
+	<div class="ui mini modal">
+		<div class="header">Confirma</div>
+		<div class="content">
+			<p>¿Estás seguro de que quieres eliminar al usuario actual?</p>
+		</div>
+		<div class="actions">
+			<div class="ui positive button">Sí</div>
+			<div class="ui button">No</div>
+		</div>
 	</div>
-	<!-- Dialogo Jquery -->
-
-
-
-
-<!-- UI Mini Modal -->
-<div class="ui mini modal">
-	<div class="header">Confirma</div>
-	<div class="content">
-		<p>¿Estás seguro de que quieres eliminar al usuario actual?</p>
-	</div>
-	<div class="actions">
-		<div class="ui positive button">Sí</div>
-		<div class="ui button">No</div>
-	</div>
-</div>
-<!-- UI Mini Modal -->
+	<!-- UI Mini Modal -->
 
 </div>
 
 
 
 
-<script>
+<!-- <script>
 	const btnAbrirDialogo = document.getElementById('btn-crear-usuario')
 	const dialogo = document.getElementById('modal-crear-usuario')
 	const btnCerrarDialogo = document.getElementById('btn-cerrar-dialogo')
@@ -307,7 +348,7 @@
 	btnCerrarDialogo.addEventListener('click', () => {
 		dialogo.close()
 	})
-</script>
+</script> -->
 
 
 

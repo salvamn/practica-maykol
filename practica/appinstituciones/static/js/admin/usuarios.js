@@ -1,23 +1,8 @@
-
-
-
-
-
-
 // https://izimodal.marcelodolza.com//#modal-large
 $("#modal-opciones-usuario").iziModal({
 	title: 'Opciones de usuario',
 	headerColor: '#333333'
 });
-
-// $(document).on('click', '.trigger', function (event) {
-//     event.preventDefault();
-//     $('#modal-opciones-usuario').iziModal('open');
-// });
-
-
-
-
 
 
 
@@ -122,9 +107,19 @@ createApp({
 
 		EditarUsuario(id) {
 		},
-		crearUsuario() {
+		crearUsuario(event) {
+			console.log('boton presionado');
+			console.log(event);
+			// Inicializar el modal
+			$('#modalCrearUsuario').modal({
+				centered: true,
+				blurring: true,
+			});
 
+			// Mostrar el modal al hacer clic en el botón o enlace
+			$('#modalCrearUsuario').modal('show');	
 
+			// Puedes agregar más lógica aquí si es necesario
 
 		},
 
