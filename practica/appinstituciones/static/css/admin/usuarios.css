@@ -3,6 +3,13 @@
     height: 100%;
 }
 
+main{
+    width: 100%;
+    height: 94vh;
+    display: inline-flex !important;
+    flex-direction: row;
+}
+
 main section .titulo{
     width: 100%;
     height: 10%;

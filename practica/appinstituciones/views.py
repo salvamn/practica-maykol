@@ -27,11 +27,6 @@ def inicio_admin(request):
     return render(request, 'admin/inicio.html', {'instituciones': instituciones})
 
 
-
-
-
-
-
 @login_required
 def lista_usuarios(request):
     # lista_usuarios = CustomUser.objects.filter(cargo='usuario').all()
@@ -50,21 +45,6 @@ def lista_usuarios(request):
         
         
     return render(request, 'admin/usuarios.html', {'usuarios': usuarios, 'instituciones': lista_instituciones})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -184,15 +164,6 @@ def get_contulmo_medico(request):
 def get_contulmo_vehiculos(request):
     datos = list(CatastroAmbulancias.objects.filter(id_institucion=5).values())
     return JsonResponse({'datos': datos})    
-
-
-
-
-
-
-
-
-
 
 
 

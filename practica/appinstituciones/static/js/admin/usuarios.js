@@ -85,37 +85,45 @@ createApp({
 			console.log('boton presionado');
 			id = event.target.id
 			const self = this;  // Guardar referencia al contexto actual
-			$('#texto-dialogo-js-ui').css('display', 'block')
-			
-			// https://jqueryui.com/dialog/#modal-confirmation
+
 			$(function () {
-					$("#dialog-confirm").dialog({
-							title: 'Eliminar usuario',
-							resizable: false,
-							height: "auto",
-							width: 400,
-							modal: true,
-							buttons: {
-								"Eliminar": function () {
-										self.eliminarUsuario(id);
-										$('#fila-' + id).addClass('fila-eliminada').fadeOut('slow', function() {
-											$(this).remove(); // Eliminar completamente la fila después de la animación
-											console.log('fila eliminada');
-										});
-											$(this).dialog("close");
-									},
-									Cancel: function () {
-											$(this).dialog("close");
-									}
-							}
+				// Inicializar el modal
+				$('.ui.mini.modal').modal({
+					centered: true,
+					blurring: true,
+					closable: false, // Evita cerrar haciendo clic fuera del modal
+				});
+
+				// Mostrar el modal al hacer clic en algún botón o enlace
+				$('.ui.mini.modal').modal('show');
+
+				// Acción al hacer clic en el botón "Sí"
+				$('.ui.positive.button').on('click', function () {
+					// Aquí puedes colocar la lógica que se ejecutará al hacer clic en "Sí"
+					self.eliminarUsuario(id);
+					$('#fila-' + id).addClass('fila-eliminada').fadeOut('slow', function () {
+						$(this).remove(); // Eliminar completamente la fila después de la animación
+						console.log('fila eliminada');
 					});
+					console.log('Acción confirmada');
+					// Cierra el modal
+					$('.ui.mini.modal').modal('hide');
+				});
+
+				// Acción al hacer clic en el botón "No"
+				$('.ui.button').on('click', function () {
+					// Aquí puedes colocar la lógica que se ejecutará al hacer clic en "No"
+					console.log('Acción cancelada');
+					// Cierra el modal
+					$('.ui.mini.modal').modal('hide');
+				});
 			});
 		},
 
-		EditarUsuario(id){
+		EditarUsuario(id) {
 		},
-		crearUsuario(){
-			
+		crearUsuario() {
+
 
 
 		},
