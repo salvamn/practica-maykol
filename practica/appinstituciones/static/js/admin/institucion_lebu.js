@@ -182,7 +182,8 @@ createApp({
                 { valor: 'industrial', texto: 'Industrial' },
                 { valor: 'vehiculo', texto: 'Vehiculo' },
             ],
-            resultados: []
+            resultados: [],
+            busqueda: null
         }
     },
 
@@ -531,7 +532,7 @@ createApp({
             const data = {
                 'id_institucion': 1,
                 'tipo_equipo': 'medico',
-                'serie': '141007131'
+                'serie': this.busqueda
             }
 
             axios.post('http://127.0.0.1:8000/busqueda_equipos_medicos/', data)

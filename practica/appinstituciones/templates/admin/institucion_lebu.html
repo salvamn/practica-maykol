@@ -26,7 +26,7 @@
 	<div class="titulo">
 		<h2>{{ institucion.nombre }}</h2>
 		<div>
-			<input type="search" placeholder="busqueda por serie">
+			<input v-model="busqueda" type="search" placeholder="busqueda por serie">
 			<button @click="buscar">Buscar</button>
 		</div>
 		<div>
