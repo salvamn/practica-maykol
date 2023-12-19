@@ -181,7 +181,8 @@ createApp({
                 { valor: 'medico', texto: 'Medico' },
                 { valor: 'industrial', texto: 'Industrial' },
                 { valor: 'vehiculo', texto: 'Vehiculo' },
-            ]
+            ],
+            resultados: []
         }
     },
 
@@ -512,7 +513,64 @@ createApp({
                 ],
             };
             myChart.setOption(option);
-        }
+        },
+
+
+
+
+
+
+
+
+
+
+
+        // Metodo relacionado con la busqueda
+        buscar() {
+            console.log('Boton presionado');
+            const data = {
+                'id_institucion': 1,
+                'tipo_equipo': 'medico',
+                'serie': '141007131'
+            }
+
+            axios.post('http://127.0.0.1:8000/busqueda_equipos_medicos/', data)
+                .then(response => {
+                    console.log(response.data.data);
+                    this.resultados = response.data.data
+                    
+                    // Muestra el modal si hay resultados
+                    if (this.resultados.length > 0) {
+                        $('#resultado-modal').modal('show');
+                    }
+                    else {
+                        const toast = new Toasts({
+                            offsetX: 20, // 20px
+                            offsetY: 20, // 20px
+                            gap: 40, // The gap size in pixels between toasts
+                            width: 450, // 300px
+                            timing: 'ease', // See list of available CSS transition timings
+                            duration: '.5s', // Transition duration
+                            dimOld: true, // Dim old notifications while the newest notification stays highlighted
+                            position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+                        });
+                        toast.push({
+                            title: 'No hay resultados', 
+                            content: 'No existen coincidencias con el numero de serie',
+                            style: 'error'
+                        })
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.cerrarModalResultadosBusqueda()
+                })
+            },
+
+
+        cerrarModalResultadosBusqueda() {
+            $('#resultado-modal').modal('hide');
+        },
 
 
 

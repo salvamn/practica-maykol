@@ -7,10 +7,16 @@
 {% block contenido_dinamico %}
 <link rel="stylesheet" href="{% static 'css/admin/instituciones.css' %}">
 <link rel="stylesheet" href="{% static 'Semantic-UI-master/dist/semantic.min.css' %}">
+<link rel="stylesheet" href="{% static 'Semantic-UI-master/dist/semantic.min.css' %}">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="{% static 'css/toast.css' %}">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="{% static 'Semantic-UI-master/dist/semantic.min.js' %}"></script>
+<script src="{% static 'js/toast.js' %}"></script>
 
 
 
@@ -19,6 +25,10 @@
 <div id="app">
 	<div class="titulo">
 		<h2>{{ institucion.nombre }}</h2>
+		<div>
+			<input type="search" placeholder="busqueda por serie">
+			<button @click="buscar">Buscar</button>
+		</div>
 		<div>
 			<p>Tipo de Equipo</p>
 			<select id="select-tipo-equipo" v-model="opcionSelecionada" @change="actualizarGraficoMedianteSelect">
@@ -160,6 +170,36 @@
 			</table>
 		</div>
 	</div>
+
+
+
+
+	<!-- Modal que muestra el resultado de la busqueda -->
+	<div class="ui modal" id="resultado-modal">
+		<div class="header">
+			Resultados de la búsqueda
+		</div>
+		<div class="content">
+			<ul>
+				<li v-for="resultado in resultados" :key="resultado.id">
+					${ resultado }
+				</li>
+			</ul>
+		</div>
+		<div class="actions">
+			<div class="ui button" @click="cerrarModalResultadosBusqueda">Cerrar</div>
+		</div>
+	</div>
+	<!-- Modal que muestra el resultado de la busqueda -->
+
+
+
+
+
+
+
+
+
 
 	<script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
 	<script src="{% static 'js/admin/institucion_lebu.js' %}"></script>

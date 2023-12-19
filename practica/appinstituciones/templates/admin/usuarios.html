@@ -39,7 +39,7 @@
 		<h2>Lista de Usuarios</h2>
 		{% if request.user.cargo == 'administrador' %}
 		<!-- <button id="btn-crear-usuario">crear usuario</button> -->
-		<button  @click="crearUsuario">crear usuario</button>
+		<button @click="crearUsuario">crear usuario</button>
 		{% endif %}
 	</div>
 
@@ -117,120 +117,60 @@
 
 
 
-
-
-	<!-- <dialog id="modal-crear-usuario">
-		<div class="contenedor-btn-cerrar">
-			<button id="btn-cerrar-dialogo">cerrar</button>
-		</div>
-
-		<div class="titulo-modal">
-			<h2>Crear Usuario</h2>
-		</div>
-
-		<div class="contenedor-formulario">
-			<form action="{% url 'crear_usuario' %}" method="POST">
+	<!-- UI Modal para Crear Usuario -->
+	<div id="modalCrearUsuario" class="ui modal">
+		<i class="close icon"></i>
+		<div class="header">Crear Usuario</div>
+		<div class="content">
+			<form class="ui form" action="{% url 'crear_usuario' %}" method="POST">
 				{% csrf_token %}
-				<div>
-					<label for="">Nombre de usuario</label>
-					<input type="text" name="nombre-usuario" required>
+				<div class="field">
+					<label for="nombreUsuario">Nombre de usuario</label>
+					<input type="text" name="nombre-usuario" id="nombreUsuario" required>
 				</div>
-				<div>
+				<div class="field">
 					<label for="nombre">Nombre</label>
-					<input type="text" name="nombre" required>
+					<input type="text" name="nombre" id="nombre" required>
 				</div>
-				<div>
+				<div class="field">
 					<label for="apellido">Apellido</label>
-					<input type="text" name="apellido" required>
+					<input type="text" name="apellido" id="apellido" required>
 				</div>
-				<div>
+				<div class="field">
 					<label for="rut">Rut</label>
-					<input type="number" placeholder="rut sin punto ni guion: 123456789" name="rut" id="input-rut"
+					<input type="number" placeholder="Rut sin punto ni guion: 123456789" name="rut" id="input-rut"
 						required>
 				</div>
-				<div>
+				<div class="field">
 					<label for="correo">Correo</label>
 					<input type="email" name="correo" id="correo" required>
 				</div>
-				<div>
+				<div class="field">
 					<label for="contrasenia">Contraseña</label>
-					<input type="password" name="contrasenia" id="" required>
+					<input type="password" name="contrasenia" id="contrasenia" required>
 				</div>
-				<div>
-					<label for="">Cargo</label>
-					<select name="cargo" id="">
+				<div class="field">
+					<label for="cargo">Cargo</label>
+					<select name="cargo" id="cargo">
 						<option value="usuario">Usuario</option>
 						<option value="administrador">Administrador</option>
 					</select>
 				</div>
-				<div>
-					<label for="">Institución</label>
-					<select name="institucion" id="">
+				<div class="field">
+					<label for="institucion">Institución</label>
+					<select name="institucion" id="institucion">
 						{% for i in instituciones %}
 						<option value="{{ i.id }}">{{ i }}</option>
 						{% endfor %}
 					</select>
 				</div>
-				<div>
-					<input type="submit" value="crear usuario">
+				<div class="field">
+					<input type="submit" value="Crear Usuario" class="ui button">
 				</div>
 			</form>
 		</div>
-
-	</dialog> -->
-<!-- UI Modal para Crear Usuario -->
-<div id="modalCrearUsuario" class="ui modal">
-	<i class="close icon"></i>
-	<div class="header">Crear Usuario</div>
-	<div class="content">
-		<form class="ui form" action="{% url 'crear_usuario' %}" method="POST">
-			{% csrf_token %}
-			<div class="field">
-				<label for="nombreUsuario">Nombre de usuario</label>
-				<input type="text" name="nombre-usuario" id="nombreUsuario" required>
-			</div>
-			<div class="field">
-				<label for="nombre">Nombre</label>
-				<input type="text" name="nombre" id="nombre" required>
-			</div>
-			<div class="field">
-				<label for="apellido">Apellido</label>
-				<input type="text" name="apellido" id="apellido" required>
-			</div>
-			<div class="field">
-				<label for="rut">Rut</label>
-				<input type="number" placeholder="Rut sin punto ni guion: 123456789" name="rut" id="input-rut" required>
-			</div>
-			<div class="field">
-				<label for="correo">Correo</label>
-				<input type="email" name="correo" id="correo" required>
-			</div>
-			<div class="field">
-				<label for="contrasenia">Contraseña</label>
-				<input type="password" name="contrasenia" id="contrasenia" required>
-			</div>
-			<div class="field">
-				<label for="cargo">Cargo</label>
-				<select name="cargo" id="cargo">
-					<option value="usuario">Usuario</option>
-					<option value="administrador">Administrador</option>
-				</select>
-			</div>
-			<div class="field">
-				<label for="institucion">Institución</label>
-				<select name="institucion" id="institucion">
-					{% for i in instituciones %}
-					<option value="{{ i.id }}">{{ i }}</option>
-					{% endfor %}
-				</select>
-			</div>
-			<div class="field">
-				<input type="submit" value="Crear Usuario" class="ui button">
-			</div>
-		</form>
 	</div>
-</div>
-<!-- Fin del UI Modal para Crear Usuario -->
+	<!-- Fin del UI Modal para Crear Usuario -->
 
 
 
@@ -240,7 +180,6 @@
 
 	<!-- Modal structure -->
 	<div ref="miModal" id="modal-opciones-usuario">
-		<!-- data-iziModal-fullscreen="true"  data-iziModal-title="Welcome"  data-iziModal-subtitle="Subtitle"  data-iziModal-icon="icon-home" -->
 		<!-- Modal content -->
 		<div class="contenedor-informacion-usuario">
 			<div>

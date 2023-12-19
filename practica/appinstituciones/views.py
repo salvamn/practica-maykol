@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.serializers import serialize
+from django.views.decorators.csrf import csrf_exempt
 # from django.conf import settings
 
 from appcatastro.models import CatastroEquipoIndustriales
@@ -15,6 +16,8 @@ from appautenticacion.models import CustomUser
 from appinstituciones.models import Institucion
 from .models import Institucion
 from .models import Convenios
+
+import json
 
 # https://semantic-ui.com/collections/table.html
 
@@ -735,8 +738,32 @@ def convenios(request):
         
     lista_intituciones = Institucion.objects.all()
     return render(request, 'admin/convenios.html', {'instituciones': lista_intituciones})
+
 def obtener_convenios_general(request):
     convenios = Convenios.objects.all()
     convenios_serializados = serialize('json', convenios)
 
     return JsonResponse({'data': convenios_serializados}, safe=False)
+
+
+
+
+# Busquedas de data de instituciones 
+@csrf_exempt
+def busqueda_equipos_medicos(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        print(data)
+        
+        # desenpaquetar la data 
+        id_institucion = data['id_institucion']
+        tipo_equipo = data['tipo_equipo']
+        numero_serie_busqueda = data['serie']
+        
+        try:
+            resultado = CatastroEquiposMedicos.objects.filter(id_institucion=id_institucion, tipo_equipo=tipo_equipo, serie=numero_serie_busqueda)
+            return JsonResponse({'data': list(resultado.values())})
+        except Exception as e:
+            print(e)
+            
+        
