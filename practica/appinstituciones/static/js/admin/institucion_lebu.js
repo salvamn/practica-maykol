@@ -42,6 +42,7 @@
 //         ]
 //     };
 
+
 //     myChart.setOption(option);
 
 //     // Agrega la siguiente línea después de setOption para hacer que el gráfico se ajuste al contenedor
@@ -183,13 +184,15 @@ createApp({
                 { valor: 'vehiculo', texto: 'Vehiculo' },
             ],
             resultados: [],
-            busqueda: null
+            busqueda: null,
+            placeholderDinamico: 'n° de inventario'
         }
     },
 
     methods: {
         actualizarGraficoMedianteSelect() {
             if (this.opcionSelecionada === 'medico') {
+                this.placeholderDinamico = 'n° de inventario'
                 axios.get('http://127.0.0.1:8000/get_lebu_medico/')
                     .then(response => {
                         // Data Para los graficos
@@ -245,6 +248,7 @@ createApp({
                         console.log(response.data.datos);
                     })
             } else if (this.opcionSelecionada === 'industrial') {
+                this.placeholderDinamico = 'n° de inventario'
                 axios.get('http://127.0.0.1:8000/get_lebu_industrial/')
                     .then(response => {
                         data_grafico = { 'bueno': 0, 'regular': 0, 'malo': 0, 'baja': 0 }
@@ -296,6 +300,7 @@ createApp({
                         console.log(response.data);
                     })
             } else if (this.opcionSelecionada === 'vehiculo') {
+                this.placeholderDinamico = 'patente'
                 axios.get('http://127.0.0.1:8000/get_lebu_vehiculos/')
                     .then(response => {
                         data_grafico = { 'bueno': 0, 'regular': 0, 'malo': 0, 'baja': 0 }
@@ -528,50 +533,124 @@ createApp({
 
         // Metodo relacionado con la busqueda
         buscar() {
-            console.log('Boton presionado');
             const data = {
                 'id_institucion': 1,
                 'tipo_equipo': 'medico',
-                'serie': this.busqueda
+                'numero_inventario_busqueda': this.busqueda
             }
 
-            axios.post('http://127.0.0.1:8000/busqueda_equipos_medicos/', data)
-                .then(response => {
-                    console.log(response.data.data);
-                    this.resultados = response.data.data
-                    
-                    // Muestra el modal si hay resultados
-                    if (this.resultados.length > 0) {
-                        $('#resultado-modal').modal('show');
-                    }
-                    else {
-                        const toast = new Toasts({
-                            offsetX: 20, // 20px
-                            offsetY: 20, // 20px
-                            gap: 40, // The gap size in pixels between toasts
-                            width: 450, // 300px
-                            timing: 'ease', // See list of available CSS transition timings
-                            duration: '.5s', // Transition duration
-                            dimOld: true, // Dim old notifications while the newest notification stays highlighted
-                            position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
-                        });
-                        toast.push({
-                            title: 'No hay resultados', 
-                            content: 'No existen coincidencias con el numero de serie',
-                            style: 'error'
-                        })
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.cerrarModalResultadosBusqueda()
-                })
-            },
+            if (this.opcionSelecionada === 'medico') {
+                data.tipo_equipo = 'medico'
+                axios.post('http://127.0.0.1:8000/busqueda_equipos_medicos/', data)
+                    .then(response => {
+                        console.log(response.data.data);
+                        this.resultados = response.data.data
+
+                        // Muestra el modal si hay resultados
+                        if (this.resultados.length > 0) {
+                            $('#resultado-modal').modal('show');
+                        }
+                        else {
+                            const toast = new Toasts({
+                                offsetX: 20, // 20px
+                                offsetY: 20, // 20px
+                                gap: 40, // The gap size in pixels between toasts
+                                width: 450, // 300px
+                                timing: 'ease', // See list of available CSS transition timings
+                                duration: '.5s', // Transition duration
+                                dimOld: true, // Dim old notifications while the newest notification stays highlighted
+                                position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+                            });
+                            toast.push({
+                                title: 'No hay resultados',
+                                content: 'No existen coincidencias con el numero de serie',
+                                style: 'error'
+                            })
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.cerrarModalResultadosBusqueda()
+                    })
+            }
+            else if (this.opcionSelecionada === 'industrial') {
+                data.tipo_equipo = 'industrial'
+                axios.post('http://127.0.0.1:8000/busqueda_equipos_industriales/', data)
+                    .then(response => {
+                        console.log(response.data.data);
+                        this.resultados = response.data.data
+
+                        if (this.resultados.length > 0) {
+                            $('#resultado-modal').modal('show');
+                        }
+                        else {
+                            const toast = new Toasts({
+                                offsetX: 20, // 20px
+                                offsetY: 20, // 20px
+                                gap: 40, // The gap size in pixels between toasts
+                                width: 450, // 300px
+                                timing: 'ease', // See list of available CSS transition timings
+                                duration: '.5s', // Transition duration
+                                dimOld: true, // Dim old notifications while the newest notification stays highlighted
+                                position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+                            });
+                            toast.push({
+                                title: 'No hay resultados',
+                                content: 'No existen coincidencias con el numero de serie',
+                                style: 'error'
+                            })
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.cerrarModalResultadosBusqueda()
+                    })
+            }
+            else if (this.opcionSelecionada === 'vehiculo') {
+                data.tipo_equipo = 'vehiculo'
+                axios.post('http://127.0.0.1:8000/busqueda_vehiculos/', data)
+                    .then(response => {
+                        console.log(response.data.data);
+                        this.resultados = response.data.data
+
+                        if (this.resultados.length > 0) {
+                            $('#resultado-modal').modal('show');
+                        }
+                        else {
+                            const toast = new Toasts({
+                                offsetX: 20, // 20px
+                                offsetY: 20, // 20px
+                                gap: 40, // The gap size in pixels between toasts
+                                width: 450, // 300px
+                                timing: 'ease', // See list of available CSS transition timings
+                                duration: '.5s', // Transition duration
+                                dimOld: true, // Dim old notifications while the newest notification stays highlighted
+                                position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+                            });
+                            toast.push({
+                                title: 'No hay resultados',
+                                content: 'No existen coincidencias con la patente',
+                                style: 'error'
+                            })
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.cerrarModalResultadosBusqueda()
+                    })
+            }
+        },
+
+
 
 
         cerrarModalResultadosBusqueda() {
             $('#resultado-modal').modal('hide');
         },
+
+        limpiarCampo() {
+            this.busqueda = ''
+        }
 
 
 

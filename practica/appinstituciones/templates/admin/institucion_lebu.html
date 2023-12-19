@@ -26,8 +26,9 @@
 	<div class="titulo">
 		<h2>{{ institucion.nombre }}</h2>
 		<div>
-			<input v-model="busqueda" type="search" placeholder="busqueda por serie">
+			<input v-model="busqueda" type="search" :placeholder="placeholderDinamico">
 			<button @click="buscar">Buscar</button>
+			<button @click="limpiarCampo">Limpiar campo</button>
 		</div>
 		<div>
 			<p>Tipo de Equipo</p>
@@ -181,8 +182,346 @@
 		</div>
 		<div class="content">
 			<ul>
-				<li v-for="resultado in resultados" :key="resultado.id">
-					${ resultado }
+
+				<li v-if="this.opcionSelecionada === 'medico'" style="list-style: none;" v-for="resultado in resultados" :key="resultado.id">
+					<div>
+						<span style="font-weight: bold;">ID - </span>
+						<span>${ resultado.id }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Clase - </span>
+						<span>${ resultado.clase }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Nombre - </span>
+						<span>${ resultado.nombre }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Marca - </span>
+						<span>${ resultado.marca }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Modelo - </span>
+						<span>${ resultado.modelo }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Serie - </span>
+						<span>${ resultado.serie }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Año - </span>
+						<span>${ resultado.anio }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vida Util - </span>
+						<span>${ resultado.vida_util }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Estado - </span>
+						<span>${ resultado.estado }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Criticidad - </span>
+						<span>${ resultado.criticidad }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Garantia - </span>
+						<span>${ resultado.garantia }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vencimiento de garantia - </span>
+						<span>${ resultado.vencimiento_garantia }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Plan de mantención - </span>
+						<span>${ resultado.plan_mantencion }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Tipo de equipo - </span>
+						<span>${ resultado.tipo_equipo }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">ID de convenio - </span>
+						<span>${ resultado.id_convenio }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">ID de institución - </span>
+						<span>${ resultado.id_institucion }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Eliminado - </span>
+						<span>${ resultado.eliminado }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Año de ingreso - </span>
+						<span>${ resultado.anio_ingreso }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Costo anual - </span>
+						<span>${ resultado.costo_anual }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Numero de proveedor - </span>
+						<span>${ resultado.numero_proveedor }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Numero de inventario - </span>
+						<span>${ resultado.numero_inventario }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Recinto - </span>
+						<span>${ resultado.recinto }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Servicio clinico - </span>
+						<span>${ resultado.servicio_clinico }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Subclase - </span>
+						<span>${ resultado.subclase }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Tipo de mantenimiento - </span>
+						<span>${ resultado.tipo_mantenimiento }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vida util residual - </span>
+						<span>${ resultado.vida_util_residual }</span>
+					</div>
+					<br>
+					<!-- <span>${ resultado }</span> -->
+				</li>
+				<li v-else-if="this.opcionSelecionada === 'industrial'" style="list-style: none;" v-for="resultado in resultados" :key="resultado.id">
+					<div>
+						<span style="font-weight: bold;">ID - </span>
+						<span>${ resultado.id }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Clase - </span>
+						<span>${ resultado.clase }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Nombre - </span>
+						<span>${ resultado.nombre }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Marca - </span>
+						<span>${ resultado.marca }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Modelo - </span>
+						<span>${ resultado.modelo }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Serie - </span>
+						<span>${ resultado.serie }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Año - </span>
+						<span>${ resultado.anio }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vida Util - </span>
+						<span>${ resultado.vida_util }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Estado - </span>
+						<span>${ resultado.estado }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Criticidad - </span>
+						<span>${ resultado.criticidad }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Garantia - </span>
+						<span>${ resultado.garantia }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vencimiento de garantia - </span>
+						<span>${ resultado.vencimiento_garantia }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Plan de mantención - </span>
+						<span>${ resultado.plan_mantencion }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Tipo de equipo - </span>
+						<span>${ resultado.tipo_equipo }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">ID de convenio - </span>
+						<span>${ resultado.id_convenio }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">ID de institución - </span>
+						<span>${ resultado.id_institucion }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Eliminado - </span>
+						<span>${ resultado.eliminado }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Año de ingreso - </span>
+						<span>${ resultado.anio_ingreso }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Costo anual - </span>
+						<span>${ resultado.costo_anual }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Numero de proveedor - </span>
+						<span>${ resultado.numero_proveedor }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Numero de inventario - </span>
+						<span>${ resultado.numero_inventario }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Recinto - </span>
+						<span>${ resultado.recinto }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Servicio clinico - </span>
+						<span>${ resultado.servicio_clinico }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Subclase - </span>
+						<span>${ resultado.subclase }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Tipo de mantenimiento - </span>
+						<span>${ resultado.tipo_mantenimiento }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vida util residual - </span>
+						<span>${ resultado.vida_util_residual }</span>
+					</div>
+					<br>
+					<!-- <span>${ resultado }</span> -->
+				</li>
+				<li v-else-if="this.opcionSelecionada === 'vehiculo'" style="list-style: none;" v-for="resultado in resultados" :key="resultado.id">
+					<div>
+						<span style="font-weight: bold;">ID - </span>
+						<span>${ resultado.id }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Funcion - </span>
+						<span>${ resultado.funcion }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Marca - </span>
+						<span>${ resultado.marca }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Modelo - </span>
+						<span>${ resultado.modelo }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Patente - </span>
+						<span>${ resultado.patente }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Numero de motor - </span>
+						<span>${ resultado.numero_motor }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Kilometraje - </span>
+						<span>${ resultado.kilometraje }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Estado - </span>
+						<span>${ resultado.estado }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Año - </span>
+						<span>${ resultado.anio }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vida Util - </span>
+						<span>${ resultado.vida_util }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Criticidad - </span>
+						<span>${ resultado.criticidad }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Garantia - </span>
+						<span>${ resultado.garantia }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vencimiento de garantia - </span>
+						<span>${ resultado.vencimiento_garantia }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Plan de mantención - </span>
+						<span>${ resultado.plan_mantencion }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Tipo de equipo - </span>
+						<span>${ resultado.tipo_equipo }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">ID de institución - </span>
+						<span>${ resultado.id_institucion }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Eliminado - </span>
+						<span>${ resultado.eliminado }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Año de ingreso a plan mantenimiento - </span>
+						<span>${ resultado.anio_ingreso_plan_mantenimiento }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Clase de ambulancia - </span>
+						<span>${ resultado.clase_ambulancia }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Costo anual mantenimiento - </span>
+						<span>${ resultado.costo_anual_mantenimiento }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Establecimiento - </span>
+						<span>${ resultado.establecimiento }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Estado situcación - </span>
+						<span>${ resultado.estado_situacion }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">ID de convenio mantenimiento - </span>
+						<span>${ resultado.id_convenio }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Numero de proveedor - </span>
+						<span>${ resultado.numero_proveedor }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Region - </span>
+						<span>${ resultado.region }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Tipo de ambulancia - </span>
+						<span>${ resultado.tipo_ambulancia }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Tipo de carroceria - </span>
+						<span>${ resultado.tipo_carroceria }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Tipo de mantenimiento - </span>
+						<span>${ resultado.tipo_mantenimiento }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Tipo de mantenimiento - </span>
+						<span>${ resultado.tipo_mantenimiento }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vida util residual - </span>
+						<span>${ resultado.vida_util_residual }</span>
+					</div>
+					<br>
+					<!-- <span>${ resultado }</span> -->
 				</li>
 			</ul>
 		</div>

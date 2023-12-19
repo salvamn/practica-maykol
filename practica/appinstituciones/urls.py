@@ -99,5 +99,7 @@ urlpatterns = [
     
     
     # Busqueda data de instituciones
-    path('busqueda_equipos_medicos/', views.busqueda_equipos_medicos, name='busqueda_equipos_medicos')
+    path('busqueda_equipos_medicos/', views.busqueda_equipos_medicos, name='busqueda_equipos_medicos'),
+    path('busqueda_equipos_industriales/', views.busqueda_equipos_industriales, name='busqueda_equipos_industriales'),
+    path('busqueda_vehiculos/', views.busqueda_vehiculos, name='busqueda_vehiculos'),
 ]

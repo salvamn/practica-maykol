@@ -753,17 +753,46 @@ def obtener_convenios_general(request):
 def busqueda_equipos_medicos(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
-        print(data)
         
         # desenpaquetar la data 
         id_institucion = data['id_institucion']
         tipo_equipo = data['tipo_equipo']
-        numero_serie_busqueda = data['serie']
+        numero_inventario_busqueda = data['numero_inventario_busqueda']
         
         try:
-            resultado = CatastroEquiposMedicos.objects.filter(id_institucion=id_institucion, tipo_equipo=tipo_equipo, serie=numero_serie_busqueda)
+            resultado = CatastroEquiposMedicos.objects.filter(id_institucion=id_institucion, tipo_equipo=tipo_equipo, numero_inventario=numero_inventario_busqueda)
+            return JsonResponse({'data': list(resultado.values())})
+        except Exception as e:
+            print(e)
+
+@csrf_exempt
+def busqueda_equipos_industriales(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+
+        # desenpaquetar la data
+        id_institucion = data['id_institucion']
+        tipo_equipo = data['tipo_equipo']
+        numero_inventario_busqueda = data['numero_inventario_busqueda']
+
+        try:
+            resultado = CatastroEquipoIndustriales.objects.filter(id_institucion=id_institucion, tipo_equipo=tipo_equipo, numero_inventario=numero_inventario_busqueda)
             return JsonResponse({'data': list(resultado.values())})
         except Exception as e:
             print(e)
             
-        
+@csrf_exempt
+def busqueda_vehiculos(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+
+        # desenpaquetar la data
+        id_institucion = data['id_institucion']
+        tipo_equipo = data['tipo_equipo']
+        patente = data['numero_inventario_busqueda']
+
+        try:
+            resultado =CatastroAmbulancias.objects.filter(id_institucion=id_institucion, tipo_equipo=tipo_equipo, patente=patente)
+            return JsonResponse({'data': list(resultado.values())})
+        except Exception as e:
+            print(e)

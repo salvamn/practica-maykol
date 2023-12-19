@@ -32,7 +32,8 @@ main section .titulo div{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 25%;
+    width: auto;
+    padding: 10px;
 }
 
 main section .titulo div p{
@@ -56,6 +57,15 @@ main section .titulo div button{
     color: white;
 }
 
+.ui,
+.modal, 
+.scrolling, 
+.transition, 
+.visible, 
+.active{
+    overflow: auto;
+    height: 90%;
+}
 
 
 #app{
