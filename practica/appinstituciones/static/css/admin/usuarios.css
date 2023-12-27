@@ -174,7 +174,7 @@ main section .titulo button:active,
 
 
 #modal-opciones-usuario{
-    width: 100%;
+    width: 60%;
     height: 70% !important;
 
 }
@@ -198,9 +198,16 @@ main section .titulo button:active,
 
 #modal-opciones-usuario .contenedor-form-editar-informacion-usuario form{
     width: 100%;
-    display: inline-flex;
-    flex-direction: row;
+    display: flex;
+    flex-direction: column !important;
     flex-wrap: wrap;
+}
+
+#modal-opciones-usuario .contenedor-form-editar-informacion-usuario form .fields{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #modal-opciones-usuario .contenedor-form-editar-informacion-usuario form div{

@@ -1,8 +1,5 @@
 // https://izimodal.marcelodolza.com//#modal-large
-$("#modal-opciones-usuario").iziModal({
-	title: 'Opciones de usuario',
-	headerColor: '#333333'
-});
+
 
 
 
@@ -39,8 +36,7 @@ createApp({
 					console.log(response.data.id);
 					console.log(this.usuario.id);
 
-					$('#modal-opciones-usuario').iziModal()
-					$('#modal-opciones-usuario').iziModal('open');
+					$('#modal-opciones-usuario').modal('show');
 					$('#modal-opciones-usuario .id-usuario').val(this.usuario.id);
 					$('#modal-opciones-usuario .contenedor-informacion-usuario .spanEnModalNombre').text(this.usuario.nombre);
 					$('#modal-opciones-usuario .contenedor-informacion-usuario .spanEnModalApellido').text(this.usuario.apellido);
@@ -106,6 +102,10 @@ createApp({
 		},
 
 		EditarUsuario(id) {
+
+
+
+
 		},
 		crearUsuario(event) {
 			console.log('boton presionado');
