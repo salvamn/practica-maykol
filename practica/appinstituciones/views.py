@@ -560,7 +560,16 @@ def editar_usuario(request):
         nueva_institucion = request.POST.get('institucion', None)
         nuevo_cargo = request.POST.get('cargo', None)
         
-        #TODO Verficiar que el rut ingresado no exista y no sea de otro usuario.
+        #DONE Verficiar que el rut ingresado no exista y no sea de otro usuario.
+        if nuevo_rut != usuario.rut:
+            if CustomUser.objects.filter(rut=nuevo_rut).exists():
+                messages.error(request, 'El rut ya existe y pertenece a otro usuario.')
+                return redirect('lista_usuarios')
+        else:
+            messages.error(request, 'El rut escrito es el mismo del usuario actual.')
+            return redirect('lista_usuarios')
+            
+        
         #TODO Verificar que el correo electronico no exista o no corresponda a otro usuario
         
         if nuevo_nombre is not None and nuevo_nombre != '':
@@ -579,7 +588,7 @@ def editar_usuario(request):
             usuario.cargo = nuevo_cargo
 
         usuario.save()
-
+        messages.success(request, 'Usuario editado con exito.')
         return redirect('lista_usuarios')
     
     

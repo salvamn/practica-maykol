@@ -12,25 +12,19 @@
 <!-- <link rel="stylesheet" href="{% static 'css/toastr.css' %}">
 <script src="{% static 'js/toastr.js' %}"></script> -->
 
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <link rel="stylesheet" href="{% static 'Semantic-UI-master/dist/semantic.min.css' %}">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-<!-- https://cdnjs.com/libraries/izimodal -->
-
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/js/iziModal.min.js"></script> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/css/iziModal.min.css">
-<!-- <link rel="stylesheet" href="https://unpkg.com/micromodal/dist/micromodal.min.css"> -->
+<link rel="stylesheet" href="{% static 'css/toast.css' %}">
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"> -->
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script> -->
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<!-- <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="{% static 'Semantic-UI-master/dist/semantic.min.js' %}"></script>
+<script src="{% static 'js/toast.js' %}"></script>
+
 
 
 
@@ -285,24 +279,25 @@
 {% if messages %}
 {% for message in messages %}
 <script>
-	Toastify({
-		text: `{{ message }}`,
-		duration: 3000,
-		destination: "https://github.com/apvarun/toastify-js",
-		newWindow: true,
-		close: true,
-		gravity: "bottom", // `top` or `bottom`
-		position: "right", // `left`, `center` or `right`
-		stopOnFocus: true, // Prevents dismissing of toast on hover
-		backgroundColor: "#327859", // Color de fondo para un mensaje de error
-		className: "success", // Clase CSS para mensajes de error
-		onClick: function () { } // Callback after click
-	}).showToast();
+	const toast = new Toasts({
+			offsetX: 20, // 20px
+			offsetY: 20, // 20px
+			gap: 20, // The gap size in pixels between toasts
+			width: 300, // 300px
+			timing: 'ease', // See list of available CSS transition timings
+			duration: '.5s', // Transition duration
+			dimOld: true, // Dim old notifications while the newest notification stays highlighted
+			position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+		});
+	toast.push({
+			title: `{{ message.level_tag }}`, 
+			content: `{{ message }}`,
+			style: `{{ message.level_tag }}`
+		})
 </script>
 {% endfor %}
 {% endif %}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.1/js/iziModal.min.js"></script>
 <script src="{% static 'js/admin/usuarios.js' %}"></script>
 
 
