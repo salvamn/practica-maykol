@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.serializers import serialize
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
 # from django.conf import settings
 
 from appcatastro.models import CatastroEquipoIndustriales
@@ -794,6 +795,7 @@ def busqueda_equipos_industriales(request):
 def busqueda_vehiculos(request):
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
+        print(data)
 
         # desenpaquetar la data
         id_institucion = data['id_institucion']
@@ -802,6 +804,326 @@ def busqueda_vehiculos(request):
 
         try:
             resultado =CatastroAmbulancias.objects.filter(id_institucion=id_institucion, tipo_equipo=tipo_equipo, patente=patente)
+            print(resultado)
             return JsonResponse({'data': list(resultado.values())})
         except Exception as e:
             print(e)
+            
+
+
+
+
+
+
+
+
+# Crud Eliminar Catastros
+@csrf_exempt
+def eliminar_catastro(request):
+    if request.method == 'POST':
+        # Convertimos la data recibida a un json que es equivalente a un diccionario de python
+        data = json.loads(request.body.decode('utf-8'))
+        
+        # desnpaquetamos la data
+        id = data['id']
+        id_institucion = data['idInstitucion']
+        tipo_equipo = data['tipoEquipo']
+        
+        # verificamos el tipo de equipo
+        if tipo_equipo == 'medico':
+            # buscamos en la db el equipo a eliminar
+            equipo = CatastroEquiposMedicos.objects.filter(id=id, id_institucion=id_institucion, tipo_equipo=tipo_equipo)
+            
+            # si el equipo existe lo eliminamos
+            if equipo.exists():
+                equipo.delete()
+                return JsonResponse({'mensaje': f'Equipo con id: {id} eliminado con exito.', 'categoria': 'success'})
+            
+        # repetimos para los otros tipos de equipos.
+        elif tipo_equipo == 'industrial':
+            equipo = CatastroEquipoIndustriales.objects.filter(id=id, id_institucion=id_institucion, tipo_equipo=tipo_equipo)
+            
+            if equipo.exists():
+                equipo.delete()
+                return JsonResponse({'mensaje': f'Equipo con: {id} eliminado con exito.', 'categoria': 'success'})
+        
+        elif tipo_equipo == 'vehiculo':
+            equipo = CatastroAmbulancias.objects.filter(id=id, id_institucion=id_institucion, tipo_equipo=tipo_equipo)
+            
+            if equipo.exists():
+                equipo.delete()
+                return JsonResponse({'mensaje': f'Equipo con: {id} eliminado con exito.', 'categoria': 'success'})  
+
+
+# Crud editar catastro
+@csrf_exempt
+def obtener_data(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        
+        id = data['id']
+        id_institucion = data['idInstitucion']
+        tipo_equipo = data['tipoEquipo']
+        
+        if tipo_equipo == 'medico':
+            # equipo = CatastroEquiposMedicos.objects.filter(id=id, id_institucion=id_institucion, tipo_equipo=tipo_equipo)
+            equipo = CatastroEquiposMedicos.objects.get(id=id, id_institucion=id_institucion, tipo_equipo=tipo_equipo)
+            
+            # if equipo.exists():
+            equipo_encontrado = {
+                'id': equipo.id,
+                'clase': equipo.clase,
+                'nombre': equipo.nombre,
+                'marca': equipo.marca,
+                'modelo': equipo.modelo,
+                'serie': equipo.serie,
+                'anio': equipo.anio,
+                'vida_util': equipo.vida_util,
+                'estado': equipo.estado,
+                'criticidad': equipo.criticidad,
+                'garantia': equipo.garantia,
+                'vencimiento_garantia': equipo.vencimiento_garantia,
+                'plan_mantencion': equipo.plan_mantencion,
+                'tipo_equipo': equipo.tipo_equipo,
+                'id_convenio': equipo.id_convenio,
+                'id_institucion': equipo.id_institucion,
+                'eliminado': equipo.eliminado,
+                'anio_ingreso': equipo.anio_ingreso,
+                'costo_anual': equipo.costo_anual,
+                'nombre_proveedor': equipo.nombre_proveedor,
+                'numero_inventario': equipo.numero_inventario,
+                'recinto': equipo.recinto,
+                'servicio_clinico': equipo.servicio_clinico,
+                'subclase': equipo.subclase,
+                'tipo_mantenimiento': equipo.tipo_mantenimiento,
+                'vida_util_residual': equipo.vida_util_residual
+            }
+            
+            return JsonResponse({'resultado': equipo_encontrado})
+        
+        elif tipo_equipo == 'industrial':
+            equipo = CatastroEquipoIndustriales.objects.get(id=id, id_institucion=id_institucion, tipo_equipo=tipo_equipo)
+            
+            equipo_encontrado = {
+                'id': equipo.id,
+                'clase': equipo.clase,
+                'subclase': equipo.subclase,
+                'marca': equipo.marca,
+                'modelo': equipo.modelo,
+                'serie': equipo.serie,
+                'numero_inventario': equipo.numero_inventario,
+                'vida_util': equipo.vida_util,
+                'vida_util_residual': equipo.vida_util_residual,
+                'estado': equipo.estado,
+                'garantia': equipo.garantia,
+                'id_institucion': equipo.id_institucion,
+                'anio': equipo.anio,
+                'anio_ingreso_plan_mantenimiento': equipo.anio_ingreso_plan_mantenimiento,
+                'costo_anual_mantenimiento': equipo.costo_anual_mantenimiento,
+                'criticidad': equipo.criticidad,
+                'eliminado': equipo.eliminado,
+                'id_convenio_mantenimiento': equipo.id_convenio_mantenimiento,
+                'nombre': equipo.nombre,
+                'nombre_proveedor': equipo.nombre_proveedor,
+                'nombre_recinto': equipo.nombre_recinto,
+                'plan_mantencion': equipo.plan_mantencion,
+                'tipo_equipo': equipo.tipo_equipo,
+                'tipo_mantenimiento': equipo.tipo_mantenimiento,
+                'ubicacion': equipo.ubicacion,
+                'vencimiento_garantia': equipo.vencimiento_garantia,
+            }
+            
+            return JsonResponse({'resultado': equipo_encontrado})
+        
+        elif tipo_equipo == 'vehiculo':
+            equipo = CatastroAmbulancias.objects.get(id=id, id_institucion=id_institucion, tipo_equipo=tipo_equipo)
+            
+            equipo_encontrado = {
+                'id': equipo.id,
+                'samu': equipo.samu,
+                'funcion': equipo.funcion,
+                'marca': equipo.marca,
+                'modelo': equipo.modelo,
+                'patente': equipo.patente,
+                'numero_motor': equipo.numero_motor,
+                'kilometraje': equipo.kilometraje,
+                'estado': equipo.estado,
+                'anio': equipo.anio,
+                'vida_util': equipo.vida_util,
+                'criticidad': equipo.criticidad,
+                'garantia': equipo.garantia,
+                'vencimiento_garantia': equipo.vencimiento_garantia,
+                'plan_mantencion': equipo.plan_mantencion,
+                'tipo_equipo': equipo.tipo_equipo,
+                'id_institucion': equipo.id_institucion,
+                'eliminado': equipo.eliminado,
+                'anio_ingreso_plan_mantenimiento': equipo.anio_ingreso_plan_mantenimiento,
+                'clase_ambulancia': equipo.clase_ambulancia,
+                'costo_anual_mantenimiento': equipo.costo_anual_mantenimiento,
+                'establecimiento': equipo.establecimiento,
+                'estado_situacion': equipo.estado_situacion,
+                'id_convenio_mantenimiento': equipo.id_convenio_mantenimiento,
+                'nombre_proveedor': equipo.nombre_proveedor,
+                'region': equipo.region,
+                'tipo_ambulancia': equipo.tipo_ambulancia,
+                'tipo_carroceria': equipo.tipo_carroceria,
+                'tipo_mantenimiento': equipo.tipo_mantenimiento,
+                'vida_util_residual': equipo.vida_util_residual,
+            }            
+            
+            return JsonResponse({'resultado': equipo_encontrado})
+            
+        
+        
+@csrf_exempt
+def editar_equipo(request):
+    if request.method == 'POST':
+        print(request.POST)
+        # Obtenemos datos escenciales para saber el tipo de equipo que editaremos
+        tipo_equipo = request.POST.get('hidden-tipo-equipo', None)
+        id_equipo = request.POST.get('hidden-id-equipo', None)
+        
+        # verificamos el tipo de equipo
+        if tipo_equipo == 'medico':
+            # obtenemos el equipo
+            equipo = CatastroEquiposMedicos.objects.filter(id=id_equipo)
+            
+            # verificamos si el equipo existe
+            if equipo.exists():
+                # obtenemos toda la data de la peticion y la guardamos en un diccionario
+
+                datos_a_modificar = {
+                    'clase' : request.POST.get('clase', ''),
+                    'nombre' : request.POST.get('nombre', ''),
+                    'marca' : request.POST.get('marca', ''),
+                    'modelo' : request.POST.get('modelo', ''),
+                    'serie' : request.POST.get('serie', ''),
+                    'anio' : request.POST.get('anio', ''),
+                    'vida_util' : request.POST.get('vida-util', ''),
+                    'estado' : request.POST.get('estado', ''),
+                    'criticidad' : request.POST.get('criticidad', ''),
+                    'garantia' : request.POST.get('garantia', ''),
+                    'vencimiento_garantia' : request.POST.get('vencimiento-garantia', ''),
+                    'plan_mantencion' : request.POST.get('plan-mantencion', ''),
+                    'tipo_equipo' : request.POST.get('tipo-equipo', ''),
+                    'id_convenio' : request.POST.get('id-convenio', ''),
+                    'id_institucion' : request.POST.get('id-institucion', ''),
+                    'eliminado' : request.POST.get('eliminado', ''),
+                    'anio_ingreso' : request.POST.get('anio-ingreso', ''),
+                    'costo_anual' : request.POST.get('costo-anual', ''),
+                    'nombre_proveedor' : request.POST.get('nombre-proveedor', ''),
+                    'numero_inventario' : request.POST.get('numero-inventario', ''),
+                    'recinto' : request.POST.get('recinto', ''),
+                    'servicio_clinico' : request.POST.get('servicio-clinico', ''),
+                    'sub_clase' : request.POST.get('sub-clase', ''),
+                    'tipo_mantenimiento' : request.POST.get('tipo-mantenimiento', ''),
+                    'vida_util_residual' : request.POST.get('vida-util-residual', ''),
+                }
+                
+                # 
+                datos_a_modificar = { campo: valor for campo, valor in datos_a_modificar.items() if valor is not '' }
+
+                # obtenemos el equipo a editar
+                equipo = CatastroEquiposMedicos.objects.get(id=id_equipo)
+                
+                # modificamos los campos mediante un for
+                for campo, valor in datos_a_modificar.items():
+                    setattr(equipo, campo, valor)
+                    
+                # guardamos los datos modificados
+                equipo.save()
+                messages.success(request, 'Equipo modificado')
+
+        elif tipo_equipo == 'industrial':
+            equipo = CatastroEquipoIndustriales.objects.filter(id=id_equipo)
+            
+            if equipo.exists():
+                
+                datos_a_modificar = {
+                    'clase' : request.POST.get('clase', ''),
+                    'subclase' : request.POST.get('sub-clase', ''),
+                    'marca' : request.POST.get('marca', ''),
+                    'modelo' : request.POST.get('modelo', ''),
+                    'serie' : request.POST.get('serie', ''),
+                    'numero_inventario' : request.POST.get('numero-inventario', ''),
+                    'vida_util' : request.POST.get('vida-util', ''),
+                    'vida_util_residual' : request.POST.get('vida-util-residual', ''),
+                    'estado' : request.POST.get('estado', ''),
+                    'garantia' : request.POST.get('garantia', ''),
+                    'id_institucion' : request.POST.get('id-institucion', ''),
+                    'anio' : request.POST.get('anio', ''),
+                    'anio_ingreso_plan_mantenimiento' : request.POST.get('anio-ingreso', ''),
+                    'costo_anual_mantenimiento' : request.POST.get('costo-anual', ''),
+                    'criticidad' : request.POST.get('criticidad', ''),
+                    'eliminado' : request.POST.get('eliminado', ''),
+                    'id_convenio_mantenimiento' : request.POST.get('id-convenio', ''),
+                    'nombre' : request.POST.get('nombre', ''),
+                    'nombre_proveedor' : request.POST.get('nombre-proveedor', ''),
+                    'nombre_recinto' : request.POST.get('recinto', ''),
+                    'plan_mantencion' : request.POST.get('plan-mantencion', ''),
+                    'tipo_equipo' : request.POST.get('tipo-equipo', ''),
+                    'tipo_mantenimiento' : request.POST.get('tipo-mantenimiento', ''),
+                    'ubicacion' : request.POST.get('servicio-clinico', ''),
+                    'vencimiento_garantia' : request.POST.get('vencimiento-garantia', ''),
+                }
+                
+                datos_a_modificar = { campo: valor for campo, valor in datos_a_modificar.items() if valor is not '' }
+                equipo = CatastroEquipoIndustriales.objects.get(id=id_equipo)
+                
+                for campo, valor in datos_a_modificar.items():
+                    setattr(equipo, campo, valor)
+                
+                equipo.save()
+                messages.success(request, 'Equipo modificado')
+        
+        elif tipo_equipo == 'vehiculo':
+            equipo = CatastroAmbulancias.objects.filter(id=id_equipo)
+            
+            if equipo.exists():
+                datos_a_modificar = {
+                    'samu': request.POST.get('samu', ''),
+                    'funcion': request.POST.get('funcion', ''),
+                    'marca': request.POST.get('marca', ''),
+                    'modelo': request.POST.get('modelo', ''),
+                    'patente': request.POST.get('patente', ''),
+                    'numero_motor': request.POST.get('numero-motor', ''),
+                    'kilometraje': request.POST.get('kilometraje', ''),
+                    'estado': request.POST.get('estado', ''),
+                    'anio': request.POST.get('anio', ''),
+                    'vida_util': request.POST.get('vida-util', ''),
+                    'criticidad': request.POST.get('criticidad', ''),
+                    'garantia': request.POST.get('garantia', ''),
+                    'vencimiento_garantia': request.POST.get('vencimiento-garantia', ''),
+                    'plan_mantencion': request.POST.get('plan-mantencion', ''),
+                    'tipo_equipo': request.POST.get('tipo_equipo', ''),
+                    'id_institucion': request.POST.get('id-institucion', ''),
+                    'eliminado': request.POST.get('eliminado', ''),
+                    'anio_ingreso_plan_mantenimiento': request.POST.get('anio-ingreso-plan-mantenimiento', ''),
+                    'clase_ambulancia': request.POST.get('clase-ambulancia', ''),
+                    'costo_anual_mantenimiento': request.POST.get('costo-anual-mantenimiento', ''),
+                    'establecimiento': request.POST.get('establecimiento', ''),
+                    'estado_situacion': request.POST.get('estado-situacion', ''),
+                    'id_convenio_mantenimiento': request.POST.get('id-convenio-mantenimiento', ''),
+                    'nombre_proveedor': request.POST.get('nombre-proveedor', ''),
+                    'region': request.POST.get('region', ''),
+                    'tipo_ambulancia': request.POST.get('tipo-ambulancia', ''),
+                    'tipo_carroceria': request.POST.get('tipo-carroceria', ''),
+                    'tipo_mantenimiento': request.POST.get('tipo-mantenimiento', ''),
+                    'vida_util_residual': request.POST.get('vida-util-residual', ''),
+                }
+                
+                datos_a_modificar = { campo: valor for campo, valor in datos_a_modificar.items() if valor is not '' }
+                equipo = CatastroAmbulancias.objects.get(id=id_equipo)
+                
+                for campo, valor in datos_a_modificar.items():
+                    setattr(equipo, campo, valor)
+                    
+                equipo.save()
+                messages.success(request, 'Equipo modificado')
+
+
+        
+    url = reverse('instituciones_admin', args=['Lebu', 'medico'])
+    return redirect(url)
+
+

@@ -21,7 +21,6 @@
 
 
 
-
 <div id="app">
 	<div class="titulo">
 		<h2>{{ institucion.nombre }}</h2>
@@ -33,8 +32,8 @@
 		<div>
 			<p>Tipo de Equipo</p>
 			<select id="select-tipo-equipo" v-model="opcionSelecionada" @change="actualizarGraficoMedianteSelect">
-				<option v-for="opcion in select_lista_instituciones" :key="opcion.valor" :value="opcion.valor">${
-					opcion.texto }
+				<option v-for="opcion in select_lista_instituciones" :key="opcion.valor" :value="opcion.valor">
+					${opcion.texto }
 				</option>
 			</select>
 		</div>
@@ -79,7 +78,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-if="opcionSelecionada === 'medico'" v-for="data in data_tabla" :key="data.id">
+					<tr v-if="opcionSelecionada === 'medico'" v-for="data in data_tabla" :key="data.id" :id="data.id">
 						<td>${ data.id }</td>
 						<td>${ data.clase }</td>
 						<td>${ data.nombre }</td>
@@ -106,8 +105,18 @@
 						<td>${ data.subclase }</td>
 						<td>${ data.tipo_mantenimiento }</td>
 						<td>${ data.vida_util_residual }</td>
+						{% if request.user.cargo == 'administrador' %}
+						<td>
+							<button @click="editarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Editar</button>
+							<button @click="eliminarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Eliminar</button>
+						</td>
+						{% else %}
+						<td>
+							<span>No eres un administrador</span>
+						</td>
+						{% endif %}
 					</tr>
-					<tr v-else-if="opcionSelecionada === 'vehiculo'" v-for="data in data_tabla" :key="data.id">
+					<tr v-else-if="opcionSelecionada === 'vehiculo'" v-for="data in data_tabla" :key="data.id" :id="data.id">
 						<td>${ data.id }</td>
 						<td>${ data.samu }</td>
 						<td>${ data.funcion }</td>
@@ -138,8 +147,18 @@
 						<td>${ data.tipo_carroceria }</td>
 						<td>${ data.tipo_mantenimiento }</td>
 						<td>${ data.vida_util_residual }</td>
-					</tr>	
-					<tr v-else-if="opcionSelecionada === 'industrial'" v-for="data in data_tabla" :key="data.id">
+						{% if request.user.cargo == 'administrador' %}
+						<td>
+							<button @click="editarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Editar</button>
+							<button @click="eliminarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Eliminar</button>
+						</td>
+						{% else %}
+						<td>
+							<span>No eres un administrador</span>
+						</td>
+						{% endif %}
+					</tr>
+					<tr v-else-if="opcionSelecionada === 'industrial'" v-for="data in data_tabla" :key="data.id" :id="data.id">
 						<td>${ data.id }</td>
 						<td>${ data.clase }</td>
 						<td>${ data.nombre }</td>
@@ -166,6 +185,16 @@
 						<td>${ data.subclase }</td>
 						<td>${ data.tipo_mantenimiento }</td>
 						<td>${ data.vida_util_residual }</td>
+						{% if request.user.cargo == 'administrador' %}
+						<td>
+							<button @click="editarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Editar</button>
+							<button @click="eliminarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Eliminar</button>
+						</td>
+						{% else %}
+						<td>
+							<span>No eres un administrador</span>
+						</td>
+						{% endif %}
 					</tr>
 				</tbody>
 			</table>
@@ -182,7 +211,118 @@
 		</div>
 		<div class="content">
 			<ul>
-				<li v-if="this.opcionSelecionada === 'medico'" style="list-style: none;" v-for="resultado in resultados" :key="resultado.id">
+				<li v-if="this.opcionSelecionada === 'medico'" style="list-style: none;" v-for="resultado in resultados"
+					:key="resultado.id">
+					<div>
+						<span>${ resultado.fields }</span>
+						<span style="font-weight: bold;">ID - </span>
+						<span>${ resultado.id }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Clase - </span>
+						<span>${ resultado.clase }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Nombre - </span>
+						<span>${ resultado.nombre }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Marca - </span>
+						<span>${ resultado.marca }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Modelo - </span>
+						<span>${ resultado.modelo }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Serie - </span>
+						<span>${ resultado.serie }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Año - </span>
+						<span>${ resultado.anio }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vida Util - </span>
+						<span>${ resultado.vida_util }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Estado - </span>
+						<span>${ resultado.estado }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Criticidad - </span>
+						<span>${ resultado.criticidad }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Garantia - </span>
+						<span>${ resultado.garantia }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vencimiento de garantia - </span>
+						<span>${ resultado.vencimiento_garantia }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Plan de mantención - </span>
+						<span>${ resultado.plan_mantencion }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Tipo de equipo - </span>
+						<span>${ resultado.tipo_equipo }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">ID de convenio - </span>
+						<span>${ resultado.id_convenio }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">ID de institución - </span>
+						<span>${ resultado.id_institucion }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Eliminado - </span>
+						<span>${ resultado.eliminado }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Año de ingreso - </span>
+						<span>${ resultado.anio_ingreso }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Costo anual - </span>
+						<span>${ resultado.costo_anual }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Numero de proveedor - </span>
+						<span>${ resultado.numero_proveedor }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Numero de inventario - </span>
+						<span>${ resultado.numero_inventario }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Recinto - </span>
+						<span>${ resultado.recinto }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Servicio clinico - </span>
+						<span>${ resultado.servicio_clinico }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Subclase - </span>
+						<span>${ resultado.subclase }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Tipo de mantenimiento - </span>
+						<span>${ resultado.tipo_mantenimiento }</span>
+					</div>
+					<div>
+						<span style="font-weight: bold;">Vida util residual - </span>
+						<span>${ resultado.vida_util_residual }</span>
+					</div>
+					<br>
+					<!-- <span>${ resultado }</span> -->
+				</li>
+				<li v-else-if="this.opcionSelecionada === 'industrial'" style="list-style: none;"
+					v-for="resultado in resultados" :key="resultado.id">
 					<div>
 						<span style="font-weight: bold;">ID - </span>
 						<span>${ resultado.id }</span>
@@ -290,115 +430,8 @@
 					<br>
 					<!-- <span>${ resultado }</span> -->
 				</li>
-				<li v-else-if="this.opcionSelecionada === 'industrial'" style="list-style: none;" v-for="resultado in resultados" :key="resultado.id">
-					<div>
-						<span style="font-weight: bold;">ID - </span>
-						<span>${ resultado.id }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Clase - </span>
-						<span>${ resultado.clase }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Nombre - </span>
-						<span>${ resultado.nombre }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Marca - </span>
-						<span>${ resultado.marca }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Modelo - </span>
-						<span>${ resultado.modelo }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Serie - </span>
-						<span>${ resultado.serie }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Año - </span>
-						<span>${ resultado.anio }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Vida Util - </span>
-						<span>${ resultado.vida_util }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Estado - </span>
-						<span>${ resultado.estado }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Criticidad - </span>
-						<span>${ resultado.criticidad }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Garantia - </span>
-						<span>${ resultado.garantia }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Vencimiento de garantia - </span>
-						<span>${ resultado.vencimiento_garantia }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Plan de mantención - </span>
-						<span>${ resultado.plan_mantencion }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Tipo de equipo - </span>
-						<span>${ resultado.tipo_equipo }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">ID de convenio - </span>
-						<span>${ resultado.id_convenio }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">ID de institución - </span>
-						<span>${ resultado.id_institucion }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Eliminado - </span>
-						<span>${ resultado.eliminado }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Año de ingreso - </span>
-						<span>${ resultado.anio_ingreso }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Costo anual - </span>
-						<span>${ resultado.costo_anual }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Numero de proveedor - </span>
-						<span>${ resultado.numero_proveedor }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Numero de inventario - </span>
-						<span>${ resultado.numero_inventario }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Recinto - </span>
-						<span>${ resultado.recinto }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Servicio clinico - </span>
-						<span>${ resultado.servicio_clinico }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Subclase - </span>
-						<span>${ resultado.subclase }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Tipo de mantenimiento - </span>
-						<span>${ resultado.tipo_mantenimiento }</span>
-					</div>
-					<div>
-						<span style="font-weight: bold;">Vida util residual - </span>
-						<span>${ resultado.vida_util_residual }</span>
-					</div>
-					<br>
-					<!-- <span>${ resultado }</span> -->
-				</li>
-				<li v-else-if="this.opcionSelecionada === 'vehiculo'" style="list-style: none;" v-for="resultado in resultados" :key="resultado.id">
+				<li v-else-if="this.opcionSelecionada === 'vehiculo'" style="list-style: none;" v-for="resultado in resultados"
+					:key="resultado.id">
 					<div>
 						<span style="font-weight: bold;">ID - </span>
 						<span>${ resultado.id }</span>
@@ -532,15 +565,388 @@
 
 
 
+	<!-- Modal para editar el catastro -->
+	<!-- Modal -->
+	<div class="ui modal" id="miModalEditarCatastro">
+		<i class="close icon">x</i>
+		<div class="header">
+			Formulario para editar catastro
+		</div>
+		<div class="content">
+			<div class="field">
+				<div>
+					<h3>Datos actuales del equipo</h3>
+				</div>
+
+				<hr>
+
+				<div v-if="tipoFormularioEditarCatastro === 'medico' || tipoFormularioEditarCatastro === 'industrial'" class="contenedor-data-formulario-editar">
+					<p ref="idEquipo"></p>
+					<p ref="clase"></p>
+					<p ref="nombre"></p>
+					<p ref="marca"></p>
+					<p ref="modelo"></p>
+					<p ref="serie"></p>
+					<p ref="anio"></p>
+					<p ref="vida_util"></p>
+					<p ref="estado"></p>
+					<p ref="criticidad"></p>
+					<p ref="garantia"></p>
+					<p ref="vencimiento_garantia"></p>
+					<p ref="plan_mantencion"></p>
+					<p ref="tipo_equipo_parrafo"></p>
+					<p ref="id_convenio"></p>
+					<p ref="id_institucion"></p>
+					<p ref="eliminado"></p>
+					<p ref="anio_ingreso"></p>
+					<p ref="costo_anual"></p>
+					<p ref="nombre_proveedor"></p>
+					<p ref="numero_inventario"></p>
+					<p ref="recinto"></p>
+					<p ref="servicio_clinico"></p>
+					<p ref="sub_clase"></p>
+					<p ref="tipo_mantenimiento"></p>
+					<p ref="vida_util_residual"></p>
+				</div>
+
+				<div v-else-if="tipoFormularioEditarCatastro === 'vehiculo'" class="contenedor-data-formulario-editar">
+					<p ref="idEquipoVehiculo"></p>
+					<p ref="funcionVehiculo"></p>
+					<p ref="marcaVehiculo"></p>
+					<p ref="modeloVehiculo"></p>
+					<p ref="patenteVehiculo"></p>
+					<p ref="numeroMotorVehiculo"></p>
+					<p ref="kilometrajeVehiculo"></p>
+					<p ref="estadoVehiculo"></p>
+					<p ref="anioVehiculo"></p>
+					<p ref="vidaUtilVehiculo"></p>
+					<p ref="criticidadVehiculo"></p>
+					<p ref="garantiaVehiculo"></p>
+					<p ref="vencimientoGarantiaVehiculo"></p>
+					<p ref="planMantecionVehiculo"></p>
+					<p ref="tipoEquipoVehiculo"></p>
+					<p ref="idInstitucionVehiculo"></p>
+					<p ref="eliminadoVehiculo"></p>
+					<p ref="anioIngreoPlanMantencionVehiculo"></p>
+					<p ref="claseAmbulanciaVehiculo"></p>
+					<p ref="costoAnualMantenimientoVehiculo"></p>
+					<p ref="establecimientoVehiculo"></p>
+					<p ref="estadoSituacionVehiculo"></p>
+					<p ref="idConvenioMantenimientoVehiculo"></p>
+					<p ref="nombreProfesorVehiculo"></p>
+					<p ref="regionVehiculo"></p>
+					<p ref="tipoAmbulanciaVehiculo"></p>
+					<p ref="tipoCarroceriaVehiculo"></p>
+					<p ref="tipoMantenimientoVehiculo"></p>
+					<p ref="vidaUtilResidualVehiculo"></p>
+				</div>
+
+
+				<br><br>
+				<hr>
+				<br><br>
+
+			</div>
+			<!-- Contenido del formulario -->
+			<form class="ui form" method="POST" action="{% url 'editar_equipo' %}" >
+				{% csrf_token %}
+				<input type="hidden" name="hidden-id-equipo" id="hidden-id-equipo" value="">
+				<input type="hidden" name="hidden-tipo-equipo" id="hidden-tipo-equipo" value="">
+				<div v-if="tipoFormularioEditarCatastro === 'medico'">
+					<div class="field">
+						<label for="">Clase</label>
+						<input type="text" name="clase" placeholder="clase">
+					</div>
+					<div class="field">
+						<label>Nombre</label>
+						<input type="text" name="nombre" placeholder="Nombre">
+					</div>
+					<div class="field">
+						<label for="marca">Marca</label>
+						<input type="text" name="marca" placeholder="marca">
+					</div>
+					<div class="field">
+						<label for="modelo">Modelo</label>
+						<input type="text" name="modelo" placeholder="modelo">
+					</div>
+					<div class="field">
+						<label for="serie">Serie</label>
+						<input type="text" name="serie" placeholder="serie">
+					</div>
+					<div class="field">
+						<label for="anio">Año</label>
+						<input type="number" name="anio" placeholder="2024">
+					</div>
+					<div class="field">
+						<label for="vida-util">Vida util</label>
+						<input type="number" name="vida-util" placeholder="1">
+					</div>
+					<div class="field">
+						<select name="estado">
+							<option value="" disabled selected>Seleccione un estado</option>
+							<option value="BUENO">Bueno</option> <!-- Bueno - Regular - Malo - Baja -->
+							<option value="REGULAR">Regular</option>
+							<option value="MALO">Malo</option>
+							<option value="BAJA">Baja</option>
+						</select>
+					</div>
+					<div class="field">
+						<select name="criticidad">
+							<option value="" disabled selected>Seleccione una opción</option>
+							<option value="Critico">Crítico</option>
+							<option value="Relevante">Relevante</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="garantia">Garantia</label>
+						<input type="text" name="garantia" placeholder="garantia">
+					</div>
+					<div class="field">
+						<label for="vencimiento-garantia">Vencimiento de garantia</label>
+						<input type="text" name="vencimiento-garantia" placeholder="vencimiento garantia">
+					</div>
+					<div class="field">
+						<label for="plan-mantencion">Plan de mantención</label>
+						<input type="text" name="plan-mantencion" placeholder="plan de mantención">
+					</div>
+					<div class="field">
+						<select name="tipo-equipo">
+							<option value="" disabled selected>seleccione un tipo de equipo</option>
+							<option value="medico">Medico</option>
+							<option value="vehiculo">Vehiculo</option>
+							<option value="industrial">Industrial</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="id-convenio">Id de convenio</label>
+						<input type="number" name="id-convenio" placeholder="1">
+					</div>
+					<div class="field">
+						<select name="id-institucion">
+							<option value="" disabled selected>Seleccione una ciudad</option>
+							<option value="1">Lebu</option>
+							<option value="2">Arauco</option>
+							<option value="4">Cañete</option>
+							<option value="3">Curanilahue</option>
+							<option value="5">Contulmo</option>
+						</select>
+					</div>
+					<div class="field">
+						<select name="eliminado">
+							<option value="" disabled selected>¿ Eliminado ?</option>
+							<option value="1">Si</option>
+							<option value="0">No</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="anio-ingreso">Año de ingreso</label>
+						<input type="number" placeholder="Año ingreso, ej: 2023" name="anio-ingreso">
+					</div>
+					<div class="field">
+						<label for="costo-anual">Costo anual</label>
+						<input type="number" name="costo-anual" placeholder="0">
+					</div>
+					<div class="field">
+						<label for="nombre-proveedor">Nombre del proveedor</label>
+						<input type="text" name="nombre-proveedor" placeholder="Nombre del proveedor">
+					</div>
+					<div class="field">
+						<label for="numero-inventario">Numero de inventario</label>
+						<input type="text" name="numero-inventario" placeholder="Numero de inventario">
+					</div>
+					<div class="field">
+						<label for="recinto">Recinto</label>
+						<input type="text" name="recinto" placeholder="recinto">
+					</div>
+					<div class="field">
+						<label for="servicio-clinico">Servicio clinico</label>
+						<input type="text" name="servicio-clinico" placeholder="Servicio clinico">
+					</div>
+					<div class="field">
+						<label for="sub-clase">SubClase</label>
+						<input type="text" name="sub-clase" placeholder="subclase">
+					</div>
+					<div class="field">
+						<label for="tipo-manteimiento">Tipo de mantenimiento</label>
+						<input type="text" name="tipo-mantenimiento" placeholder="Tipo de mantenimiento">
+					</div>
+					<div class="field">
+						<label for="vida-util-residual">Vida util residual</label>
+						<input type="number" name="vida-util-residual" placeholder="0">
+					</div>
+					
+					<button ref="btnEnviarFormularioEditarCatastro" class="ui button" type="submit">Enviar</button>
+
+				</div>
+				<div v-else-if="tipoFormularioEditarCatastro === 'industrial'">
+
+					<div class="field">
+						<label for="">Clase</label>
+						<input type="text" name="clase" placeholder="clase">
+					</div>
+					<div class="field">
+						<label>Nombre</label>
+						<input type="text" name="nombre" placeholder="Nombre">
+					</div>
+					<div class="field">
+						<label for="marca">Marca</label>
+						<input type="text" name="marca" placeholder="marca">
+					</div>
+					<div class="field">
+						<label for="modelo">Modelo</label>
+						<input type="text" name="modelo" placeholder="modelo">
+					</div>
+					<div class="field">
+						<label for="serie">Serie</label>
+						<input type="text" name="serie" placeholder="serie">
+					</div>
+					<div class="field">
+						<label for="anio">Año</label>
+						<input type="number" name="anio" placeholder="2024">
+					</div>
+					<div class="field">
+						<label for="vida-util">Vida util</label>
+						<input type="number" name="vida-util" placeholder="1">
+					</div>
+					<div class="field">
+						<select name="estado">
+							<option value="" disabled selected>Seleccione un estado</option>
+							<option value="BUENO">Bueno</option> <!-- Bueno - Regular - Malo - Baja -->
+							<option value="REGULAR">Regular</option>
+							<option value="MALO">Malo</option>
+							<option value="BAJA">Baja</option>
+						</select>
+					</div>
+					<div class="field">
+						<select name="criticidad">
+							<option value="" disabled selected>Seleccione una opción</option>
+							<option value="Critico">Crítico</option>
+							<option value="Relevante">Relevante</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="garantia">Garantia</label>
+						<input type="text" name="garantia" placeholder="garantia">
+					</div>
+					<div class="field">
+						<label for="vencimiento-garantia">Vencimiento de garantia</label>
+						<input type="text" name="vencimiento-garantia" placeholder="vencimiento garantia">
+					</div>
+					<div class="field">
+						<label for="plan-mantencion">Plan de mantención</label>
+						<input type="text" name="plan-mantencion" placeholder="plan de mantención">
+					</div>
+					<div class="field">
+						<select name="tipo-equipo">
+							<option value="" disabled selected>seleccione un tipo de equipo</option>
+							<option value="medico">Medico</option>
+							<option value="vehiculo">Vehiculo</option>
+							<option value="industrial">Industrial</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="id-convenio">Id de convenio</label>
+						<input type="number" name="id-convenio" placeholder="1">
+					</div>
+					<div class="field">
+						<select name="id-institucion">
+							<option value="" disabled selected>Seleccione una ciudad</option>
+							<option value="1">Lebu</option>
+							<option value="2">Arauco</option>
+							<option value="4">Cañete</option>
+							<option value="3">Curanilahue</option>
+							<option value="5">Contulmo</option>
+						</select>
+					</div>
+					<div class="field">
+						<select name="eliminado">
+							<option value="" disabled selected>¿ Eliminado ?</option>
+							<option value="1">Si</option>
+							<option value="0">No</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="anio-ingreso">Año de ingreso</label>
+						<input type="number" placeholder="Año ingreso, ej: 2023" name="anio-ingreso">
+					</div>
+					<div class="field">
+						<label for="costo-anual">Costo anual</label>
+						<input type="number" name="costo-anual" placeholder="0">
+					</div>
+					<div class="field">
+						<label for="nombre-proveedor">Nombre del proveedor</label>
+						<input type="text" name="nombre-proveedor" placeholder="Nombre del proveedor">
+					</div>
+					<div class="field">
+						<label for="numero-inventario">Numero de inventario</label>
+						<input type="text" name="numero-inventario" placeholder="Numero de inventario">
+					</div>
+					<div class="field">
+						<label for="recinto">Recinto</label>
+						<input type="text" name="recinto" placeholder="recinto">
+					</div>
+					<div class="field">
+						<label for="servicio-clinico">Servicio clinico</label>
+						<input type="text" name="servicio-clinico" placeholder="Servicio clinico">
+					</div>
+					<div class="field">
+						<label for="sub-clase">SubClase</label>
+						<input type="text" name="sub-clase" placeholder="subclase">
+					</div>
+					<div class="field">
+						<label for="tipo-manteimiento">Tipo de mantenimiento</label>
+						<input type="text" name="tipo-mantenimiento" placeholder="Tipo de mantenimiento">
+					</div>
+					<div class="field">
+						<label for="vida-util-residual">Vida util residual</label>
+						<input type="number" name="vida-util-residual" placeholder="0">
+					</div>
+					
+					<button ref="btnEnviarFormularioEditarCatastro" class="ui button" type="submit">Enviar</button>
+
+
+				</div>
+				<div v-else-if="tipoFormularioEditarCatastro === 'vehiculo'">
+
+				</div>
+			</form>
+		</div>
+		<!-- Modal para editar el catastro -->
 
 
 
 
 
 
+		<script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+		<script src="{% static 'js/admin/institucion_lebu.js' %}"></script>
+	</div>
 
-	<script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
-	<script src="{% static 'js/admin/institucion_lebu.js' %}"></script>
-</div>
 
-{% endblock contenido_dinamico %}
+
+
+	{% if messages %}
+		<ul class="messages">
+			{% for mensaje in messages %}
+				<script>
+					const toast = new Toasts({
+						offsetX: 20, // 20px
+						offsetY: 20, // 20px
+						gap: 20, // The gap size in pixels between toasts
+						width: 300, // 300px
+						timing: 'ease', // See list of available CSS transition timings
+						duration: '.5s', // Transition duration
+						dimOld: true, // Dim old notifications while the newest notification stays highlighted
+						position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+					});
+					toast.push({
+						title: 'Información', 
+						content: `{{ mensaje }}`,
+						style: `{{ mensaje.level_tag }}`
+					})
+				</script>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
+	{% endblock contenido_dinamico %}

@@ -30,47 +30,6 @@ class CatastroEquipoIndustriales(models.Model):
     eliminado = models.IntegerField(default=0)
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    # servicio_clinico = models.CharField(max_length=200, blank=True)
-    # recinto = models.CharField(max_length=100, blank=True)
-    # clase = models.CharField(max_length=100, blank=True)
-    # subclase = models.CharField(max_length=100, blank=True)
-    # nombre_equipo = models.CharField(max_length=100, blank=True)
-    # marca = models.CharField(max_length=100, blank=True)
-    # modelo = models.CharField(max_length=100, blank=True)
-    # serie = models.CharField(max_length=100, blank=True)
-    # numero_inventario = models.CharField(max_length=100, blank=True)
-    # anio_adquisicion = models.CharField(max_length=100, blank=True)
-    # vida_util = models.IntegerField(null=True)
-    # vida_util_residual = models.IntegerField(null=True)
-    # propio = models.CharField(max_length=50, blank=True) # Propio - Arriendo Comodato
-    # estado = models.CharField(max_length=50, blank=True) # Bueno - Regular - Malo - Baja
-    # garantia = models.CharField(max_length=50, blank=True) # Si - No
-    # anio_vencimiento_garantia = models.IntegerField(null=True)
-    # bajo_plan_mantenimiento = models.CharField(max_length=50, blank=True) # Si - No
-    # id_institucion = models.IntegerField(null=True)
-    
-    
 class CatastroEquiposMedicos(models.Model):
     servicio_clinico = models.CharField(max_length = 150, default='')
     recinto = models.CharField(max_length = 150, default='')

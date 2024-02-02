@@ -122,13 +122,17 @@ createApp({
                 { valor: 'medico', texto: 'Medico' },
                 { valor: 'industrial', texto: 'Industrial' },
                 { valor: 'vehiculo', texto: 'Vehiculo' },
-            ]
+            ],
+            resultados: [],
+            busqueda: null,
+            placeholderDinamico: 'n° de inventario'
         }
     },
 
     methods: {
         actualizarGraficoMedianteSelect(){
             if (this.opcionSelecionada === 'medico') {
+                this.placeholderDinamico = 'n° de inventario'
                 axios.get('http://127.0.0.1:8000/get_arauco_medico/')
                 .then(response => {
                     data_grafico = { 'bueno': 0, 'regular': 0, 'malo': 0, 'baja': 0 }
@@ -164,7 +168,7 @@ createApp({
                         'ID', 'Clase', 'Nombre', 'Marca', 'Modelo', 'Serie', 'Anio', 'Vida Util', 'Estado', 'Criticidad', 'Garantia',
                         'Vencimiento Garantia', 'Plan Mantención', 'Tipo Equipo', 'ID Convenio', 'ID Institución', 'Eliminado', 'Año Ingreso',
                         'Costo Anual', 'Nombre Proveedor', 'Numero Inventario', 'Recinto', 'Servicio Clinico', 'Subclase', 'Tipo Mantenimiento',
-                        'Vida Util Residual'
+                        'Vida Util Residual', 'Opciones'
                     ]
 
                     this.titulo_primer_grafico = 'Equipos Medicos'
@@ -176,6 +180,7 @@ createApp({
                     // console.log(this.data_tabla[0].id);
                 })
             }else if(this.opcionSelecionada === 'industrial'){
+                this.placeholderDinamico = 'n° de inventario'
                 axios.get('http://127.0.0.1:8000/get_arauco_industrial/')
                 .then(response => {
                     data_grafico = { 'bueno': 0, 'regular': 0, 'malo': 0, 'baja': 0 }
@@ -210,7 +215,7 @@ createApp({
                         'ID', 'Clase', 'Nombre', 'Marca', 'Modelo', 'Serie', 'Anio', 'Vida Util', 'Estado', 'Criticidad', 'Garantia',
                         'Vencimiento Garantia', 'Plan Mantención', 'Tipo Equipo', 'ID Convenio', 'ID Institución', 'Eliminado', 'Año Ingreso',
                         'Costo Anual', 'Nombre Proveedor', 'Numero Inventario', 'Recinto', 'Servicio Clinico', 'Subclase', 'Tipo Mantenimiento',
-                        'Vida Util Residual'
+                        'Vida Util Residual', 'Opciones'
                     ]
                     this.titulo_primer_grafico = 'Equipos Industriales'
                     this.grafico(data_grafico.bueno, data_grafico.regular, data_grafico.malo, data_grafico.baja)
@@ -220,6 +225,7 @@ createApp({
                     this.data_tabla = response.data.datos
                 })
             }else if(this.opcionSelecionada === 'vehiculo'){
+                this.placeholderDinamico = 'patente'
                 axios.get('http://127.0.0.1:8000/get_arauco_vehiculos/')
                 .then(response => {
                     data_grafico = { 'bueno': 0, 'regular': 0, 'malo': 0, 'baja': 0 }
@@ -256,7 +262,7 @@ createApp({
                         'Vida Util', 'Criticidad', 'Garantia', 'Vencimiento Garantia', 'Plan Mantención', 'Tipo Equipo', 'ID Institución',
                         'Eliminado', 'Año Ingreso Plan Mantenimiento', 'Clase Ambulancia', 'Costo Anual Mantenimiento', 'Establecimiento',
                         'Estado Situacion', 'ID Convenio Mantenimiento', 'Nombre Proveedor', 'Region', 'Tipo Ambulancia', 'Tipo Carroceria',
-                        'Tipo Mantenimiento', 'Vida Util Residual'
+                        'Tipo Mantenimiento', 'Vida Util Residual', 'Opciones'
                     ]
                     this.titulo_primer_grafico = 'Vehiculos'
                     this.grafico(data_grafico.bueno, data_grafico.regular, data_grafico.malo, data_grafico.baja)
@@ -304,7 +310,7 @@ createApp({
                     'ID', 'Clase', 'Nombre', 'Marca', 'Modelo', 'Serie', 'Anio', 'Vida Util', 'Estado', 'Criticidad', 'Garantia',
                     'Vencimiento Garantia', 'Plan Mantención', 'Tipo Equipo', 'ID Convenio', 'ID Institución', 'Eliminado', 'Año Ingreso',
                     'Costo Anual', 'Nombre Proveedor', 'Numero Inventario', 'Recinto', 'Servicio Clinico', 'Subclase', 'Tipo Mantenimiento',
-                    'Vida Util Residual'
+                    'Vida Util Residual', 'Opciones'
                 ]
                 this.titulo_primer_grafico = 'Equipos Medicos'
                 this.grafico(data_grafico.bueno, data_grafico.regular, data_grafico.malo, data_grafico.baja)
@@ -438,10 +444,177 @@ createApp({
                 ],
             };
             myChart.setOption(option);
+        },
+
+
+        // Metodo relacionado con la busqueda
+        buscar() {
+            const data = {
+                'id_institucion': 2,
+                'tipo_equipo': 'medico',
+                'numero_inventario_busqueda': this.busqueda
+            }
+
+            if (this.opcionSelecionada === 'medico') {
+                data.tipo_equipo = 'medico'
+                axios.post('http://127.0.0.1:8000/busqueda_equipos_medicos/', data)
+                    .then(response => {
+                        this.resultados = response.data.data
+
+                        // Muestra el modal si hay resultados
+                        if (this.resultados.length > 0) {
+                        // if (this.resultados) {
+                            $('#resultado-modal').modal('show');
+                        }
+                        else {
+                            const toast = new Toasts({
+                                offsetX: 20, // 20px
+                                offsetY: 20, // 20px
+                                gap: 40, // The gap size in pixels between toasts
+                                width: 450, // 300px
+                                timing: 'ease', // See list of available CSS transition timings
+                                duration: '.5s', // Transition duration
+                                dimOld: true, // Dim old notifications while the newest notification stays highlighted
+                                position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+                            });
+                            toast.push({
+                                title: 'No hay resultados',
+                                content: 'No existen coincidencias con el numero de serie',
+                                style: 'error'
+                            })
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.cerrarModalResultadosBusqueda()
+                    })
+            }
+            else if (this.opcionSelecionada === 'industrial') {
+                data.tipo_equipo = 'industrial'
+                axios.post('http://127.0.0.1:8000/busqueda_equipos_industriales/', data)
+                    .then(response => {
+                        console.log(response.data.data);
+                        this.resultados = response.data.data
+
+
+                        if (this.resultados.length > 0) {
+                            $('#resultado-modal').modal('show');
+                        }
+                        else {
+                            const toast = new Toasts({
+                                offsetX: 20, // 20px
+                                offsetY: 20, // 20px
+                                gap: 40, // The gap size in pixels between toasts
+                                width: 450, // 300px
+                                timing: 'ease', // See list of available CSS transition timings
+                                duration: '.5s', // Transition duration
+                                dimOld: true, // Dim old notifications while the newest notification stays highlighted
+                                position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+                            });
+                            toast.push({
+                                title: 'No hay resultados',
+                                content: 'No existen coincidencias con el numero de serie',
+                                style: 'error'
+                            })
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.cerrarModalResultadosBusqueda()
+                    })
+            }
+            else if (this.opcionSelecionada === 'vehiculo') {
+                data.tipo_equipo = 'vehiculo'
+                axios.post('http://127.0.0.1:8000/busqueda_vehiculos/', data)
+                    .then(response => {
+                        console.log(response.data.data);
+                        this.resultados = response.data.data
+
+                        if (this.resultados.length > 0) {
+                            $('#resultado-modal').modal('show');
+                        }
+                        else {
+                            const toast = new Toasts({
+                                offsetX: 20, // 20px
+                                offsetY: 20, // 20px
+                                gap: 40, // The gap size in pixels between toasts
+                                width: 450, // 300px
+                                timing: 'ease', // See list of available CSS transition timings
+                                duration: '.5s', // Transition duration
+                                dimOld: true, // Dim old notifications while the newest notification stays highlighted
+                                position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+                            });
+                            toast.push({
+                                title: 'No hay resultados',
+                                content: 'No existen coincidencias con la patente',
+                                style: 'error'
+                            })
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.cerrarModalResultadosBusqueda()
+                    })
+            }
+        },
+
+        cerrarModalResultadosBusqueda() {
+            $('#resultado-modal').modal('hide');
+        },
+
+        limpiarCampo() {
+            this.busqueda = ''
+        },
+
+
+        // Crud Editar y Eliminar
+        editarCatastro(id, idInstitucion, tipoEquipo) {
+            console.log(id, idInstitucion, tipoEquipo);
+        },
+
+
+        eliminarCatastro(id, idInstitucion, tipoEquipo) {
+            // Esta funcion recibe tres argumentos: id, idinstitucion y tipoEquipo, esto nos permite identificar el registro en la base de datos.
+            console.log(id, idInstitucion, tipoEquipo);
+            const data = {
+                'id': id,
+                'idInstitucion': idInstitucion,
+                'tipoEquipo': tipoEquipo
+            }
+            axios.post('http://127.0.0.1:8000/eliminar_catastro/', data)
+                .then(response => {
+                    const index = this.data_tabla.findIndex(item => item.id === id)
+                    console.log(index);
+                    // JQUERY
+                    $('#' + id).addClass('fila-eliminada').fadeOut('slow', function () {
+                        $(this).remove(); // Eliminar completamente la fila después de la animación
+                        console.log('fila eliminada');
+                    });
+                    // JQUERY
+                    
+                    console.log(response);
+
+                    const toast = new Toasts({
+                        offsetX: 20, // 20px
+                        offsetY: 20, // 20px
+                        gap: 20, // The gap size in pixels between toasts
+                        width: 300, // 300px
+                        timing: 'ease', // See list of available CSS transition timings
+                        duration: '.5s', // Transition duration
+                        dimOld: true, // Dim old notifications while the newest notification stays highlighted
+                        position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+                    });
+                    toast.push({
+                        title: `Información`,
+                        content: response.data.mensaje,
+                        style: response.data.categoria
+                    })
+                })
+                .catch(error => {
+                console.log(error);
+            })
+        
         }
-
-
-
 
 
 
