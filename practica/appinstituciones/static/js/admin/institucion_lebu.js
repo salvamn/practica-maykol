@@ -497,7 +497,7 @@ createApp({
 
                         // Muestra el modal si hay resultados
                         if (this.resultados.length > 0) {
-                        // if (this.resultados) {
+                            // if (this.resultados) {
                             $('#resultado-modal').modal('show');
                         }
                         else {
@@ -611,159 +611,227 @@ createApp({
                 'tipoEquipo': tipoEquipo
             }
 
-            if(tipoEquipo === 'medico'){
+            if (tipoEquipo === 'medico') {
                 axios.post('http://127.0.0.1:8000/obtener_data/', data)
-                .then(response => {
-                    // console.log(response.data.resultado);
-                    this.dataObjetoAEditar = response.data.resultado
+                    .then(response => {
+                        // console.log(response.data.resultado);
+                        this.dataObjetoAEditar = response.data.resultado
 
-                    // Obtenemos las referencias del dom mediante refs
-                    const idEquipo = this.$refs.idEquipo
-                    const clase = this.$refs.clase
-                    const nombre = this.$refs.nombre
-                    const marca = this.$refs.marca
-                    const modelo = this.$refs.modelo
-                    const serie = this.$refs.serie
-                    const anio = this.$refs.anio
-                    const vida_util = this.$refs.vida_util
-                    const estado = this.$refs.estado
-                    const criticidad = this.$refs.criticidad
-                    const garantia = this.$refs.garantia
-                    const vencimiento_garantia = this.$refs.vencimiento_garantia
-                    const plan_mantencion = this.$refs.plan_mantencion
-                    const tipo_equipo_parrafo = this.$refs.tipo_equipo_parrafo
-                    const id_convenio = this.$refs.id_convenio
-                    const id_institucion = this.$refs.id_institucion
-                    const eliminado = this.$refs.eliminado
-                    const anio_ingreso = this.$refs.anio_ingreso
-                    const costo_anual = this.$refs.costo_anual
-                    const nombre_proveedor = this.$refs.nombre_proveedor
-                    const numero_inventario = this.$refs.numero_inventario
-                    const recinto = this.$refs.recinto
-                    const servicio_clinico = this.$refs.servicio_clinico
-                    const sub_clase = this.$refs.sub_clase
-                    const tipo_mantenimiento = this.$refs.tipo_mantenimiento
-                    const vida_util_residual = this.$refs.vida_util_residual
-                    
-                    const inputHiddenIdEquipo = document.getElementById('hidden-id-equipo')
-                    const ipnutHiddenTipoEquipo = document.getElementById('hidden-tipo-equipo')
-                    
-                    // Les asignamos texto a las refs
-                    idEquipo.innerHTML = `ID: ${this.dataObjetoAEditar.id}`
-                    clase.innerHTML = `Clase: ${this.dataObjetoAEditar.clase}`
-                    nombre.innerHTML = `Nombre: ${this.dataObjetoAEditar.nombre}`
-                    marca.innerHTML = `Marca: ${this.dataObjetoAEditar.marca}`
-                    modelo.innerHTML = `Modelo: ${this.dataObjetoAEditar.modelo}`
-                    serie.innerHTML = `Serie: ${this.dataObjetoAEditar.serie}`
-                    anio.innerHTML = `Año: ${this.dataObjetoAEditar.anio}`
-                    vida_util.innerHTML = `Vida util: ${this.dataObjetoAEditar.vida_util}`
-                    estado.innerHTML = `Estado: ${this.dataObjetoAEditar.estado}`
-                    criticidad.innerHTML = `Criticidad: ${this.dataObjetoAEditar.criticidad}`
-                    garantia.innerHTML = `Garantia: ${this.dataObjetoAEditar.garantia}`
-                    vencimiento_garantia.innerHTML = `Vencimiento de garantia: ${this.dataObjetoAEditar.vencimiento_garantia}`
-                    plan_mantencion.innerHTML = `Plan de mantención: ${this.dataObjetoAEditar.plan_mantencion}`
-                    tipo_equipo_parrafo.innerHTML = `Tipo de equipo: ${this.dataObjetoAEditar.tipo_equipo}`
-                    id_convenio.innerHTML = `ID de convenio: ${this.dataObjetoAEditar.id_convenio}`
-                    id_institucion.innerHTML = `ID de institución: ${this.dataObjetoAEditar.id_institucion}`
-                    eliminado.innerHTML = `Eliminado: ${this.dataObjetoAEditar.eliminado}`
-                    anio_ingreso.innerHTML = `Año de ingreso: ${this.dataObjetoAEditar.anio_ingreso}`
-                    costo_anual.innerHTML = `Costo anual: ${this.dataObjetoAEditar.costo_anual}`
-                    nombre_proveedor.innerHTML = `Nombre del proveedor: ${this.dataObjetoAEditar.nombre_proveedor}`
-                    numero_inventario.innerHTML = `Numero de inventario: ${this.dataObjetoAEditar.numero_inventario}`
-                    recinto.innerHTML = `Recinto: ${this.dataObjetoAEditar.recinto}`
-                    servicio_clinico.innerHTML = `Servicio clinico: ${this.dataObjetoAEditar.servicio_clinico}`
-                    sub_clase.innerHTML = `SubClase: ${this.dataObjetoAEditar.subclase}`
-                    tipo_mantenimiento.innerHTML = `Tipo de mantenimiento: ${this.dataObjetoAEditar.tipo_mantenimiento}`
-                    vida_util_residual.innerHTML = `Vida util residual: ${this.dataObjetoAEditar.vida_util_residual}`
-                    inputHiddenIdEquipo.value = this.dataObjetoAEditar.id
-                    ipnutHiddenTipoEquipo.value = this.dataObjetoAEditar.tipo_equipo
+                        // Obtenemos las referencias del dom mediante refs
+                        const idEquipo = this.$refs.idEquipo
+                        const clase = this.$refs.clase
+                        const nombre = this.$refs.nombre
+                        const marca = this.$refs.marca
+                        const modelo = this.$refs.modelo
+                        const serie = this.$refs.serie
+                        const anio = this.$refs.anio
+                        const vida_util = this.$refs.vida_util
+                        const estado = this.$refs.estado
+                        const criticidad = this.$refs.criticidad
+                        const garantia = this.$refs.garantia
+                        const vencimiento_garantia = this.$refs.vencimiento_garantia
+                        const plan_mantencion = this.$refs.plan_mantencion
+                        const tipo_equipo_parrafo = this.$refs.tipo_equipo_parrafo
+                        const id_convenio = this.$refs.id_convenio
+                        const id_institucion = this.$refs.id_institucion
+                        const eliminado = this.$refs.eliminado
+                        const anio_ingreso = this.$refs.anio_ingreso
+                        const costo_anual = this.$refs.costo_anual
+                        const nombre_proveedor = this.$refs.nombre_proveedor
+                        const numero_inventario = this.$refs.numero_inventario
+                        const recinto = this.$refs.recinto
+                        const servicio_clinico = this.$refs.servicio_clinico
+                        const sub_clase = this.$refs.sub_clase
+                        const tipo_mantenimiento = this.$refs.tipo_mantenimiento
+                        const vida_util_residual = this.$refs.vida_util_residual
+
+                        const inputHiddenIdEquipo = document.getElementById('hidden-id-equipo')
+                        const ipnutHiddenTipoEquipo = document.getElementById('hidden-tipo-equipo')
+
+                        // Les asignamos texto a las refs
+                        idEquipo.innerHTML = `ID: ${this.dataObjetoAEditar.id}`
+                        clase.innerHTML = `Clase: ${this.dataObjetoAEditar.clase}`
+                        nombre.innerHTML = `Nombre: ${this.dataObjetoAEditar.nombre}`
+                        marca.innerHTML = `Marca: ${this.dataObjetoAEditar.marca}`
+                        modelo.innerHTML = `Modelo: ${this.dataObjetoAEditar.modelo}`
+                        serie.innerHTML = `Serie: ${this.dataObjetoAEditar.serie}`
+                        anio.innerHTML = `Año: ${this.dataObjetoAEditar.anio}`
+                        vida_util.innerHTML = `Vida util: ${this.dataObjetoAEditar.vida_util}`
+                        estado.innerHTML = `Estado: ${this.dataObjetoAEditar.estado}`
+                        criticidad.innerHTML = `Criticidad: ${this.dataObjetoAEditar.criticidad}`
+                        garantia.innerHTML = `Garantia: ${this.dataObjetoAEditar.garantia}`
+                        vencimiento_garantia.innerHTML = `Vencimiento de garantia: ${this.dataObjetoAEditar.vencimiento_garantia}`
+                        plan_mantencion.innerHTML = `Plan de mantención: ${this.dataObjetoAEditar.plan_mantencion}`
+                        tipo_equipo_parrafo.innerHTML = `Tipo de equipo: ${this.dataObjetoAEditar.tipo_equipo}`
+                        id_convenio.innerHTML = `ID de convenio: ${this.dataObjetoAEditar.id_convenio}`
+                        id_institucion.innerHTML = `ID de institución: ${this.dataObjetoAEditar.id_institucion}`
+                        eliminado.innerHTML = `Eliminado: ${this.dataObjetoAEditar.eliminado}`
+                        anio_ingreso.innerHTML = `Año de ingreso: ${this.dataObjetoAEditar.anio_ingreso}`
+                        costo_anual.innerHTML = `Costo anual: ${this.dataObjetoAEditar.costo_anual}`
+                        nombre_proveedor.innerHTML = `Nombre del proveedor: ${this.dataObjetoAEditar.nombre_proveedor}`
+                        numero_inventario.innerHTML = `Numero de inventario: ${this.dataObjetoAEditar.numero_inventario}`
+                        recinto.innerHTML = `Recinto: ${this.dataObjetoAEditar.recinto}`
+                        servicio_clinico.innerHTML = `Servicio clinico: ${this.dataObjetoAEditar.servicio_clinico}`
+                        sub_clase.innerHTML = `SubClase: ${this.dataObjetoAEditar.subclase}`
+                        tipo_mantenimiento.innerHTML = `Tipo de mantenimiento: ${this.dataObjetoAEditar.tipo_mantenimiento}`
+                        vida_util_residual.innerHTML = `Vida util residual: ${this.dataObjetoAEditar.vida_util_residual}`
+                        inputHiddenIdEquipo.value = this.dataObjetoAEditar.id
+                        ipnutHiddenTipoEquipo.value = this.dataObjetoAEditar.tipo_equipo
 
 
-                    // Obtenemos referencia del boton
-                    // const btn = this.$refs.btnEnviarFormularioEditarCatastro
-                    // Asignamos el metodo correspondiante
-                    // btn.addEventListener('click', this.enviarFormularioEditarCatastro)
-                    // this.actualizarGraficoMedianteSelect()
-                })
+                        // Obtenemos referencia del boton
+                        // const btn = this.$refs.btnEnviarFormularioEditarCatastro
+                        // Asignamos el metodo correspondiante
+                        // btn.addEventListener('click', this.enviarFormularioEditarCatastro)
+                        // this.actualizarGraficoMedianteSelect()
+                    })
             }
-            else if(tipoEquipo === 'industrial'){
+            else if (tipoEquipo === 'industrial') {
                 axios.post('http://127.0.0.1:8000/obtener_data/', data)
-                .then(response => {
-                    console.log(response.data.resultado);
-                    this.dataObjetoAEditar = response.data.resultado
-                    // Obtenemos las referencias del dom mediante refs
-                    const idEquipo = this.$refs.idEquipo
-                    const clase = this.$refs.clase
-                    const nombre = this.$refs.nombre
-                    const marca = this.$refs.marca
-                    const modelo = this.$refs.modelo
-                    const serie = this.$refs.serie
-                    const anio = this.$refs.anio
-                    const vida_util = this.$refs.vida_util
-                    const estado = this.$refs.estado
-                    const criticidad = this.$refs.criticidad
-                    const garantia = this.$refs.garantia
-                    const vencimiento_garantia = this.$refs.vencimiento_garantia
-                    const plan_mantencion = this.$refs.plan_mantencion
-                    const tipo_equipo_parrafo = this.$refs.tipo_equipo_parrafo
-                    const id_convenio = this.$refs.id_convenio
-                    const id_institucion = this.$refs.id_institucion
-                    const eliminado = this.$refs.eliminado
-                    const anio_ingreso = this.$refs.anio_ingreso
-                    const costo_anual = this.$refs.costo_anual
-                    const nombre_proveedor = this.$refs.nombre_proveedor
-                    const numero_inventario = this.$refs.numero_inventario
-                    const recinto = this.$refs.recinto
-                    const servicio_clinico = this.$refs.servicio_clinico
-                    const sub_clase = this.$refs.sub_clase
-                    const tipo_mantenimiento = this.$refs.tipo_mantenimiento
-                    const vida_util_residual = this.$refs.vida_util_residual
-                    
-                    const inputHiddenIdEquipo = document.getElementById('hidden-id-equipo')
-                    const ipnutHiddenTipoEquipo = document.getElementById('hidden-tipo-equipo')
-                    
-                    // Les asignamos texto a las refs
-                    idEquipo.innerHTML = `ID: ${this.dataObjetoAEditar.id}`
-                    clase.innerHTML = `Clase: ${this.dataObjetoAEditar.clase}`
-                    sub_clase.innerHTML = `SubClase: ${this.dataObjetoAEditar.subclase}`
-                    marca.innerHTML = `Marca: ${this.dataObjetoAEditar.marca}`
-                    modelo.innerHTML = `Modelo: ${this.dataObjetoAEditar.modelo}`
-                    serie.innerHTML = `Serie: ${this.dataObjetoAEditar.serie}`
-                    numero_inventario.innerHTML = `Numero de inventario: ${this.dataObjetoAEditar.numero_inventario}`
-                    vida_util.innerHTML = `Vida util: ${this.dataObjetoAEditar.vida_util}`
-                    vida_util_residual.innerHTML = `Vida util residual: ${this.dataObjetoAEditar.vida_util_residual}`
-                    estado.innerHTML = `Estado: ${this.dataObjetoAEditar.estado}`
-                    garantia.innerHTML = `Garantia: ${this.dataObjetoAEditar.garantia}`
-                    id_institucion.innerHTML = `ID de institución: ${this.dataObjetoAEditar.id_institucion}`
-                    anio.innerHTML = `Año: ${this.dataObjetoAEditar.anio}`
-                    anio_ingreso.innerHTML = `Año de ingreso al plan de manteniento: ${this.dataObjetoAEditar.anio_ingreso_plan_mantenimiento}`
-                    costo_anual.innerHTML = `Costo anual de mantenimiento: ${this.dataObjetoAEditar.costo_anual_mantenimiento}`
-                    criticidad.innerHTML = `Criticidad: ${this.dataObjetoAEditar.criticidad}`
-                    eliminado.innerHTML = `Eliminado: ${this.dataObjetoAEditar.eliminado}`
-                    id_convenio.innerHTML = `ID de convenio: ${this.dataObjetoAEditar.id_convenio_mantenimiento}`
-                    nombre.innerHTML = `Nombre: ${this.dataObjetoAEditar.nombre}`
-                    nombre_proveedor.innerHTML = `Nombre del proveedor: ${this.dataObjetoAEditar.nombre_proveedor}`
-                    recinto.innerHTML = `Nombre del recinto: ${this.dataObjetoAEditar.nombre_recinto}`
-                    plan_mantencion.innerHTML = `Plan de mantención: ${this.dataObjetoAEditar.plan_mantencion}`
-                    tipo_equipo_parrafo.innerHTML = `Tipo de equipo: ${this.dataObjetoAEditar.tipo_equipo}`
-                    tipo_mantenimiento.innerHTML = `Tipo de mantenimiento: ${this.dataObjetoAEditar.tipo_mantenimiento}`
-                    servicio_clinico.innerHTML = `Ubicación: ${this.dataObjetoAEditar.ubicacion}`
-                    vencimiento_garantia.innerHTML = `Vencimiento de garantia: ${this.dataObjetoAEditar.vencimiento_garantia}`
-                    inputHiddenIdEquipo.value = this.dataObjetoAEditar.id
-                    ipnutHiddenTipoEquipo.value = this.dataObjetoAEditar.tipo_equipo
-                })
+                    .then(response => {
+                        console.log(response.data.resultado);
+                        this.dataObjetoAEditar = response.data.resultado
+                        // Obtenemos las referencias del dom mediante refs
+                        const idEquipo = this.$refs.idEquipo
+                        const clase = this.$refs.clase
+                        const nombre = this.$refs.nombre
+                        const marca = this.$refs.marca
+                        const modelo = this.$refs.modelo
+                        const serie = this.$refs.serie
+                        const anio = this.$refs.anio
+                        const vida_util = this.$refs.vida_util
+                        const estado = this.$refs.estado
+                        const criticidad = this.$refs.criticidad
+                        const garantia = this.$refs.garantia
+                        const vencimiento_garantia = this.$refs.vencimiento_garantia
+                        const plan_mantencion = this.$refs.plan_mantencion
+                        const tipo_equipo_parrafo = this.$refs.tipo_equipo_parrafo
+                        const id_convenio = this.$refs.id_convenio
+                        const id_institucion = this.$refs.id_institucion
+                        const eliminado = this.$refs.eliminado
+                        const anio_ingreso = this.$refs.anio_ingreso
+                        const costo_anual = this.$refs.costo_anual
+                        const nombre_proveedor = this.$refs.nombre_proveedor
+                        const numero_inventario = this.$refs.numero_inventario
+                        const recinto = this.$refs.recinto
+                        const servicio_clinico = this.$refs.servicio_clinico
+                        const sub_clase = this.$refs.sub_clase
+                        const tipo_mantenimiento = this.$refs.tipo_mantenimiento
+                        const vida_util_residual = this.$refs.vida_util_residual
+
+                        const inputHiddenIdEquipo = document.getElementById('hidden-id-equipo')
+                        const ipnutHiddenTipoEquipo = document.getElementById('hidden-tipo-equipo')
+
+                        // Les asignamos texto a las refs
+                        idEquipo.innerHTML = `ID: ${this.dataObjetoAEditar.id}`
+                        clase.innerHTML = `Clase: ${this.dataObjetoAEditar.clase}`
+                        sub_clase.innerHTML = `SubClase: ${this.dataObjetoAEditar.subclase}`
+                        marca.innerHTML = `Marca: ${this.dataObjetoAEditar.marca}`
+                        modelo.innerHTML = `Modelo: ${this.dataObjetoAEditar.modelo}`
+                        serie.innerHTML = `Serie: ${this.dataObjetoAEditar.serie}`
+                        numero_inventario.innerHTML = `Numero de inventario: ${this.dataObjetoAEditar.numero_inventario}`
+                        vida_util.innerHTML = `Vida util: ${this.dataObjetoAEditar.vida_util}`
+                        vida_util_residual.innerHTML = `Vida util residual: ${this.dataObjetoAEditar.vida_util_residual}`
+                        estado.innerHTML = `Estado: ${this.dataObjetoAEditar.estado}`
+                        garantia.innerHTML = `Garantia: ${this.dataObjetoAEditar.garantia}`
+                        id_institucion.innerHTML = `ID de institución: ${this.dataObjetoAEditar.id_institucion}`
+                        anio.innerHTML = `Año: ${this.dataObjetoAEditar.anio}`
+                        anio_ingreso.innerHTML = `Año de ingreso al plan de manteniento: ${this.dataObjetoAEditar.anio_ingreso_plan_mantenimiento}`
+                        costo_anual.innerHTML = `Costo anual de mantenimiento: ${this.dataObjetoAEditar.costo_anual_mantenimiento}`
+                        criticidad.innerHTML = `Criticidad: ${this.dataObjetoAEditar.criticidad}`
+                        eliminado.innerHTML = `Eliminado: ${this.dataObjetoAEditar.eliminado}`
+                        id_convenio.innerHTML = `ID de convenio: ${this.dataObjetoAEditar.id_convenio_mantenimiento}`
+                        nombre.innerHTML = `Nombre: ${this.dataObjetoAEditar.nombre}`
+                        nombre_proveedor.innerHTML = `Nombre del proveedor: ${this.dataObjetoAEditar.nombre_proveedor}`
+                        recinto.innerHTML = `Nombre del recinto: ${this.dataObjetoAEditar.nombre_recinto}`
+                        plan_mantencion.innerHTML = `Plan de mantención: ${this.dataObjetoAEditar.plan_mantencion}`
+                        tipo_equipo_parrafo.innerHTML = `Tipo de equipo: ${this.dataObjetoAEditar.tipo_equipo}`
+                        tipo_mantenimiento.innerHTML = `Tipo de mantenimiento: ${this.dataObjetoAEditar.tipo_mantenimiento}`
+                        servicio_clinico.innerHTML = `Ubicación: ${this.dataObjetoAEditar.ubicacion}`
+                        vencimiento_garantia.innerHTML = `Vencimiento de garantia: ${this.dataObjetoAEditar.vencimiento_garantia}`
+                        inputHiddenIdEquipo.value = this.dataObjetoAEditar.id
+                        ipnutHiddenTipoEquipo.value = this.dataObjetoAEditar.tipo_equipo
+                    })
             }
             else if (tipoEquipo === 'vehiculo') {
                 axios.post('http://127.0.0.1:8000/obtener_data/', data)
                     .then(response => {
-                    console.log(response.data.resultado);
+                        console.log(response.data.resultado);
+                        this.dataObjetoAEditar = response.data.resultado
 
-                })
+                        const idEquipo = this.$refs.idEquipoVehiculo
+                        const funcionVehiculo = this.$refs.funcionVehiculo
+                        const marcaVehiculo = this.$refs.marcaVehiculo
+                        const modeloVehiculo = this.$refs.modeloVehiculo
+                        const patenteVehiculo = this.$refs.patenteVehiculo
+                        const numeroMotorVehiculo = this.$refs.numeroMotorVehiculo
+                        const kilometrajeVehiculo = this.$refs.kilometrajeVehiculo
+                        const anioVehiculo = this.$refs.anioVehiculo
+                        const vidaUtilVehiculo = this.$refs.vidaUtilVehiculo
+                        const criticidaVehiculo = this.$refs.criticidadVehiculo
+                        const garantiaVehiculo = this.$refs.garantiaVehiculo
+                        const vencimientoGarantiaVehiculo = this.$refs.vencimientoGarantiaVehiculo
+                        const planMantencionVehiculo = this.$refs.planMantecionVehiculo
+                        const tipoEquipoVehiculo = this.$refs.tipoEquipoVehiculo
+                        const idInstitucionVehiculo = this.$refs.idInstitucionVehiculo
+                        const eliminadoVehiculo = this.$refs.eliminadoVehiculo
+                        const anioIngresoPlanMantenimiento = this.$refs.anioIngreoPlanMantencionVehiculo
+                        const claseVehiculo = this.$refs.claseAmbulanciaVehiculo
+                        const costoAnualMantenimientoVehiculo = this.$refs.costoAnualMantenimientoVehiculo
+                        const establecimientoVehiculo = this.$refs.establecimientoVehiculo
+                        const estadoSituacionVehiculo = this.$refs.estadoSituacionVehiculo
+                        const idConvenioMantenimientoVehiculo = this.$refs.idConvenioMantenimientoVehiculo
+                        const nombreProveedorVehiculo = this.$refs.nombreProveedorVehiculo
+                        const regionVehiculo = this.$refs.regionVehiculo
+                        const tipoAmbulanciaVehiculo = this.$refs.tipoAmbulanciaVehiculo
+                        const tipoCarroceriaVehiculo = this.$refs.tipoCarroceriaVehiculo
+                        const tipoMantenimientoVehiculo = this.$refs.tipoMantenimientoVehiculo
+                        const vidaUtilResidualVehiculo = this.$refs.vidaUtilResidualVehiculo
+
+                        const inputHiddenIdEquipo = document.getElementById('hidden-id-equipo')
+                        const ipnutHiddenTipoEquipo = document.getElementById('hidden-tipo-equipo')
+
+                        idEquipo.innerHTML = `ID: ${this.dataObjetoAEditar.id}`
+                        funcionVehiculo.innerHTML = `Funcion del vehiculo: ${this.dataObjetoAEditar.funcion}`
+                        marcaVehiculo.innerHTML = `Marca del vehiculo: ${this.dataObjetoAEditar.marca}`
+                        modeloVehiculo.innerHTML = `Modelo del vehiculo: ${this.dataObjetoAEditar.modelo}`
+                        patenteVehiculo.innerHTML = `Patente: ${this.dataObjetoAEditar.patente}`
+                        numeroMotorVehiculo.innerHTML = `Numero del motor: ${this.dataObjetoAEditar.numero_motor}`
+                        kilometrajeVehiculo.innerHTML = `Kilometraje: ${this.dataObjetoAEditar.kilometraje}`
+                        anioVehiculo.innerHTML = `Año: ${this.dataObjetoAEditar.anio}`
+                        vidaUtilVehiculo.innerHTML = `Vida util: ${this.dataObjetoAEditar.vida_util}`
+                        criticidaVehiculo.innerHTML = `Criticidad: ${this.dataObjetoAEditar.criticidad}`
+                        garantiaVehiculo.innerHTML = `Garantia del vehiculo: ${this.dataObjetoAEditar.garantia}`
+                        vencimientoGarantiaVehiculo.innerHTML = `Vencimiento garantia: ${this.dataObjetoAEditar.vencimiento_garantia}`
+                        planMantencionVehiculo.innerHTML = `Plan mantencion: ${this.dataObjetoAEditar.plan_mantencion}`
+                        tipoEquipoVehiculo.innerHTML = `Tipo de equipo: ${this.dataObjetoAEditar.tipo_equipo}`
+                        idInstitucionVehiculo.innerHTML = `ID institucion: ${this.dataObjetoAEditar.id_institucion}`
+                        eliminadoVehiculo.innerHTML = `Eliminado: ${this.dataObjetoAEditar.eliminado}`
+                        anioIngresoPlanMantenimiento.innerHTML = `Año ingreso plan mantenimiento: ${this.dataObjetoAEditar.anio_ingreso_plan_mantenimiento}`
+                        claseVehiculo.innerHTML = `Clase: ${this.dataObjetoAEditar.clase}`
+                        costoAnualMantenimientoVehiculo.innerHTML = `Costo anual mantenimiento: ${this.dataObjetoAEditar.costo_anual_mantenimiento}`
+                        establecimientoVehiculo.innerHTML = `Establecimiento: ${this.dataObjetoAEditar.establecimiento}`
+                        estadoSituacionVehiculo.innerHTML = `Estado situacion: ${this.dataObjetoAEditar.estado_situacion}`
+                        idConvenioMantenimientoVehiculo.innerHTML = `ID convenio mantenimiento: ${this.dataObjetoAEditar.id_convenio_mantenimiento}`
+                        nombreProveedorVehiculo.innerHTML = `Nombre del proveedor: ${this.dataObjetoAEditar.nombre_proveedor}`
+                        regionVehiculo.innerHTML = `Region: ${this.dataObjetoAEditar.region}`
+                        tipoAmbulanciaVehiculo.innerHTML = `Tipo ambulancia: ${this.dataObjetoAEditar.tipo_ambulancia}`
+                        tipoCarroceriaVehiculo.innerHTML = `Tipo de carroceria: ${this.dataObjetoAEditar.tipo_carroceria}`
+                        tipoMantenimientoVehiculo.innerHTML = `Tipo mantenimiento: ${this.dataObjetoAEditar.tipo_mantenimiento}`
+                        vidaUtilResidualVehiculo.innerHTML = `Vida util residual: ${this.dataObjetoAEditar.vida_util_residual}`
+
+                        inputHiddenIdEquipo.value = this.dataObjetoAEditar.id
+                        ipnutHiddenTipoEquipo.value = this.dataObjetoAEditar.tipo_equipo
+
+
+
+
+                    })
             }
             $('#miModalEditarCatastro').modal('show');
         },
 
-        enviarFormularioEditarCatastro(event){
+        enviarFormularioEditarCatastro(event) {
             event.preventDefault()
 
             $('#miModalEditarCatastro').modal('hide');
@@ -807,7 +875,7 @@ createApp({
                         console.log('fila eliminada');
                     });
                     // JQUERY
-                    
+
                     console.log(response);
 
                     const toast = new Toasts({
@@ -827,9 +895,9 @@ createApp({
                     })
                 })
                 .catch(error => {
-                console.log(error);
-            })
-        
+                    console.log(error);
+                })
+
         }
 
 

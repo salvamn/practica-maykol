@@ -107,8 +107,10 @@
 						<td>${ data.vida_util_residual }</td>
 						{% if request.user.cargo == 'administrador' %}
 						<td>
-							<button @click="editarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Editar</button>
-							<button @click="eliminarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Eliminar</button>
+							<button
+								@click="editarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Editar</button>
+							<button
+								@click="eliminarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Eliminar</button>
 						</td>
 						{% else %}
 						<td>
@@ -116,7 +118,8 @@
 						</td>
 						{% endif %}
 					</tr>
-					<tr v-else-if="opcionSelecionada === 'vehiculo'" v-for="data in data_tabla" :key="data.id" :id="data.id">
+					<tr v-else-if="opcionSelecionada === 'vehiculo'" v-for="data in data_tabla" :key="data.id"
+						:id="data.id">
 						<td>${ data.id }</td>
 						<td>${ data.samu }</td>
 						<td>${ data.funcion }</td>
@@ -149,8 +152,10 @@
 						<td>${ data.vida_util_residual }</td>
 						{% if request.user.cargo == 'administrador' %}
 						<td>
-							<button @click="editarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Editar</button>
-							<button @click="eliminarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Eliminar</button>
+							<button
+								@click="editarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Editar</button>
+							<button
+								@click="eliminarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Eliminar</button>
 						</td>
 						{% else %}
 						<td>
@@ -158,7 +163,8 @@
 						</td>
 						{% endif %}
 					</tr>
-					<tr v-else-if="opcionSelecionada === 'industrial'" v-for="data in data_tabla" :key="data.id" :id="data.id">
+					<tr v-else-if="opcionSelecionada === 'industrial'" v-for="data in data_tabla" :key="data.id"
+						:id="data.id">
 						<td>${ data.id }</td>
 						<td>${ data.clase }</td>
 						<td>${ data.nombre }</td>
@@ -187,8 +193,10 @@
 						<td>${ data.vida_util_residual }</td>
 						{% if request.user.cargo == 'administrador' %}
 						<td>
-							<button @click="editarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Editar</button>
-							<button @click="eliminarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Eliminar</button>
+							<button
+								@click="editarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Editar</button>
+							<button
+								@click="eliminarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Eliminar</button>
 						</td>
 						{% else %}
 						<td>
@@ -430,8 +438,8 @@
 					<br>
 					<!-- <span>${ resultado }</span> -->
 				</li>
-				<li v-else-if="this.opcionSelecionada === 'vehiculo'" style="list-style: none;" v-for="resultado in resultados"
-					:key="resultado.id">
+				<li v-else-if="this.opcionSelecionada === 'vehiculo'" style="list-style: none;"
+					v-for="resultado in resultados" :key="resultado.id">
 					<div>
 						<span style="font-weight: bold;">ID - </span>
 						<span>${ resultado.id }</span>
@@ -580,7 +588,8 @@
 
 				<hr>
 
-				<div v-if="tipoFormularioEditarCatastro === 'medico' || tipoFormularioEditarCatastro === 'industrial'" class="contenedor-data-formulario-editar">
+				<div v-if="tipoFormularioEditarCatastro === 'medico' || tipoFormularioEditarCatastro === 'industrial'"
+					class="contenedor-data-formulario-editar">
 					<p ref="idEquipo"></p>
 					<p ref="clase"></p>
 					<p ref="nombre"></p>
@@ -633,7 +642,7 @@
 					<p ref="establecimientoVehiculo"></p>
 					<p ref="estadoSituacionVehiculo"></p>
 					<p ref="idConvenioMantenimientoVehiculo"></p>
-					<p ref="nombreProfesorVehiculo"></p>
+					<p ref="nombreProveedorVehiculo"></p>
 					<p ref="regionVehiculo"></p>
 					<p ref="tipoAmbulanciaVehiculo"></p>
 					<p ref="tipoCarroceriaVehiculo"></p>
@@ -648,7 +657,7 @@
 
 			</div>
 			<!-- Contenido del formulario -->
-			<form class="ui form" method="POST" action="{% url 'editar_equipo' %}" >
+			<form class="ui form" method="POST" action="{% url 'editar_equipo' %}">
 				{% csrf_token %}
 				<input type="hidden" name="hidden-id-equipo" id="hidden-id-equipo" value="">
 				<input type="hidden" name="hidden-tipo-equipo" id="hidden-tipo-equipo" value="">
@@ -774,7 +783,7 @@
 						<label for="vida-util-residual">Vida util residual</label>
 						<input type="number" name="vida-util-residual" placeholder="0">
 					</div>
-					
+
 					<button ref="btnEnviarFormularioEditarCatastro" class="ui button" type="submit">Enviar</button>
 
 				</div>
@@ -901,12 +910,158 @@
 						<label for="vida-util-residual">Vida util residual</label>
 						<input type="number" name="vida-util-residual" placeholder="0">
 					</div>
-					
+
 					<button ref="btnEnviarFormularioEditarCatastro" class="ui button" type="submit">Enviar</button>
 
 
 				</div>
 				<div v-else-if="tipoFormularioEditarCatastro === 'vehiculo'">
+					<div class="field">
+						<label for="samu">Samu</label>
+						<input type="text" name="samu" placeholder="samu">
+					</div>
+					<div class="field">
+						<label for="funcion">Función</label>
+						<input type="text" name="funcion" placeholder="función">
+					</div>
+					<div class="field">
+						<label for="marca">Marca</label>
+						<input type="text" name="marca" placeholder="marca">
+					</div>
+					<div class="field">
+						<label for="modelo">Modelo</label>
+						<input type="text" name="modelo" placeholder="modelo">
+					</div>
+					<div class="field">
+						<label for="patente">Patente</label>
+						<input type="text" name="patente" placeholder="JBCZ 52">
+					</div>
+					<div class="field">
+						<label for="numero-motor">Numero de motor</label>
+						<input type="text" name="numero-motor" placeholder="651955W0058039">
+					</div>
+					<div class="field">
+						<label for="kilometraje">Kilometraje</label>
+						<input type="number" name="kilometraje" placeholder="123">
+					</div>
+					<div class="field">
+						<select name="estado">
+							<option value="" disabled selected>Seleccione un estado</option>
+							<option value="BUENO">Bueno</option> <!-- Bueno - Regular - Malo - Baja -->
+							<option value="REGULAR">Regular</option>
+							<option value="MALO">Malo</option>
+							<option value="BAJA">Baja</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="anio">Año</label>
+						<input type="number" name="anio" placeholder="2024">
+					</div>
+					<div class="field">
+						<label for="vida-util">Vida util</label>
+						<input type="number" name="vida-util" placeholder="1">
+					</div>
+					<div class="field">
+						<select name="criticidad">
+							<option value="" disabled selected>Seleccione una opción</option>
+							<option value="Critico">Crítico</option>
+							<option value="Relevante">Relevante</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="garantia">Garantia</label>
+						<input type="text" name="garantia" placeholder="garantia">
+					</div>
+					<div class="field">
+						<label for="vencimiento-garantia">Vencimiento de garantia</label>
+						<input type="text" name="vencimiento-garantia" placeholder="vencimiento garantia">
+					</div>
+					<div class="field">
+						<label for="plan-mantencion">Plan de mantención</label>
+						<input type="text" name="plan-mantencion" placeholder="plan de mantención">
+					</div>
+					<div class="field">
+						<select name="tipo-equipo">
+							<option value="" disabled selected>seleccione un tipo de equipo</option>
+							<option value="medico">Medico</option>
+							<option value="vehiculo">Vehiculo</option>
+							<option value="industrial">Industrial</option>
+						</select>
+					</div>
+					<div class="field">
+						<select name="id-institucion">
+							<option value="" disabled selected>Seleccione una ciudad</option>
+							<option value="1">Lebu</option>
+							<option value="2">Arauco</option>
+							<option value="4">Cañete</option>
+							<option value="3">Curanilahue</option>
+							<option value="5">Contulmo</option>
+						</select>
+					</div>
+					<div class="field">
+						<select name="eliminado">
+							<option value="" disabled selected>¿ Eliminado ?</option>
+							<option value="1">Si</option>
+							<option value="0">No</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="anio-ingreso">Año de ingreso</label>
+						<input type="number" placeholder="Año ingreso, ej: 2023" name="anio-ingreso">
+					</div>
+					<div class="field">
+						<label for="clase-ambulancia">Clase de ambulancia</label>
+						<input type="text" name="clase-ambulancia" placeholder="URBANA">
+					</div>
+					<div class="field">
+						<label for="costo-anual">Costo anual</label>
+						<input type="number" name="costo-anual" placeholder="0">
+					</div>
+					<div class="field">
+						<label for="establecimiento">Establecimiento</label>
+						<input type="text" name="establecimiento" placeholder="establecimiento">
+					</div>
+					<div class="field">
+						<label for="estado-situacion">Estado de situación</label>
+						<input type="text" name="estado-situacion" placeholder="estado de situación">
+					</div>
+					<div class="field">
+						<label for="id-convenio-mantenimiento">ID del convenio de mantenimiento</label>
+						<input type="number" name="id-convenio-mantenimiento" placeholder="1">
+					</div>
+					<div class="field">
+						<label for="nombre-proveedor">Nombre del proveedor</label>
+						<input type="text" name="nombre-proveedor" placeholder="nombre del proveedor">
+					</div>
+					<div class="field">
+						<select name="id-institucion">
+							<option value="" disabled selected>Seleccione una ciudad</option>
+							<option value="1">Lebu</option>
+							<option value="2">Arauco</option>
+							<option value="4">Cañete</option>
+							<option value="3">Curanilahue</option>
+							<option value="5">Contulmo</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="tipo-ambulancia">Tipo de ambulancia</label>
+						<input type="text" name="tipo-ambulancia" placeholder="tipo de ambulancia">
+					</div>
+					<div class="field">
+						<label for="tipo-carroceria">Tipo de carroceria</label>
+						<input type="text" name="tipo-carroceria" placeholder="tipo de carroceria">
+					</div>
+					<div class="field">
+						<label for="tipo-mantenimiento">Tipo de mantenimiento</label>
+						<input type="text" name="tipo-mantenimiento" id="">
+					</div>
+					<div class="field">
+						<label for="vida-util-residual">Vida util residual</label>
+						<input type="number" name="vida-util-residual" placeholder="0">
+					</div>
+					
+					<button ref="btnEnviarFormularioEditarCatastro" class="ui button" type="submit">Enviar</button>
+
 
 				</div>
 			</form>
@@ -926,27 +1081,27 @@
 
 
 	{% if messages %}
-		<ul class="messages">
-			{% for mensaje in messages %}
-				<script>
-					const toast = new Toasts({
-						offsetX: 20, // 20px
-						offsetY: 20, // 20px
-						gap: 20, // The gap size in pixels between toasts
-						width: 300, // 300px
-						timing: 'ease', // See list of available CSS transition timings
-						duration: '.5s', // Transition duration
-						dimOld: true, // Dim old notifications while the newest notification stays highlighted
-						position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
-					});
-					toast.push({
-						title: 'Información', 
-						content: `{{ mensaje }}`,
-						style: `{{ mensaje.level_tag }}`
-					})
-				</script>
-			{% endfor %}
-		</ul>
+	<ul class="messages">
+		{% for mensaje in messages %}
+		<script>
+			const toast = new Toasts({
+				offsetX: 20, // 20px
+				offsetY: 20, // 20px
+				gap: 20, // The gap size in pixels between toasts
+				width: 300, // 300px
+				timing: 'ease', // See list of available CSS transition timings
+				duration: '.5s', // Transition duration
+				dimOld: true, // Dim old notifications while the newest notification stays highlighted
+				position: 'bottom-left' // top-left | top-center | top-right | bottom-left | bottom-center | bottom-right
+			});
+			toast.push({
+				title: 'Información',
+				content: `{{ mensaje }}`,
+				style: `{{ mensaje.level_tag }}`
+			})
+		</script>
+		{% endfor %}
+	</ul>
 	{% endif %}
 
 	{% endblock contenido_dinamico %}

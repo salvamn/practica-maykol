@@ -1078,7 +1078,8 @@ def editar_equipo(request):
         
         elif tipo_equipo == 'vehiculo':
             equipo = CatastroAmbulancias.objects.filter(id=id_equipo)
-            
+            print(f'tipo de equipo: {tipo_equipo}')
+            print(f'id: {id_equipo}')
             if equipo.exists():
                 datos_a_modificar = {
                     'samu': request.POST.get('samu', ''),
