@@ -111,6 +111,8 @@
 								@click="editarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Editar</button>
 							<button
 								@click="eliminarCatastro( data.id, data.id_institucion, data.tipo_equipo )">Eliminar</button>
+							<button @click="generarPDF( data.id, data.tipo_equipo )">PDF</button>
+							<!-- <a href="{% url 'generar_pdf_catastro' %}">PDF</a> -->
 						</td>
 						{% else %}
 						<td>
@@ -1059,7 +1061,7 @@
 						<label for="vida-util-residual">Vida util residual</label>
 						<input type="number" name="vida-util-residual" placeholder="0">
 					</div>
-					
+
 					<button ref="btnEnviarFormularioEditarCatastro" class="ui button" type="submit">Enviar</button>
 
 

@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pdf</title>
+    <link rel="stylesheet" href="{% static 'css/pdf_css/pdf_catastro.css' %}">
+</head>
+
+<body>
+    <div id="contenedor">
+        <nav>
+            <div class="logo">
+                <div class="colores">
+                    <div class="azul"></div>
+                    <div class="rojo"></div>
+                </div>
+            </div>
+            <div class="texto">
+                <h5>Servicio de Salud Arauco</h5>
+                <h6>Región del Bío Bío</h6>
+                <h6>Ministerio de Salud</h6>
+            </div>
+        </nav>
+        <div class="titulo">
+            <h2>Informe PDF de Catastro Industrial</h2>
+        </div>
+
+        <div class="informacion-catastro">
+            <span>ID: {{ catastro.id }}</span>
+            <span>CLASE: {{ catastro.clase }}</span>
+            <span>SUBCLASE: {{ catastro.subclase }}</span>
+            <span>MARCA: {{ catastro.marca }}</span>
+            <span>MODELO: {{ catastro.modelo }}</span>
+            <span>SERIE: {{ catastro.serie }}</span>
+            <span>NÚMERO DE INVENTARIO: {{ catastro.numero_inventario }}</span>
+            <span>VIDA ÚTIL: {{ catastro.vida_util }}</span>
+            <span>VIDA ÚTIL RESIDUAL: {{ catastro.vida_util_residual }}</span>
+            <span>ESTADO: {{ catastro.estado }}</span>
+            <span>GARANTÍA: {{ catastro.garantia }}</span>
+            <span>ID DE LA INSTITUCIÓN: {{ catastro.id_institucion }}</span>
+            <span>AÑO: {{ catastro.anio }}</span>
+            <span>AÑO DE INGRESO PLAN DE MANTENIMIENTO: {{ catastro.anio_ingreso }}</span>
+            <span>COSTO ANUAL DE MANTENIMIENTO: {{ catastro.costo_anual }}</span>
+            <span>CRITICIDAD: {{ catastro.criticidad }}</span>
+            <span>ELIMINADO: {{ catastro.eliminado }}</span>
+            <span>ID DEL CONVENIO: {{ catastro.id_convenio }}</span>
+            <span>NOMBRE: {{ catastro.nombre }}</span>
+            <span>NOMBRE DEL PROVEEDOR: {{ catastro.nombre_proveedor }}</span>
+            <span>RECINTO: {{ catastro.recinto }}</span>
+            <span>PLAN DE MANTENCIÓN: {{ catastro.plan_mantencion }}</span>
+            <span>TIPO DE EQUIPO: {{ catastro.tipo_equipo }}</span>
+            <span>TIPO DE MANTENIMIENTO: {{ catastro.tipo_mantenimiento }}</span>
+            <span>UBICACIÓN: {{ catastro.ubicacion }}</span>
+            <span>VENCIMIENTO DE GARANTÍA: {{ catastro.vencimiento_garantia }}</span>
+        </div>
+    </div>
+</body>
+
+</html>

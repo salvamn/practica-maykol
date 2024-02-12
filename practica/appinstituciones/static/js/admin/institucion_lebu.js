@@ -898,8 +898,41 @@ createApp({
                     console.log(error);
                 })
 
-        }
+        },
 
+
+        // PDF
+        generarPDF(id, tipoEquipo) {
+            const data = {
+                'id': id,
+                'tipoEquipo': tipoEquipo
+            }
+            console.log(data);
+            axios.post('http://127.0.0.1:8000/generar_pdf_catastro/', data, { responseType: 'blob' })
+                .then(response => {
+                    // Crear un objeto Blob con el contenido del PDF recibido
+                    console.log(response);
+                    const blob = new Blob([response.data], { type: 'application/pdf' });
+                    // Crear una URL del objeto Blob
+                    const url = window.URL.createObjectURL(blob);
+
+                    // Crear un enlace temporal para forzar la descarga del PDF
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'archivo.pdf');
+
+                    // Agregar el enlace al DOM y hacer clic en él
+                    document.body.appendChild(link);
+                    link.click();
+
+                    // Liberar la URL del objeto Blob
+                    window.URL.revokeObjectURL(url);
+
+                })
+                .catch(error => {
+                    console.error('Error al generar el PDF:', error);
+                });
+        }
 
 
 
