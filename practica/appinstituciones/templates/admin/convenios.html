@@ -6,23 +6,26 @@
 
 {% block contenido_dinamico %}
 <link rel="stylesheet" href="{% static 'css/admin/convenios.css' %}">
-<link rel="stylesheet" href="{% static 'css/ventanaModal.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/ventanaModal.css' %}"> -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-<div id="app">
+
+<div id="app" class="flex flex-col w-full h-full justify-between items-center">
 	{% if request.user.cargo == 'administrador' %}
-	<div id="contenedor-formulario">
-		<div class="titulo-">
-			<h2>Convenios</h2>
-		</div>
+	<div id="contenedor-formulario" class="w-[98%] h-[50%] p-2 flex flex-col justify-around">
+		<!-- <div class="titulo- text-lg mb-2 w-full flex flex-row h-[10%] pl-2">
+			<a id="crear-convenio" href="#" class="text-[#2BB0FD] mr-4">crear convenio</a>
+			<a id="editar-convenio" href="#" class="text-[#2BB0FD] mr-4">editar convenio</a>
+		</div> -->
 
-		<form action="" method="POST">
+		<form action="" method="POST" class="w-full h-[90%] flex flex-col items-center justify-center">
 			{% csrf_token %}
-			<div>
+			<div class="w-full h-[20%] flex flex-row  items-center">
 				<input type="text" required placeholder="Servicio de salud" name="servicio-salud">
 				<input type="text" required placeholder="Nombre del convenio" name="nombre-convenio">
-                <select name="institucion">
+				<select name="institucion">
 					<option value="" disabled selected>Seleccione una ciudad</option>
 					<option value="1">Lebu</option>
 					<option value="2">Arauco</option>
@@ -31,14 +34,14 @@
 					<option value="5">Contulmo</option>
 				</select>
 			</div>
-            
-			<div>
-                <input type="number" required placeholder="Monto anual" name="monto-anual">
+
+			<div class="w-full h-[20%] flex flex-row  items-center">
+				<input type="number" required placeholder="Monto anual" name="monto-anual">
 				<input type="text" required placeholder="Subsignacion SIGFE" name="subsignacion-sigfe">
 				<input type="text" required placeholder="Establecimiento" name="establecimiento">
 			</div>
-            
-			<div>
+
+			<div class="w-full h-[20%] flex flex-row  items-center">
 				<input type="text" required placeholder="Orden de compra" name="orden-compra">
 				<select name="tipo" id="">
 					<option value="" disabled selected>Seleccione una opción tipo</option>
@@ -48,39 +51,40 @@
 				</select>
 			</div>
 
-			<div>
-                <div>
-                    <label for="">Fecha de expiración</label>
-                    <input type="date" required placeholder="Fecha de expiracion" name="fecha-expiracion">
-                </div>
-                <div>
-                    <label for="">Fecha de resolución</label>
-				    <input type="date" required placeholder="Fecha de resolucion" name="fecha-resolucion">
-                </div>
-                
+			<div class="w-full h-[20%] flex flex-row items-center ml-4">
+				<div class="w-auto">
+					<label for="">Fecha de expiración</label>
+					<input type="date" required placeholder="Fecha de expiracion" name="fecha-expiracion">
+				</div>
+				<div class="w-auto">
+					<label for="">Fecha de resolución</label>
+					<input type="date" required placeholder="Fecha de resolucion" name="fecha-resolucion">
+				</div>
+
 			</div>
-            
-			<div>
-                <input type="submit" value="Agregar">
+
+			<div class="w-full h-[20%] flex flex-row items-center">
+				<input type="submit" value="Agregar" class="w-auto p-2 pr-4 pl-4  ml-2 rounded-md shadow-md mr-4">
 				{% if messages %}
 				<ul class="messages">
 					{% for message in messages %}
-					<li style="color: green;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+					<li style="color: green;" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+					</li>
 					{% endfor %}
 				</ul>
 				{% endif %}
 			</div>
-
-
-
-
-
 		</form>
 	</div>
+
+
+
+
+
 	{% elif request.cargo.user == 'usuario' %}
-	<div id="contenedor-formulario" class="usuario">
+	<!-- <div id="contenedor-formulario" class="usuario w-full h-[50%] p-4">
 		<div class="titulo-">
-			<h2>Convenios</h2>
+
 		</div>
 
 		<form action="" method="POST">
@@ -88,7 +92,7 @@
 			<div>
 				<input type="text" required placeholder="Servicio de salud" name="servicio-salud">
 				<input type="text" required placeholder="Nombre del convenio" name="nombre-convenio">
-                <select name="institucion">
+				<select name="institucion">
 					<option value="" disabled selected>Seleccione una ciudad</option>
 					<option value="1">Lebu</option>
 					<option value="2">Arauco</option>
@@ -97,13 +101,13 @@
 					<option value="5">Contulmo</option>
 				</select>
 			</div>
-            
+
 			<div>
-                <input type="number" required placeholder="Monto anual" name="monto-anual">
+				<input type="number" required placeholder="Monto anual" name="monto-anual">
 				<input type="text" required placeholder="Subsignacion SIGFE" name="subsignacion-sigfe">
 				<input type="text" required placeholder="Establecimiento" name="establecimiento">
 			</div>
-            
+
 			<div>
 				<input type="text" required placeholder="Orden de compra" name="orden-compra">
 				<select name="tipo" id="">
@@ -115,34 +119,30 @@
 			</div>
 
 			<div>
-                <div>
-                    <label for="">Fecha de expiración</label>
-                    <input type="date" required placeholder="Fecha de expiracion" name="fecha-expiracion">
-                </div>
-                <div>
-                    <label for="">Fecha de resolución</label>
-				    <input type="date" required placeholder="Fecha de resolucion" name="fecha-resolucion">
-                </div>
-                
+				<div>
+					<label for="">Fecha de expiración</label>
+					<input type="date" required placeholder="Fecha de expiracion" name="fecha-expiracion">
+				</div>
+				<div>
+					<label for="">Fecha de resolución</label>
+					<input type="date" required placeholder="Fecha de resolucion" name="fecha-resolucion">
+				</div>
+
 			</div>
-            
+
 			<div>
-                <input type="submit" value="Agregar">
+				<input type="submit" value="Agregar">
 				{% if messages %}
 				<ul class="messages">
 					{% for message in messages %}
-					<li style="color: green;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+					<li style="color: green;" {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+					</li>
 					{% endfor %}
 				</ul>
 				{% endif %}
 			</div>
-
-
-
-
-
 		</form>
-	</div>
+	</div> -->
 	{% endif %}
 
 
@@ -150,92 +150,225 @@
 
 
 	{% if request.user.cargo == 'administrador' %}
-	<div id="contenedor-tabla">
-		<div class="tabla">
-			<table id="tabla">
-				<thead>
-					<tr>
-						<!-- <th>ID</th> -->
-						<!-- <th>Servicio Clinico</th> -->
-						<th>Servico Salud</th>
-						<!-- <th>SubClase</th> -->
-						<!-- <th>Marca</th> -->
-						<th>Establecimiento</th>
-						<!-- <th>Serie</th> -->
-						<th>Orden Compra</th>
-						<th>Monto Anual</th>
-						<th>Tipo</th>
-						<!-- <th>N° Motor</th> -->
-						<!-- <th>Año Adquisición</th> -->
-						<!-- <th>Información</th> -->
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="data in data_tabla" :key="data.id">
-						<!-- <td>${ data.id }</td> -->
-						<!-- <td>${ data.servicio_clinico }</td> -->
-						<td>${ data.fields.servicio_salud }</td>
-						<!-- <td>${ data.subclase }</td> -->
-						<!-- <td>${ data.marca }</td> -->
-						<td>${ data.fields.establecimiento }</td>
-						<!-- <td>${ data.serie }</td> -->
-						<td>${ data.fields.orden_compra }</td>
-						<td>${ data.fields.monto_anual }</td>
-						<!-- <td>${ data.propio }</td> -->
-						<td>${ data.fields.tipo }</td>
-						<!-- <td>${ data.anio_adquisicion }</td> -->
-						<!-- <td><button v-bind:id="data.id" @click="mostrarModal">Mas</button></td> -->
-					</tr>
-				</tbody>
-			</table>
-		</div>
+	<div id="contenedor-tabla" class="w-full h-[50%] flex flex-col items-center overflow-auto">
+		<!-- <div class="w-full h-full flex flex-col items-center"> -->
+		<table class="table-auto overflow-scroll w-full border h-[90%]  shadow-lg">
+			<tbody class="w-full text-center rounded-md h-[90%] break-words">
+				<!-- Estos son las cabeceras de la tabla, es decir son los nombres de las columnas. -->
+				<tr class="border-b ">
+					<th class="p-2 px-2">ID</th>
+					<th class="p-2 px-2">Servico Salud</th>
+					<th class="p-2 px-2">Establecimiento</th>
+					<th class="p-2 px-2">Orden Compra</th>
+					<th class="p-2 px-2">Monto Anual</th>
+					<th class="p-2 px-2">Tipo</th>
+					<th class="p-2 px-2">CRUD</th>
+				</tr>
+				<!-- Columnas dinamicas con data cargada desde Vue -->
+				<tr v-for="data in data_tabla" v-bind:id="`fila-${data.pk}`"
+					class="border-b even:bg-gray-100 break-words">
+					<td class="p-2 px-2">${data.pk}</td>
+					<td class="p-2 px-2">${data.fields.servicio_salud}
+					</td>
+					<td class="p-2 px-2">${data.fields.establecimiento}
+					</td>
+					<td class="p-2 px-2">${data.fields.orden_compra}</td>
+					<td class="p-2 px-2">${data.fields.monto_anual}</td>
+					<td class="p-2 px-2">${data.fields.tipo}</td>
+					<td class="p-2 px-2 flex flex-row justify-center">
+						<button @click="mostrarModalConvenio" type="button" v-bind:id="data.pk"
+							class="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">
+							Editar
+						</button>
+						<button @click="mostrarDialogo" type="button" v-bind:id="data.pk"
+							class="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Borrar</button>
+						<a @click="generarPDFConvenio" v-bind:id="data.pk" class="ml-2 text-green-400 cursor-pointer">PDF</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+
+
+
+
+
 	{% elif request.user.cargo == 'usuario' %}
-	<div id="contenedor-tabla" class="usuario">
-		<div class="tabla">
-			<table id="tabla">
-				<thead>
-					<tr>
-						<!-- <th>ID</th> -->
-						<!-- <th>Servicio Clinico</th> -->
-						<th>Servico Salud</th>
-						<!-- <th>SubClase</th> -->
-						<!-- <th>Marca</th> -->
-						<th>Establecimiento</th>
-						<!-- <th>Serie</th> -->
-						<th>Orden Compra</th>
-						<th>Monto Anual</th>
-						<th>Tipo</th>
-						<!-- <th>N° Motor</th> -->
-						<!-- <th>Año Adquisición</th> -->
-						<!-- <th>Información</th> -->
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="data in data_tabla" :key="data.id">
-						<!-- <td>${ data.id }</td> -->
-						<!-- <td>${ data.servicio_clinico }</td> -->
-						<td>${ data.fields.servicio_salud }</td>
-						<!-- <td>${ data.subclase }</td> -->
-						<!-- <td>${ data.marca }</td> -->
-						<td>${ data.fields.establecimiento }</td>
-						<!-- <td>${ data.serie }</td> -->
-						<td>${ data.fields.orden_compra }</td>
-						<td>${ data.fields.monto_anual }</td>
-						<!-- <td>${ data.propio }</td> -->
-						<td>${ data.fields.tipo }</td>
-						<!-- <td>${ data.anio_adquisicion }</td> -->
-						<!-- <td><button v-bind:id="data.id" @click="mostrarModal">Mas</button></td> -->
-					</tr>
-				</tbody>
-			</table>
-		</div>
+	<div id="contenedor-tabla" class="w-full h-[50%] flex flex-col items-center overflow-auto">
+		<!-- <div class="w-full h-full flex flex-col items-center"> -->
+		<table class="table-auto overflow-scroll w-full border h-[90%]  shadow-lg">
+			<tbody class="w-full text-center rounded-md h-[90%] break-words">
+				<!-- Estos son las cabeceras de la tabla, es decir son los nombres de las columnas. -->
+				<tr class="border-b ">
+					<th class="p-2 px-2">Servico Salud</th>
+					<th class="p-2 px-2">Establecimiento</th>
+					<th class="p-2 px-2">Orden Compra</th>
+					<th class="p-2 px-2">Monto Anual</th>
+					<th class="p-2 px-2">Tipo</th>
+					<th class="p-2 px-2">CRUD</th>
+				</tr>
+				<!-- Columnas dinamicas con data cargada desde Vue -->
+				<tr v-for="data in data_tabla" v-bind:id="`fila-${data.pk}`"
+					class="border-b even:bg-gray-100 break-words">
+					<td class="p-2 px-2">${data.fields.servicio_salud}
+					</td>
+					<td class="p-2 px-2">${data.fields.establecimiento}
+					</td>
+					<td class="p-2 px-2">${data.fields.orden_compra}</td>
+					<td class="p-2 px-2">${data.fields.monto_anual}</td>
+					<td class="p-2 px-2">${data.fields.tipo}</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	{% endif %}
+
+
+
+
+	<!-- DIALOGO -->
+	<!-- DIALOGO -->
+	<!-- DIALOGO -->
+
+
+	<div id="modal-dialogo" class="fixed inset-0 hidden items-center justify-center z-50">
+		<div id="modal-background" class="fixed inset-0 hidden bg-black opacity-50"></div>
+		<div class="bg-white rounded-lg relative">
+			<div class="w-96 border-t-8 border-[#2BB0FD] rounded-lg flex">
+				<div class="w-full p-6">
+					<h3 class="font-bold">Borrar Convenio?</h3>
+					<p class="py-4 text-sm text-gray-400">
+						Estás seguro de querer borrar este convenio? Si lo borras no habrá
+						vuelta atrás.
+					</p>
+				</div>
+			</div>
+
+			<div class="p-4 flex space-x-4">
+				<a @click="ocultarDialogo" href="#"
+					class="w-1/2 px-4 py-3 text-center bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm">Cancelar</a>
+				<a @click="btnDialogoEliminarConvenio" href="#"
+					class="w-1/2 px-4 py-3 text-center text-pink-100 bg-[#2BB0FD] rounded-lg hover:bg-pink-700 hover:text-white font-bold text-sm">Borrar</a>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- DIALOGO -->
+	<!-- DIALOGO -->
+	<!-- DIALOGO -->
+
+
+
+
+	<!-- MODAL EDITAR CONVENIO -->
+	<!-- MODAL EDITAR CONVENIO -->
+	<!-- MODAL EDITAR CONVENIO -->
+
+	<div id="modal-editar-convenio" class="fixed inset-0 hidden items-center justify-center z-50">
+		<div id="modal-background-convenio" class="fixed inset-0 hidden bg-black opacity-50"></div>
+		<div class="bg-white rounded-lg relative w-[40%] h-[80%]">
+			<div class="w-[100%] h-[90%] border-t-8 border-[#2BB0FD] rounded-lg flex flex-col">
+				<div class="w-full h-[10%] p-6">
+					<h3 class="font-bold">Editar Convenio?</h3>
+				</div>
+				<div class="w-full h-[90%]">
+					<form action="{% url 'editar_convenio' %}" method="post" class="flex flex-col h-full w-full p-4">
+						{% csrf_token %}
+						<input type="hidden" name="id" v-bind:value="idConvenioEliminar">
+
+						<div class="w-full h-[20%] flex flex-row  justify-around items-center">
+							<input class="w-[30%] p-2 border border-solid rounded-md" type="text"
+								placeholder="Servicio de salud" name="servicio_salud">
+							<input class="w-[30%] p-2 border border-solid rounded-md" type="text"
+								placeholder="Nombre del convenio" name="nombre_convenio">
+							<select class="w-[30%] p-2 border border-solid rounded-md" name="id_institucion">
+								<option value="" disabled selected>Seleccione una ciudad</option>
+								<option value="1">Lebu</option>
+								<option value="2">Arauco</option>
+								<option value="4">Cañete</option>
+								<option value="3">Curanilahue</option>
+								<option value="5">Contulmo</option>
+							</select>
+						</div>
+
+						<div class="w-full h-[20%] flex flex-row  justify-around items-center">
+							<input class="w-[30%] p-2 border border-solid rounded-md" type="number"
+								placeholder="Monto anual" name="monto_anual">
+							<input class="w-[30%] p-2 border border-solid rounded-md" type="text"
+								placeholder="Subsignacion SIGFE" name="subsignacion_sigfe">
+							<input class="w-[30%] p-2 border border-solid rounded-md" type="text"
+								placeholder="Establecimiento" name="establecimiento">
+						</div>
+
+						<div class="w-full h-[20%] flex flex-row  justify-around items-center">
+							<input class="w-[45%] p-2 border border-solid rounded-md" type="text"
+								placeholder="Orden de compra" name="orden_compra">
+							<select class="w-[45%] p-2 border border-solid rounded-md" name="tipo" id="">
+								<option value="" disabled selected>Seleccione una opción tipo</option>
+								<option value="Medico">Medico</option>
+								<option value="Industrial">Industrial</option>
+								<option value="Vehiculo">Vehiculo</option>
+							</select>
+						</div>
+
+						<div class="w-full h-[20%] flex flex-row  justify-around items-center">
+							<div class="w-auto">
+								<label for="">Fecha de expiración</label>
+								<input class="w-[30%] p-2 border border-solid rounded-md" type="date"
+									placeholder="Fecha de expiracion" name="fecha_expiracion">
+							</div>
+							<div class="w-auto">
+								<label for="">Fecha de resolución</label>
+								<input class="w-[30%] p-2 border border-solid rounded-md" type="date"
+									placeholder="Fecha de resolucion" name="fecha_resolucion">
+							</div>
+						</div>
+						<div class="p-2 flex space-x-4 h-[10%]">
+							<a @click="ocultarModalConvenio" href="#"
+								class="w-1/2 px-4 py-3 text-center bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm">Cancelar
+							</a>
+
+							<input type="submit" value="editar">
+							<!-- <a  href="#"
+								class="w-1/2 px-4 py-3 text-center text-pink-100 bg-[#2BB0FD] rounded-lg hover:bg-pink-700 hover:text-white font-bold text-sm">Editar</a> -->
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- MODAL EDITAR CONVENIO -->
+	<!-- MODAL EDITAR CONVENIO -->
+	<!-- MODAL EDITAR CONVENIO -->
+
+
 
 
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script src="{% static 'js/admin/convenios.js' %}"></script>
 

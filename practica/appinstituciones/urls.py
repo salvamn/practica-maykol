@@ -89,7 +89,9 @@ urlpatterns = [
     # Convenios
     path('convenios/', views.convenios, name='convenios'),
     path('obtener_convenios_general/', views.obtener_convenios_general, name='obtener_convenios_general'),
-    
+    path('eliminar_convenio/', views.eliminar_convenio, name='eliminar_convenio'),
+    path('editar_convenio/', views.editar_convenio, name='editar_convenio'),
+    path('generar_pdf_convenio/', views.generar_pdf_convenio, name='generar_pdf_convenio'),
     
     
     # Usuarios

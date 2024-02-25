@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pdf</title>
+    <link rel="stylesheet" href="{% static 'css/pdf_css/pdf_catastro.css' %}">
+</head>
+
+<body>
+    <div id="contenedor">
+        <nav>
+            <div class="logo">
+                <div class="colores">
+                    <div class="azul"></div>
+                    <div class="rojo"></div>
+                </div>
+            </div>
+            <div class="texto">
+                <h5>Servicio de Salud Arauco</h5>
+                <h6>Región del Bío Bío</h6>
+                <h6>Ministerio de Salud</h6>
+            </div>
+        </nav>
+        <div class="titulo">
+            <h2>Informe PDF de Convenio</h2>
+        </div>
+
+        <div class="informacion-catastro">
+            <span>ID: {{ convenio.id }}</span>
+            <span>SERVICIO SALUD: {{ convenio.servicio_salud }}</span>
+            <span>NOMBRE CONVENIO: {{ convenio.nombre_convenio }}</span>
+            <span>FECHA RESOLUCION: {{ convenio.fecha_resolucion }}</span>
+            <span>FECHA EXPIRACION: {{ convenio.fecha_expiracion }}</span>
+            <span>MONTO ANUAL: {{ convenio.monto_anual }}</span>
+            <span>SUBSIGNACION SIGFE: {{ convenio.subsignacion_sigfe }}</span>
+            <span>ESTABLECIMIENTO: {{ convenio.establecimiento }}</span>
+            <span>ORDEN COMPRA: {{ convenio.orden_compra }}</span>
+            <span>ID INSTITUCION: {{ convenio.id_institucion }}</span>
+            <span>TIPO: {{ convenio.tipo }}</span>
+
+        </div>
+    </div>
+</body>
+
+</html>
